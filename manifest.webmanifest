@@ -1,7 +1,7 @@
 {
-  "name": "PHARMA — Interactive Pharmacology Atlas",
-  "short_name": "PHARMA",
-  "description": "PHARMA, app made by Eliseo Peirano · 2026. Atlante didattico interattivo di farmacologia.",
+  "name": "ELIX — The Interactive Pharmacology Atlas",
+  "short_name": "ELIX",
+  "description": "ELIX, la Bibbia dei Farmaci: atlante molecolare, trattato interattivo, academy e laboratori didattici. App made by Eliseo Peirano · 2026.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
@@ -10,15 +10,9 @@
   "lang": "it",
   "icons": [
     {
-      "src": "./assets/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "./assets/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
+      "src": "./assets/elix-logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
       "purpose": "any maskable"
     }
   ]
