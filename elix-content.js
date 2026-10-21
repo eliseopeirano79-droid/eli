@@ -1,3 +1,5 @@
+import {EXPANDED_CHAPTERS} from './elix-expanded-chapters.js';
+import {EXPANDED_QUESTIONS} from './elix-expanded-questions.js';
 /* ELIX · Contenuti didattici originali Alpha 0.5. Revisione specialistica ancora da completare. */
 
 export const ELIX_VOLUMES = [
@@ -75,7 +77,7 @@ export const ELIX_VOLUMES = [
   }
 ];
 
-export const ELIX_CHAPTERS = [
+const BASE_CHAPTERS = [
   {
     "id": "identita-del-farmaco",
     "volume": 1,
@@ -278,7 +280,7 @@ export const ELIX_CHAPTERS = [
   }
 ];
 
-export const ELIX_QUESTIONS = [
+const BASE_QUESTIONS = [
   {
     "id": "q01",
     "kind": "teoria",
@@ -920,3 +922,6 @@ export const ELIX_QUESTIONS = [
     "why": "Se RR = 0,5 e il rischio di base è 0,002, il rischio trattato è 0,001; ARR = 0,001 = 1‰ (NNT 1000 nello stesso orizzonte)."
   }
 ];
+
+export const ELIX_CHAPTERS = Object.freeze([...BASE_CHAPTERS,...EXPANDED_CHAPTERS]);
+export const ELIX_QUESTIONS = Object.freeze([...BASE_QUESTIONS,...EXPANDED_QUESTIONS]);
