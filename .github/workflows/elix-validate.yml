@@ -1,7 +1,7 @@
 name: ELIX code and data validation
 on:
   push:
-    branches: [main, feature/elix-alpha-05, feature/elix-06-focus-and-brand, feature/elix-07-deep-scientific-atlas, feature/elix-09-dose-pk-guidelines]
+    branches: [main, feature/elix-alpha-05, feature/elix-06-focus-and-brand, feature/elix-07-deep-scientific-atlas, feature/elix-09-dose-pk-guidelines, feature/elix-10-clean-sheets-visual-structures]
   pull_request:
     branches: [main]
   workflow_dispatch:
@@ -42,5 +42,7 @@ jobs:
           node --check elix-09-content.js
           node --check elix-verified.js
           node --check scripts/validate-pharma09.mjs
+          node --check elix-structure-visuals.js
+          node --check scripts/validate-sheets.mjs
       - name: Run pharmacology data and UI tests
         run: npm test
