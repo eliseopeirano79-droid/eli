@@ -1,18 +1,14 @@
 import fs from 'node:fs';
 import assert from 'node:assert/strict';
-const read = path => fs.readFileSync(path,'utf8');
-const write = (path,text) => fs.writeFileSync(path,text);
-const patch = (text,before,after,label) => {
- assert.equal(text.split(before).length-1,1,'Expected one patch anchor: '+label);
- return text.replace(before,after);
-};
+const read=path=>fs.readFileSync(path,'utf8');
+const write=(path,text)=>fs.writeFileSync(path,text);
+const patch=(text,before,after,label)=>{assert.equal(text.split(before).length-1,1,'Expected one patch anchor: '+label);return text.replace(before,after);};
 let src=read('evidence-atlas.js');
-if(!src.includes("from './elix-verified.js'")) {
+if(!src.includes("from './elix-verified.js'")){
  src="import {loadVerifiedIndex,verifiedRecord,verifiedBadges,verifiedOverview,renderVerifiedData,verifiedMarketSummary,verifiedPublicPrice,hasVerifiedData} from './elix-verified.js';\n"+src;
  src=patch(src,"const state={query:'',group:'',type:'',country:'',page:0,news:'',classesQuery:''};","const state={query:'',group:'',type:'',country:'',page:0,news:'',classesQuery:'',dataKind:'',order:'name'};",'filter state');
  src=patch(src,'   db={catalog,registry,ed,labelIndex,news};','   await loadVerifiedIndex(refresh);\n   db={catalog,registry,ed,labelIndex,news};','load real index');
- const a=src.indexOf(' function filters(){'),b=src.indexOf('\n function results(){',a);
- assert.ok(a>=0&&b>a,'Filter boundaries');
+ const a=src.indexOf(' function filters(){'),b=src.indexOf('\n function results(){',a);assert.ok(a>=0&&b>a,'Filter boundaries');
  const filter=` function filters(){
   const rows=searchable.filter(({m,text})=>(!state.query||text.includes(normalize(state.query)))&&(!state.group||m.atc.some(a=>a.startsWith(state.group)))&&(!state.type||m.type===state.type)&&(!state.country||(registry(m)[state.country]||[]).length)&&(!state.dataKind||hasVerifiedData(m,state.dataKind)));
   if(state.order==='price')rows.sort((a,b)=>(verifiedPublicPrice(a.m)??Infinity)-(verifiedPublicPrice(b.m)??Infinity)||name(a.m).localeCompare(name(b.m),'it'));
@@ -27,7 +23,8 @@ if(!src.includes("from './elix-verified.js'")) {
  src=patch(src,'function drugMarket(m){','function drugMarket(m){\n const realMarket=verifiedMarketSummary(m);if(realMarket)return realMarket;','replace missing price message');
  src=patch(src,'const comparison=d?.comparison||{};','const comparison=d?.comparison||{};\n const actualPrice=verifiedPublicPrice(m);','summary price lookup');
  src=patch(src,'${fact("Prezzo","Non importato","Confezione, Paese e data")}','${fact("Prezzo",actualPrice===null?"Non disponibile":"da "+actualPrice.toLocaleString("it-IT",{style:"currency",currency:"EUR"}),"AIFA · confezioni e dosaggi diversi")}', 'real price summary');
- src=patch(src,'  load();','  document.addEventListener("change",e=>{if(e.target.id==="vd-data-kind"){state.dataKind=e.target.value;state.page=0;updateResults();}if(e.target.id==="vd-order"){state.order=e.target.value;state.page=0;updateResults();}});\n  load();','data filter events');
+ const loadLines=src.split('\n').filter(line=>line.trim()==='load();');assert.equal(loadLines.length,1,'Unique initialization');
+ src=patch(src,loadLines[0],' document.addEventListener("change",e=>{if(e.target.id==="vd-data-kind"){state.dataKind=e.target.value;state.page=0;updateResults();}if(e.target.id==="vd-order"){state.order=e.target.value;state.page=0;updateResults();}});\n load();','data filter events');
  write('evidence-atlas.js',src);
 }
 let html=read('index.html');
@@ -36,14 +33,9 @@ html=html.replace('Alpha 0.7','Alpha 0.8');write('index.html',html);
 let sw=read('sw.js').replace(/const CACHE = '[^']+';/,"const CACHE = 'elix-alpha-0.8.0';");
 if(!sw.includes("'./elix-verified.js'"))sw=patch(sw,"'./elix-deep.css'","'./elix-deep.css', './elix-verified.js', './elix-verified.css', './data/verified/index.json'",'offline shell');
 write('sw.js',sw);
-let app=read('app.js').replaceAll('ALPHA 0.7','ALPHA 0.8').replaceAll('α 0.7','α 0.8').replaceAll('Alpha 0.7 ·','Alpha 0.8 ·');write('app.js',app);
-const pkg=JSON.parse(read('package.json'));
-if(!pkg.scripts.test.includes('validate-verified'))pkg.scripts.test+=' && node scripts/validate-verified.mjs';
-write('package.json',JSON.stringify(pkg,null,2)+'\n');
-const info=JSON.parse(read('data/verified/index.json'));
-const counts=info.counts;
-const intro=`## Alpha 0.8 — dati pubblici acquisiti, non generati\n\nImportazione: ${info.retrieved}.\n\n- ${counts.activityRecords} misure ChEMBL per ${counts.activityMolecules} molecole; ${counts.bindingRecords} record Ki/Kd. Identità, bersaglio, specie, condizioni, unità, confronto (=, <, >), DOI/PMID quando presenti, identificativi di saggio e record. Non è una revisione di ogni articolo; la provenienza è quella curata nel database.\n- ${counts.productLabels} documenti di prodotto USA, ${counts.labelSections} sezioni, ${counts.pkSourceSentences} frasi PK conservate nel contesto originale. Nessuna traduzione automatica delle dosi; niente trasferimento a un RCP italiano.\n- ${counts.aifaLinkedPackages || 0} confezioni abbinate al prezzo nella lista di trasparenza AIFA, raggruppate in ${counts.aifaLinkedFamilies || 0} famiglie di sostanza. Prezzo pubblico, riferimento e differenza distinti; non costo di trattamento.\n- Nessuna nuova voce di navigazione: dati dentro Farmaci, con filtri, paginazione e caricamento progressivo.\n- Dati completi e dichiarazioni di copertura in data/verified/index.json; criteri e scarti in data/verified/report.json. Dati derivati ChEMBL: CC BY-SA 3.0, attribuzione EMBL-EBI. Le altre fonti mantengono propria provenienza e condizioni.\n\n`;
-let readme=read('README.md').replace('Alpha 0.7','Alpha 0.8');
-if(!readme.includes('## Alpha 0.8 — dati pubblici acquisiti')) {const at=readme.indexOf('\n## ');readme=readme.slice(0,at)+'\n'+intro+readme.slice(at);}
-write('README.md',readme);
+write('app.js',read('app.js').replaceAll('ALPHA 0.7','ALPHA 0.8').replaceAll('α 0.7','α 0.8').replaceAll('Alpha 0.7 ·','Alpha 0.8 ·'));
+const pkg=JSON.parse(read('package.json'));if(!pkg.scripts.test.includes('validate-verified'))pkg.scripts.test+=' && node scripts/validate-verified.mjs';write('package.json',JSON.stringify(pkg,null,2)+'\n');
+const info=JSON.parse(read('data/verified/index.json')),counts=info.counts;
+const intro=`## Alpha 0.8 — dati pubblici acquisiti, non generati\n\nImportazione: ${info.retrieved}.\n\n- ${counts.activityRecords} misure ChEMBL per ${counts.activityMolecules} molecole; ${counts.bindingRecords} record Ki/Kd. Identità, bersaglio, specie, condizioni, unità, relazioni, DOI/PMID quando presenti e record di fonte. Non è una revisione clinica di ogni articolo.\n- ${counts.productLabels} documenti di prodotto USA, ${counts.labelSections} sezioni, ${counts.pkSourceSentences} frasi PK nel contesto originale. Nessuna traduzione automatica delle dosi o trasferimento a un RCP italiano.\n- ${counts.aifaLinkedPackages || 0} confezioni con prezzo AIFA, raggruppate in ${counts.aifaLinkedFamilies || 0} famiglie. Prezzo pubblico, riferimento e differenza distinti; non costo di trattamento.\n- Dati dentro Farmaci con filtri, paginazione e caricamento progressivo. Restano cinque sezioni principali.\n- Metodo e scarti: data/verified/report.json. Dati derivati ChEMBL: CC BY-SA 3.0, attribuzione EMBL-EBI. Le altre fonti mantengono provenienza distinta.\n\n`;
+let readme=read('README.md').replace('Alpha 0.7','Alpha 0.8');if(!readme.includes('## Alpha 0.8 — dati pubblici acquisiti')){const at=readme.indexOf('\n## ');readme=readme.slice(0,at)+'\n'+intro+readme.slice(at);}write('README.md',readme);
 console.log('INTEGRATION_READY',JSON.stringify(counts));
