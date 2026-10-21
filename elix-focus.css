@@ -101,3 +101,13 @@ body[data-theme="light"]{--accent:#278948;--accent2:#267d44;--accentink:#fff;--g
 @media(max-width:1050px){.ex-home-main{grid-template-columns:repeat(2,1fr)}.rx-two{grid-template-columns:1fr}.rx-results{grid-template-columns:1fr}.top-navigation{max-width:100%!important}}
 @media(max-width:650px){.rx-panel{padding:17px}.rx-molstar{height:290px}.rx-cascade{gap:6px}.rx-cascade span{padding:8px}.rx-result{gap:8px;padding:12px}.rx-gene{min-width:50px}.rx-pdb{font-size:9px}.ev-facts{grid-template-columns:repeat(2,1fr)}.ex-home-main{grid-template-columns:1fr 1fr;gap:9px}.ex-home-main a{padding:16px}.ex-home-hero{padding:24px}.ex-home-brand-icon{width:85px;height:85px;align-self:flex-start}.ex-home-hero h1{font-size:32px}.ex-home-hero p{font-size:11px}}
 @media(max-width:440px){.rx-pdb{display:none}.ex-home-brand-icon{width:64px;height:64px}.ex-home-main{grid-template-columns:1fr}.ev-facts{grid-template-columns:1fr 1fr}.ev-fact strong{font-size:12px}}
+
+/* Contextual Cinema controls: the only 3D switch lives inside Recettori. */
+.ex-cinema-modes{display:flex;gap:7px;margin:0 0 12px;padding:3px;border-radius:10px;border:1px solid var(--line);background:var(--panel2);flex-wrap:wrap}
+.ex-cinema-modes button{background:transparent;border:0;border-radius:8px;padding:10px 15px;font-size:11px;font-weight:750;color:var(--muted)}
+.ex-cinema-modes button[aria-pressed="true"]{color:var(--accent);background:var(--panel);box-shadow:0 1px 5px rgba(0,0,0,.12)}
+.ex-cinema-atom-viewer{display:block;width:100%;height:440px;border:1px solid var(--line);border-radius:14px;background:#101723}
+.ev-drug-page .ev-section-title{margin:20px 0 12px;letter-spacing:-.02em}
+.ev-drug-jump button{font-size:11px;flex:0 0 auto;background:var(--panel);border:1px solid var(--line);border-radius:50px;padding:9px 13px;font-weight:720;color:var(--muted)}
+.ev-drug-jump button:hover{color:var(--accent);border-color:var(--accent)}
+@media(max-width:650px){.ex-cinema-atom-viewer{height:350px}}
