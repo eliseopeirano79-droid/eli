@@ -1,12 +1,12 @@
 /* PHARMA • servizio offline e aggiornamenti delle versioni pubblicate */
-const CACHE = 'pharma-alpha-0.4.0';
-const FILES = ['./', './index.html', './styles.css', './app.js', './evidence-atlas.js', './evidence-atlas.css', './data/catalog.json', './data/registry.json', './data/editorial.json', './data/labels-index.json', './data/news.json', './assets/heparin-subunits.jpg', './manifest.webmanifest', './assets/icon-192.png', './assets/icon-512.png'];
+const CACHE = 'elix-alpha-0.5.0';
+const FILES = ['./', './index.html', './styles.css', './app.js', './evidence-atlas.js', './evidence-atlas.css', './elix-studio.js', './elix-content.js', './elix-studio.css', './data/catalog.json', './data/registry.json', './data/editorial.json', './data/labels-index.json', './data/news.json', './assets/heparin-subunits.jpg', './manifest.webmanifest', './assets/elix-logo.svg'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(FILES)));
   self.skipWaiting();
 });
 self.addEventListener('activate', event => {
-  event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k => k.startsWith('pharma-') && k !== CACHE).map(k => caches.delete(k)))));
+  event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k => /^(?:pharma|elix)-/.test(k) && k !== CACHE).map(k => caches.delete(k)))));
   self.clients.claim();
 });
 self.addEventListener('fetch', event => {
