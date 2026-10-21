@@ -1,10 +1,15 @@
 name: ELIX systematic audit
 on:
   push:
-    branches: [feature/elix-11-systematic-audit]
+    branches: [main, feature/elix-11-systematic-audit]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 permissions:
   contents: read
+defaults:
+  run:
+    shell: bash
 concurrency:
   group: elix-systematic-audit-${{ github.ref }}
   cancel-in-progress: true
@@ -24,13 +29,13 @@ jobs:
           git rev-parse HEAD > /tmp/elix-audit/commit.txt
       - name: Validate all existing data and features
         run: npm test
-      - name: Run systematic browser audit when available
-        if: hashFiles('scripts/browser-systematic-audit.cjs') != ''
+      - name: Run systematic browser audit
         run: |
           npm install --prefix /tmp/elix-audit-deps --no-save playwright@1.56.1
           node /tmp/elix-audit-deps/node_modules/playwright/cli.js install --with-deps chromium
           python3 -m http.server 8765 > /tmp/elix-audit/http.log 2>&1 &
           PLAYWRIGHT_MODULE=/tmp/elix-audit-deps/node_modules/playwright node scripts/browser-systematic-audit.cjs
+          python3 -c 'import json; assert json.load(open("/tmp/elix-audit/audit-report.json"))["passed"] is True'
       - uses: actions/upload-artifact@v4
         if: always()
         with:
