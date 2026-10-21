@@ -260,7 +260,7 @@ export function createElixStudio({refresh}) {
       const label=document.getElementById("ex-dose-label");if(label)label.textContent=state.dose+"/100";
       const result=document.getElementById("ex-dose-results");if(result)result.innerHTML=doseResults();
       const graph=document.querySelector(".ex-graph");
-      if(graph){const el=graph.parentElement;if(el)el.innerHTML=doseChart()+el.innerHTML.slice(el.innerHTML.indexOf("<div class=\"ex-legend\"")); }
+      if(graph)graph.outerHTML=doseChart();
     }
   });
   window.addEventListener("hashchange",()=>{
