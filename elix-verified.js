@@ -97,6 +97,28 @@ export function renderVerifiedData(molecule) {
  ${data.label?`<section class="vd-panel"><header><h3>Farmacocinetica, dosi e sicurezza nella fonte</h3><span>Prodotto specifico · USA · EN</span></header>${available(data.label.file,d=>labelSections(d,data.label.file))}</section>`:''}
  ${data.market?`<section class="vd-panel"><header><h3>Prezzi reali per confezione · AIFA</h3><span>${data.market.packages} confezioni${data.market.minPublicPriceEUR!==null?' · da '+eur(data.market.minPublicPriceEUR):''}</span></header>${available(data.market.file,d=>marketRows(data.market.file,d))}</section>`:''}</div>`;
 }
+
+export function renderVerifiedByArea(molecule,area){
+ const data=verifiedRecord(molecule);
+ if(area==="adme"){
+  if(!data.label)return '<p class="ev-missing">Nessun documento PK specifico associato a questo record. L’assenza dal dataset non dimostra assenza di dati nella letteratura.</p>';
+  return available(data.label.file,label=>`<div class="vd-product-context"><strong>${h(label.product?.generic?.join(" / "))}</strong><p>${h(label.product?.route?.join(" / "))} · Fonte USA, versione ${h(date(label.effectiveDate))}</p></div>${renderPK09(label)}<p class="vd-note">${h(label.match)} ${h(label.limitation)}</p><div class="vd-links">${ext(label.source,"Testo ufficiale completo · DailyMed")}</div>`);
+ }
+ if(area==="dosage"){
+  if(!data.label)return '<p class="ev-missing">Posologia per indicazione non acquisita in questo dataset. Usa il RCP italiano della specifica confezione, se disponibile.</p>';
+  return available(data.label.file,label=>`<div class="vd-product-context"><strong>${h(label.product?.generic?.join(" / "))}</strong><p>Via: ${h(label.product?.route?.join(" / "))} · Fonte USA, versione ${h(date(label.effectiveDate))}</p></div>${renderIndications09(label,data.label.file)}<div class="vd-links">${ext(label.source,"Apri tutte le sezioni della label originale")}</div>`);
+ }
+ if(area==="activity"){
+  if(data.activity)return `<section class="vd-panel"><header><h3>Confronta le misure sperimentali</h3><span>${data.activity.count} misure · ${data.activity.targets} bersagli</span></header>${available(data.activity.file,body=>activityRows(data.activity.file,body))}</section>`;
+  if(data.parentActivity)return `<p class="ev-missing">Le misure disponibili sono riferite alla molecola parent e non sono automaticamente attribuibili a questa specifica forma chimica. <a href="#/molecule/${h(molecule.parent)}">Consulta il parent (${data.parentActivity.count} misure) →</a></p>`;
+  return '<p class="ev-missing">Nessuna misura di questo tipo importata per l’identità selezionata. Non significa che il farmaco non abbia bersagli.</p>';
+ }
+ if(area==="market"){
+  if(!data.market)return '<p class="ev-missing">Confezioni con prezzo non collegate nella lista AIFA importata. Non indica automaticamente mancata commercializzazione.</p>';
+  return `<section class="vd-panel"><header><h3>Confezioni e prezzi AIFA</h3><span>${data.market.packages} confezioni · AIC specifici</span></header>${available(data.market.file,body=>marketRows(data.market.file,body))}</section>`;
+ }
+ return "";
+}
 export function verifiedMarketSummary(molecule) {
  const data=verifiedRecord(molecule).market;
  if(!data)return '';
