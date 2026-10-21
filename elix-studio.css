@@ -156,3 +156,10 @@ box-shadow:0 0 55px rgba(46,215,174,.16),inset 0 0 30px rgba(97,221,176,.12)}
 @media(max-width:780px){.ex-book-layout,.ex-two{grid-template-columns:1fr}.ex-chapter-index{position:static}.ex-volume-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.ex-cinema-layout{grid-template-columns:1fr}}
 @media(max-width:540px){.ex-page-head{align-items:start;flex-direction:column}.ex-page-head h1{font-size:29px}.ex-tabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:thin}.ex-tabs a{white-space:nowrap}.ex-card{padding:19px}.ex-volume-grid,.ex-home-grid{grid-template-columns:1fr}.ex-quiz-filters{grid-template-columns:1fr}.ex-filter-footer{align-items:start;flex-direction:column}.ex-results-grid,.ex-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.ex-results-grid strong,.ex-stats strong{font-size:22px}.ex-reading{padding:23px}.ex-cell-canvas{height:385px}.ex-ligand-label{font-size:9px}.ex-membrane{height:72px}.ex-protein-g{top:66%}.ex-signal{top:77%}.ex-tissue{top:89%}.ex-cinema-controls label{margin-left:0}}
 @media(prefers-reduced-motion:reduce){.ex-cell-canvas *,.ex-track span,.ex-home-grid a,.ex-volume{animation:none!important;transition:none!important}}
+
+/* ELIX brand and high-density navigation */
+.brand-mark,.header-brand .brand-mark{padding:0;overflow:hidden;background:transparent;border:0;box-shadow:none;border-radius:12px}
+.header-brand .brand-mark img,.brand-mark img{width:100%;height:100%;display:block}
+.sidebar{overflow-y:auto;overscroll-behavior:contain}
+.top-navigation{overflow-x:auto;max-width:min(72vw,930px);scrollbar-width:thin;flex-shrink:1}
+@media(max-width:1100px){.top-navigation{max-width:100%}}
