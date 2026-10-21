@@ -1,0 +1,264 @@
+{
+  "retrieved": "2026-10-21T20:40:38.255951+00:00",
+  "sources": {
+    "aifa_prices": {
+      "url": "https://www.aifa.gov.it/documents/20142/825643/Lista_farmaci_equivalenti.csv",
+      "error": "Could not determine delimiter"
+    },
+    "aifa_ingredients": {
+      "url": "https://drive.aifa.gov.it/farmaci/PA_confezioni.csv",
+      "rows": 339137,
+      "encoding": "utf-8-sig",
+      "separator": ";",
+      "headers": [
+        "CODICE_AIC",
+        "PRINCIPIO_ATTIVO",
+        "QUANTITA",
+        "UNITA_MISURA"
+      ],
+      "sample": [
+        {
+          "CODICE_AIC": "000140018",
+          "PRINCIPIO_ATTIVO": "N.D.",
+          "QUANTITA": " 0.0",
+          "UNITA_MISURA": "N.D."
+        },
+        {
+          "CODICE_AIC": "000152013",
+          "PRINCIPIO_ATTIVO": "N.D.",
+          "QUANTITA": " 0.0",
+          "UNITA_MISURA": "N.D."
+        },
+        {
+          "CODICE_AIC": "000152025",
+          "PRINCIPIO_ATTIVO": "N.D.",
+          "QUANTITA": " 0.0",
+          "UNITA_MISURA": "N.D."
+        }
+      ],
+      "modified": "Tue, 20 Oct 2026 23:02:19 GMT"
+    },
+    "chembl_activity": {
+      "url": "https://www.ebi.ac.uk/chembl/api/data/activity.json?molecule_chembl_id=CHEMBL27&standard_type__in=Ki,Kd,IC50,EC50&limit=2",
+      "data": {
+        "activities": [
+          {
+            "action_type": null,
+            "activity_comment": null,
+            "activity_id": 53873,
+            "activity_properties": [],
+            "assay_chembl_id": "CHEMBL699533",
+            "assay_description": "Concentration required to inhibit ADP-induced platelet aggregation by 50%",
+            "assay_type": "F",
+            "assay_variant_accession": null,
+            "assay_variant_mutation": null,
+            "bao_endpoint": "BAO_0000190",
+            "bao_format": "BAO_0000218",
+            "bao_label": "organism-based format",
+            "canonical_smiles": "CC(C)NCC(O)COc1cccc2ccccc12",
+            "data_validity_comment": "Outside typical range",
+            "data_validity_description": "Values for this activity type are unusually large/small, so may not be accurate",
+            "document_chembl_id": "CHEMBL1125511",
+            "document_journal": "J Med Chem",
+            "document_year": 1992,
+            "ligand_efficiency": null,
+            "modality": null,
+            "molecule_chembl_id": "CHEMBL27",
+            "molecule_pref_name": "PROPRANOLOL",
+            "parent_molecule_chembl_id": "CHEMBL27",
+            "pchembl_value": null,
+            "potential_duplicate": 0,
+            "qudt_units": "http://www.openphacts.org/units/Nanomolar",
+            "record_id": 186620,
+            "relation": "=",
+            "src_id": 1,
+            "standard_flag": 1,
+            "standard_relation": "=",
+            "standard_text_value": null,
+            "standard_type": "IC50",
+            "standard_units": "nM",
+            "standard_upper_value": null,
+            "standard_value": "178400.0",
+            "target_chembl_id": "CHEMBL372",
+            "target_organism": "Homo sapiens",
+            "target_pref_name": "Homo sapiens",
+            "target_tax_id": "9606",
+            "text_value": null,
+            "toid": null,
+            "type": "IC50",
+            "units": "uM",
+            "uo_units": "UO_0000065",
+            "upper_value": null,
+            "value": "178.4"
+          },
+          {
+            "action_type": null,
+            "activity_comment": null,
+            "activity_id": 56633,
+            "activity_properties": [],
+            "assay_chembl_id": "CHEMBL689690",
+            "assay_description": "Negative log concentration effecting 50% blockade of isoproterenol-induced rate responses in vitro in guinea pig right atria.",
+            "assay_type": "F",
+            "assay_variant_accession": null,
+            "assay_variant_mutation": null,
+            "bao_endpoint": "BAO_0000034",
+            "bao_format": "BAO_0000218",
+            "bao_label": "organism-based format",
+            "canonical_smiles": "CC(C)NCC(O)COc1cccc2ccccc12",
+            "data_validity_comment": null,
+            "data_validity_description": null,
+            "document_chembl_id": "CHEMBL1122495",
+            "document_journal": "J Med Chem",
+            "document_year": 1983,
+            "ligand_efficiency": null,
+            "modality": null,
+            "molecule_chembl_id": "CHEMBL27",
+            "molecule_pref_name": "PROPRANOLOL",
+            "parent_molecule_chembl_id": "CHEMBL27",
+            "pchembl_value": "8.70",
+            "potential_duplicate": 0,
+            "qudt_units": "http://www.openphacts.org/units/Nanomolar",
+            "record_id": 12557,
+            "relation": "=",
+            "src_id": 1,
+            "standard_flag": 1,
+            "standard_relation": "=",
+            "standard_text_value": null,
+            "standard_type": "Kd",
+            "standard_units": "nM",
+            "standard_upper_value": null,
+            "standard_value": "1.995",
+            "target_chembl_id": "CHEMBL369",
+            "target_organism": "Cavia porcellus",
+            "target_pref_name": "Cavia porcellus",
+            "target_tax_id": "10141",
+            "text_value": null,
+            "toid": null,
+            "type": "pA2",
+            "units": null,
+            "uo_units": "UO_0000065",
+            "upper_value": null,
+            "value": "8.7"
+          }
+        ],
+        "page_meta": {
+          "limit": 2,
+          "next": "/chembl/api/data/activity.json?limit=2&offset=2&molecule_chembl_id=CHEMBL27&standard_type__in=Ki%2CKd%2CIC50%2CEC50",
+          "offset": 0,
+          "previous": null,
+          "total_count": 483
+        }
+      }
+    },
+    "chembl_status": {
+      "url": "https://www.ebi.ac.uk/chembl/api/data/status.json",
+      "data": {
+        "activities": 24527044,
+        "chembl_db_version": "ChEMBL_37",
+        "chembl_release_date": "2026-05-01",
+        "compound_records": 3824604,
+        "disinct_compounds": 2921148,
+        "publications": 101100,
+        "status": "UP",
+        "targets": 18552
+      }
+    },
+    "fda_label": {
+      "url": "https://api.fda.gov/drug/label.json?search=openfda.generic_name.exact:%22METFORMIN%20HYDROCHLORIDE%22&limit=1",
+      "meta": {
+        "disclaimer": "Do not rely on openFDA to make decisions regarding medical care. While we make every effort to ensure that data is accurate, you should assume all results are unvalidated. We may limit or otherwise restrict your access to the API in line with our Terms of Service.",
+        "terms": "https://open.fda.gov/terms/",
+        "license": "https://open.fda.gov/license/",
+        "last_updated": "2026-10-20",
+        "results": {
+          "skip": 0,
+          "limit": 1,
+          "total": 238
+        }
+      },
+      "keys": [
+        "spl_product_data_elements",
+        "boxed_warning",
+        "indications_and_usage",
+        "dosage_and_administration",
+        "dosage_forms_and_strengths",
+        "contraindications",
+        "warnings_and_cautions",
+        "adverse_reactions",
+        "adverse_reactions_table",
+        "drug_interactions",
+        "drug_interactions_table",
+        "use_in_specific_populations",
+        "pregnancy",
+        "pediatric_use",
+        "geriatric_use",
+        "overdosage",
+        "description",
+        "clinical_pharmacology",
+        "clinical_pharmacology_table",
+        "mechanism_of_action",
+        "pharmacokinetics",
+        "pharmacokinetics_table",
+        "nonclinical_toxicology",
+        "carcinogenesis_and_mutagenesis_and_impairment_of_fertility",
+        "clinical_studies",
+        "clinical_studies_table",
+        "how_supplied",
+        "information_for_patients",
+        "spl_patient_package_insert",
+        "package_label_principal_display_panel",
+        "set_id",
+        "id",
+        "effective_time",
+        "version",
+        "openfda"
+      ],
+      "openfda": {
+        "application_number": [
+          "ANDA090564"
+        ],
+        "brand_name": [
+          "Metformin Hydrochloride"
+        ],
+        "generic_name": [
+          "METFORMIN HYDROCHLORIDE"
+        ],
+        "manufacturer_name": [
+          "A-S Medication Solutions"
+        ],
+        "product_ndc": [
+          "50090-7011"
+        ],
+        "product_type": [
+          "HUMAN PRESCRIPTION DRUG"
+        ],
+        "route": [
+          "ORAL"
+        ],
+        "substance_name": [
+          "METFORMIN HYDROCHLORIDE"
+        ],
+        "rxcui": [
+          "861007"
+        ],
+        "spl_id": [
+          "19e4bfb8-2ed1-4a6b-adf5-853ad2953362"
+        ],
+        "spl_set_id": [
+          "011de1a5-1ac0-4831-9e8d-26ec79ba2205"
+        ],
+        "package_ndc": [
+          "50090-7011-0"
+        ],
+        "original_packager_product_ndc": [
+          "70010-063"
+        ],
+        "unii": [
+          "786Z46389E"
+        ]
+      },
+      "effective_time": "20240821",
+      "set_id": "011de1a5-1ac0-4831-9e8d-26ec79ba2205"
+    }
+  }
+}
