@@ -1,10 +1,21 @@
-# PHARMA — Atlante internazionale · Alpha 0.4
+# ELIX — The Interactive Pharmacology Atlas · Alpha 0.5
 
 **App made by Eliseo Peirano · 2026**
 
-Sito: https://eliseopeirano79-droid.github.io/PHARMA/
+Sito: https://eliseopeirano79-droid.github.io/PHARMA/ (l'URL GitHub resta invariato; ELIX è il nuovo nome dell'app).
 
 Estensione del progetto recuperato da `PHARMA-Alpha03-pronta-per-Dock-e-GitHub-Pages.zip`. I laboratori, il simulatore ADME, i casi e il quiz originali restano disponibili. ISOELETTRICA e la copia separata ELIX non sono coinvolte in questa pubblicazione.
+
+## Novità ELIX Alpha 0.5 (21 ottobre 2026)
+
+- Branding ELIX con logo vettoriale originale, favicon e manifest PWA aggiornati; il repository resta `PHARMA` per non interrompere i vecchi collegamenti Pages.
+- **ELIX Textbook**: indice editoriale di 18 volumi e 10 capitoli originali iniziali, distinti dalla monografia di singola molecola.
+- **ELIX Academy**: 40 quiz originali classificati per tema, tipo (teoria, caso sintetico, statistica), molecola e difficoltà, con sessioni casuali senza ripetizioni, spiegazioni e statistiche locali.
+- **Molecular Cinema**: rappresentazione cellulare 2.5D con avanzamento, play/pausa, tessuti e cascate β1, β2, AT1; collegamento separato alla struttura sperimentale RCSB 7BZ2 (β2–formoterolo–Gs). Non è dinamica molecolare atomistica.
+- **Dose Explorer**: slider matematico non clinico con curve astratte di effetto, esposizione e indice di danno. Non fornisce dosaggi farmacologici reali o probabilità di eventi.
+- **Evidence Lab**: calcolo ARR, RRR, RR, NNT/NNH su rischi ipotetici inseriti dall'utente, da collegare a studi reali in futuro.
+
+Queste funzioni sono prototipi iniziali con limiti espliciti; non completano ancora l'enciclopedia, né sostituiscono validazione medica o fonti aggiornate.
 
 ## Copertura al 20 ottobre 2026
 
