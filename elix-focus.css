@@ -86,7 +86,7 @@ body[data-theme="light"]{--accent:#278948;--accent2:#267d44;--accentink:#fff;--g
 .ex-home-hero h1 em{font-style:normal;color:#83d694}
 .ex-home-hero p{max-width:550px;font-size:13px;line-height:1.8;color:#b8cbc3}
 .ex-home-hero .ex-kicker{color:#86dc97}
-.ex-home-brand-icon{width:clamp(110px,22vw,210px);height:clamp(110px,22vw,210px);border-radius:22%;object-fit:cover;filter:drop-shadow(0 15px 32px rgba(0,0,0,.3));flex:none}
+.ex-home-brand-icon{width:clamp(110px,22vw,210px);height:clamp(110px,22vw,210px);border-radius:22%;object-fit:cover;filter:none;box-shadow:none;flex:none}
 .ex-home-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:19px}
 .ex-home-actions a{font-size:12px;font-weight:780;padding:12px 15px;border-radius:10px;border:1px solid #679d76;background:transparent;color:#e9f2ea}
 .ex-home-actions a.primary{background:#80d98e;color:#11251a;border-color:#80d98e}
