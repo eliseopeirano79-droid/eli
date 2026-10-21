@@ -1,0 +1,43 @@
+{
+  "release": "0.11",
+  "implementationCommit": "41b2503f9a8e76bce77673b385da57581a5a3e18",
+  "verifiedWorkflowRun": 39690956913,
+  "artifactId": 12389065246,
+  "workflow": "https://github.com/eliseopeirano79-droid/PHARMA/actions/runs/39690956913",
+  "passed": true,
+  "sourceTests": {
+    "moleculeRoutes": 4225,
+    "chapters": 54,
+    "curatedTargets": 24,
+    "quizQuestions": 131,
+    "reachableProductLabels": 172,
+    "reachableOriginalSourceSections": 2862,
+    "answerShuffle": true
+  },
+  "browser": {
+    "engine": "Chromium through Playwright 1.56.1",
+    "matrixChecks": 160,
+    "routes": 20,
+    "viewportWidths": [1440, 768, 390, 320],
+    "themes": ["light", "dark"],
+    "horizontalOverflowFailures": 0,
+    "runtimeErrors": [],
+    "lazyLoading": true,
+    "safetySectionsRestored": true,
+    "quizSessionResume": true,
+    "answerShuffle": true,
+    "offlineReload": true,
+    "svgFixture": {
+      "fitted": true,
+      "geometryUnchanged": true,
+      "unsafeContentRemoved": true
+    }
+  },
+  "limits": [
+    "The browser matrix samples 20 routes; all 4225 molecule routes are separately rendered by data tests, not visually inspected one by one.",
+    "The SVG framing and sanitization test uses a synthetic fixture, not a newly invented pharmacological structure.",
+    "External ChEMBL, RCSB and Mol* availability is not certified by the offline-capable browser test.",
+    "This is a software and presentation audit, not a clinical validation of every pharmacological statement.",
+    "The catalog is not 4225 complete monographs; missing scientific information remains explicitly identified."
+  ]
+}
