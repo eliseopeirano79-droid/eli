@@ -1,0 +1,103 @@
+/* ELIX 0.6 — calm receptor, molecule, and brand surfaces. */
+:root{--elix-green:#80d98e;--elix-night:#182230}
+body[data-theme="dark"]{--accent:#80d98e;--accent2:#6eca84;--accentink:#10251a;--glow:rgba(128,217,142,.12)}
+body[data-theme="light"]{--accent:#278948;--accent2:#267d44;--accentink:#fff;--glow:rgba(47,150,79,.1)}
+.brand-mark,.header-brand .brand-mark{background:transparent!important;box-shadow:none!important;border:0!important;overflow:hidden;padding:0}
+.brand-mark img,.header-brand .brand-mark img{display:block;width:100%;height:100%;object-fit:cover}
+.brand-name,.header-brand .brand-name{font-family:Inter,"Arial",system-ui,sans-serif;font-weight:810!important;letter-spacing:.07em!important}
+.brand-sub,.header-brand .brand-sub{letter-spacing:.015em!important;text-transform:none!important;font-size:10px!important;color:var(--accent)!important}
+.top-navigation{max-width:min(66vw,720px)!important;gap:3px}
+.topnav-link{min-width:auto;padding:10px 14px}
+.header-credit{display:none}
+.context-version{display:none}
+.rx-wrap{max-width:1230px;margin:0 auto}
+.rx-heading{margin:10px 0 25px}.rx-heading h1{font-size:clamp(32px,4vw,49px);letter-spacing:-.045em;margin:10px 0}
+.rx-heading p{font-size:13px;color:var(--muted);line-height:1.75;max-width:810px;margin:0}
+.rx-back{display:inline-block;font-size:12px;color:var(--accent);font-weight:760;margin:0 0 15px}
+.rx-summary{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:15px 18px;background:var(--panel);border:1px solid var(--line);border-radius:13px;margin:16px 0}
+.rx-summary strong{color:var(--accent);font-size:12px}.rx-summary span{font-size:11px;color:var(--muted)}
+.rx-search{display:flex;flex-direction:column;font-weight:700;font-size:11px;color:var(--muted);gap:7px;margin:22px 0 14px}
+.rx-search input{width:100%;min-height:48px;border-radius:12px;border:1px solid var(--line);background:var(--panel);color:var(--text);font-size:13px;padding:12px 15px}
+.rx-results{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+.rx-result{display:flex;align-items:center;gap:13px;background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:16px;min-width:0}
+.rx-result:hover{border-color:var(--accent)}
+.rx-result>span:nth-child(2){min-width:0;flex:1}
+.rx-gene{display:grid;place-items:center;background:var(--panel2);padding:8px 10px;border-radius:9px;color:var(--accent);font-size:10px;font-weight:800;min-width:68px}
+.rx-result strong{display:block;font-size:13px;line-height:1.4}
+.rx-result small{display:block;margin:5px 0 0;color:var(--muted);font-size:10px}
+.rx-pdb{font-size:10px;color:var(--accent);white-space:nowrap}
+.rx-secondary{margin:28px 0;padding:19px 23px;border-top:1px solid var(--line)}
+.rx-secondary h2{font-size:16px}.rx-secondary p,.rx-muted{font-size:11px!important;line-height:1.75!important;color:var(--muted)!important}
+.rx-cloud{display:flex;flex-wrap:wrap;gap:7px;margin-top:15px}
+.rx-cloud a{font-size:11px;font-weight:680;color:var(--muted);border:1px solid var(--line);border-radius:100px;padding:8px 12px}
+.rx-cloud a:hover{border-color:var(--accent);color:var(--accent)}
+.rx-tags{display:flex;gap:7px;margin:17px 0 0;flex-wrap:wrap}
+.rx-tags span{font-size:10px;color:var(--accent);background:var(--glow);border:1px solid var(--line);border-radius:50px;padding:8px 12px}
+.rx-two{display:grid;grid-template-columns:minmax(0,1.22fr) minmax(290px,.78fr);gap:15px;align-items:start}
+.rx-panel{padding:23px;margin:0 0 16px;background:var(--panel);border:1px solid var(--line);border-radius:17px}
+.rx-panel h2{font-size:17px;letter-spacing:-.025em;margin:0 0 12px}
+.rx-panel p{font-size:12px;color:var(--muted);line-height:1.73}
+.rx-panel-head{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:12px}
+.rx-panel-head h2{margin:0}
+.rx-panel-head>span{font-size:10px;font-weight:800;color:var(--accent)}
+.rx-panel-head a,.rx-primary{font-size:11px;color:var(--accent);font-weight:740}
+.rx-viewer-poster{min-height:300px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;border:1px solid #386252;border-radius:14px;gap:8px;padding:30px;background:radial-gradient(circle at 50% 40%,rgba(100,192,144,.2),transparent 45%),linear-gradient(130deg,#11252f,#16293a)}
+.rx-viewer-poster>span{display:grid;place-items:center;width:78px;height:78px;border:1px solid #75d5929c;border-radius:50%;font-size:23px;color:#8ce2a4;box-shadow:0 0 30px rgba(140,232,168,.17)}
+.rx-viewer-poster strong{color:white;font-size:16px;line-height:1.5}
+.rx-viewer-poster p{color:#bed0cd;font-size:11px}
+.rx-viewer-poster button{background:#80d98e;color:#122a1b;border:0;border-radius:9px;font-size:12px;font-weight:800;padding:12px 16px}
+.rx-molstar{width:100%;height:340px;border:1px solid var(--line);border-radius:13px;background:#0b111e}
+.rx-actions{display:flex;gap:9px;flex-wrap:wrap;margin:16px 0 8px}
+.rx-actions>*{font-size:11px;font-weight:750;color:var(--accent);border:1px solid var(--line);border-radius:9px;padding:10px 13px;background:transparent}
+.rx-source{border-top:1px solid var(--line);padding-top:13px}
+.rx-source a{color:var(--accent)}
+.rx-theory{font-size:14px!important;line-height:1.85!important;color:var(--text)!important}
+.rx-panel dl{margin:22px 0 0;display:grid;grid-template-columns:minmax(120px,1fr) 1.5fr;gap:12px;border-top:1px solid var(--line);padding-top:17px}
+.rx-panel dt{font-size:11px;color:var(--muted)}.rx-panel dd{font-size:11px;color:var(--text);font-weight:730;margin:0}
+.rx-cascade{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:18px 0}
+.rx-cascade span{border:1px solid var(--line);background:var(--panel2);border-radius:9px;padding:11px 12px;display:flex;flex-direction:column;gap:4px;font-size:11px;font-weight:680}
+.rx-cascade small{font-size:9px;font-weight:800;color:var(--accent)}
+.rx-cascade b{font-weight:700;color:var(--soft)}
+.rx-drugs{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin-top:13px}
+.rx-drug{display:flex;align-items:center;gap:12px;border:1px solid var(--line);background:var(--panel2);padding:13px;border-radius:10px;font-size:11px}
+.rx-drug strong{font-size:12px}.rx-drug small{font-size:10px;color:var(--muted);flex:1}.rx-drug span{color:var(--accent)}
+/* One clear drug page instead of navigation inside navigation. */
+.ev-tabs{display:none!important}
+.ev-drug-hero{margin-top:9px}
+.ev-drug-jump{display:flex;overflow-x:auto;gap:6px;scrollbar-width:thin;margin:20px 0 21px;padding-bottom:8px}
+.ev-drug-jump a{font-size:11px;flex:0 0 auto;background:var(--panel);border:1px solid var(--line);border-radius:50px;padding:9px 13px;font-weight:720;color:var(--muted)}
+.ev-drug-jump a:hover{color:var(--accent);border-color:var(--accent)}
+.ev-facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:0 0 20px}
+.ev-fact{padding:16px;border:1px solid var(--line);background:var(--panel);border-radius:13px;min-width:0}
+.ev-fact span{font-size:10px;color:var(--muted);font-weight:700;display:block}
+.ev-fact strong{display:block;font-size:14px;line-height:1.5;margin:9px 0;overflow-wrap:anywhere}
+.ev-fact small{font-size:10px;line-height:1.5;color:var(--soft);display:block}
+.ev-card-group{scroll-margin-top:155px;margin:20px 0}
+.ev-card-group>h2{font-size:20px;font-weight:800;letter-spacing:-.025em;margin:0 0 13px}
+.ev-card-group .ev-panel{margin-bottom:12px}
+.ev-source-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px}
+.ev-source-actions a{color:var(--accent);border:1px solid var(--line);padding:10px 13px;border-radius:8px;font-size:11px;font-weight:740}
+.ev-dosing-note{border:1px solid var(--line);background:var(--panel2);padding:15px;border-radius:11px}
+.ev-inline-dots{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.ex-tabs{display:none!important}
+.ex-home-shell{max-width:1140px;margin:0 auto}
+.ex-home-hero{display:flex;align-items:center;justify-content:space-between;gap:20px;background:linear-gradient(112deg,#131b24,#152b2b);border:1px solid #365a46;border-radius:23px;padding:clamp(24px,4vw,45px);overflow:hidden;position:relative}
+.ex-home-hero h1{font-size:clamp(33px,4.2vw,57px);line-height:1.07;letter-spacing:-.045em;margin:14px 0;color:#f0f0f3}
+.ex-home-hero h1 em{font-style:normal;color:#83d694}
+.ex-home-hero p{max-width:550px;font-size:13px;line-height:1.8;color:#b8cbc3}
+.ex-home-hero .ex-kicker{color:#86dc97}
+.ex-home-brand-icon{width:clamp(110px,22vw,210px);height:clamp(110px,22vw,210px);border-radius:22%;object-fit:cover;filter:drop-shadow(0 15px 32px rgba(0,0,0,.3));flex:none}
+.ex-home-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:19px}
+.ex-home-actions a{font-size:12px;font-weight:780;padding:12px 15px;border-radius:10px;border:1px solid #679d76;background:transparent;color:#e9f2ea}
+.ex-home-actions a.primary{background:#80d98e;color:#11251a;border-color:#80d98e}
+.ex-home-main{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:20px}
+.ex-home-main a{background:var(--panel);border:1px solid var(--line);padding:21px 20px;border-radius:15px}
+.ex-home-main a:hover{border-color:var(--accent)}
+.ex-home-main strong{display:block;font-size:15px;margin:4px 0 12px}
+.ex-home-main span{display:block;font-size:11px;color:var(--muted);line-height:1.6}
+.ex-home-footer{padding:20px 0;display:flex;gap:16px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+.ex-home-footer p{color:var(--muted);font-size:11px;max-width:720px}
+.ex-home-footer a{color:var(--accent);font-size:12px}
+@media(max-width:1050px){.ex-home-main{grid-template-columns:repeat(2,1fr)}.rx-two{grid-template-columns:1fr}.rx-results{grid-template-columns:1fr}.top-navigation{max-width:100%!important}}
+@media(max-width:650px){.rx-panel{padding:17px}.rx-molstar{height:290px}.rx-cascade{gap:6px}.rx-cascade span{padding:8px}.rx-result{gap:8px;padding:12px}.rx-gene{min-width:50px}.rx-pdb{font-size:9px}.ev-facts{grid-template-columns:repeat(2,1fr)}.ex-home-main{grid-template-columns:1fr 1fr;gap:9px}.ex-home-main a{padding:16px}.ex-home-hero{padding:24px}.ex-home-brand-icon{width:85px;height:85px;align-self:flex-start}.ex-home-hero h1{font-size:32px}.ex-home-hero p{font-size:11px}}
+@media(max-width:440px){.rx-pdb{display:none}.ex-home-brand-icon{width:64px;height:64px}.ex-home-main{grid-template-columns:1fr}.ev-facts{grid-template-columns:1fr 1fr}.ev-fact strong{font-size:12px}}
