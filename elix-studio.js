@@ -9,7 +9,7 @@ export function createElixStudio({refresh}) {
     volume:"all", dose:45, elimination:"standard", trialControl:10, trialTreatment:6,
     kind:"all", group:"all", drug:"all", maxDifficulty:"all",
     quiz:null, progress:load("elix-academy-progress",{sessions:0,answered:0,correct:0,wrong:{}}),
-    cinemaTarget:"ADRB2",cinemaStep:0,cinemaPlaying:false,cinemaSpeed:1
+    cinemaTarget:"ADRB2",cinemaStep:0,cinemaPlaying:false,cinemaSpeed:1,cinemaMode:"cell"
   };
   let cinemaTimer = null;
   const stages = [
@@ -21,17 +21,73 @@ export function createElixStudio({refresh}) {
     {name:"Risposta del tessuto",zone:"Effetto fisiologico"}
   ];
   const cinemaModels = {
-    ADRB2:{name:"Recettore β₂-adrenergico",ligand:"Formoterolo (struttura 7BZ2)",protein:"Gs",messenger:"cAMP → PKA",result:"Rilassamento bronchiale",organ:"Cellula muscolare liscia bronchiale",structure:"https://www.rcsb.org/structure/7BZ2",viewer:"https://www.rcsb.org/3d-view/7BZ2",note:"RCSB PDB 7BZ2: complesso β₂–formoterolo–Gs (crio-EM). La struttura è reale; il percorso animato rimane illustrativo."},
-    ADRB1:{name:"Recettore β₁-adrenergico",ligand:"Noradrenalina",protein:"Gs",messenger:"cAMP → PKA",result:"Modulazione della contrattilità",organ:"Cardiomiocita",structure:null,viewer:null,note:"Sequenza schematica originale. Qui non è caricata una struttura sperimentale specifica."},
-    AGTR1:{name:"Recettore AT₁ dell'angiotensina II",ligand:"Angiotensina II",protein:"Gq/11",messenger:"PLCβ → IP₃/DAG → Ca²⁺",result:"Aumento del tono vascolare",organ:"Cellula muscolare liscia vascolare",structure:null,viewer:null,note:"Sequenza schematica originale. Sono mostrati soltanto alcuni passaggi della via canonica."}
-  };
+  "ADRB2": {
+    "name": "Recettore β₂-adrenergico",
+    "ligand": "Formoterolo (PDB 7BZ2)",
+    "protein": "Gs",
+    "messenger": "cAMP → PKA",
+    "result": "Rilassamento bronchiale",
+    "organ": "Muscolatura liscia bronchiale",
+    "pdb": "7BZ2",
+    "note": "Complesso β₂–formoterolo–Gs (crio-EM). Il modello strutturale è sperimentale, mentre l'animazione del movimento è illustrativa.",
+    "structure": "https://www.rcsb.org/structure/7BZ2",
+    "viewer": "https://www.rcsb.org/3d-view/7BZ2"
+  },
+  "ADRB1": {
+    "name": "Recettore β₁-adrenergico",
+    "ligand": "Noradrenalina (PDB 7BU6)",
+    "protein": "Gs",
+    "messenger": "cAMP → PKA",
+    "result": "Modulazione cardiaca",
+    "organ": "Cardiomiocita",
+    "pdb": "7BU6",
+    "note": "Recettore β₁ con noradrenalina e nanobody 6B9 (raggi X), costrutto modificato. Il movimento è illustrativo.",
+    "structure": "https://www.rcsb.org/structure/7BU6",
+    "viewer": "https://www.rcsb.org/3d-view/7BU6"
+  },
+  "AGTR1": {
+    "name": "Recettore AT₁ dell'angiotensina II",
+    "ligand": "Sar¹-AngII (PDB 7F6G)",
+    "protein": "Gq/11",
+    "messenger": "PLCβ → IP₃/DAG → Ca²⁺",
+    "result": "Aumento del tono vascolare",
+    "organ": "Muscolatura liscia vascolare",
+    "pdb": "7F6G",
+    "note": "Struttura AT₁ con analogo Sar¹-AngII e Gq (crio-EM). La via animata mostra soltanto il ramo canonico.",
+    "structure": "https://www.rcsb.org/structure/7F6G",
+    "viewer": "https://www.rcsb.org/3d-view/7F6G"
+  },
+  "ADRA2A": {
+    "name": "Recettore α₂A-adrenergico",
+    "ligand": "Brimonidina (PDB 7EJ8)",
+    "protein": "Gi/o",
+    "messenger": "Adenilato ciclasi ↓ · cAMP ↓",
+    "result": "Modulazione del rilascio sinaptico",
+    "organ": "Terminale noradrenergico (schematico)",
+    "pdb": "7EJ8",
+    "note": "Complesso α₂A–brimonidina–GoA (crio-EM). L'animazione non rappresenta la traiettoria sperimentale.",
+    "structure": "https://www.rcsb.org/structure/7EJ8",
+    "viewer": "https://www.rcsb.org/3d-view/7EJ8"
+  },
+  "ADRA1A": {
+    "name": "Recettore α₁A-adrenergico",
+    "ligand": "Adrenalina (PDB 8THL)",
+    "protein": "Gq/11",
+    "messenger": "PLCβ → IP₃/DAG → Ca²⁺",
+    "result": "Contrazione muscolare",
+    "organ": "Muscolatura liscia",
+    "pdb": "8THL",
+    "note": "Complesso α₁A con adrenalina, crio-EM. È uno stato strutturale, non un film atomistico.",
+    "structure": "https://www.rcsb.org/structure/8THL",
+    "viewer": "https://www.rcsb.org/3d-view/8THL"
+  }
+};
 
   const badge = (text,kind="") => "<span class='ex-badge "+esc(kind)+"'>"+esc(text)+"</span>";
   const card = (title,body,cls="") => "<section class='ex-card "+cls+"'><h2>"+title+"</h2>"+body+"</section>";
   const heading = (eyebrow,title,lead,action="") => "<div class='ex-page-head'><div><span class='ex-kicker'>"+esc(eyebrow)+"</span><h1>"+esc(title)+"</h1><p>"+esc(lead)+"</p></div>"+action+"</div>";
-  const tabs = () => "<nav class='ex-tabs' aria-label='Laboratori ELIX'>"+
-    [["textbook","Trattato"],["cinema","Molecular Cinema"],["dose","Dose Explorer"],["evidence","Evidence Lab"],["quiz","Academy"]]
-      .map(([path,label]) => "<a href='#/"+path+"' "+(location.hash.startsWith("#/"+path)?"aria-current='page'":"")+">"+esc(label)+"</a>").join("")+"</nav>";
+  // Labs are reached contextually from Farmaci or Recettori, not via a second navigation bar.
+  const tabs = () => "";
 
   function textbook(id) {
     const chapter = ELIX_CHAPTERS.find(c=>c.id===id);
@@ -137,8 +193,8 @@ export function createElixStudio({refresh}) {
       "<div class='ex-intra-label'>CITOPLASMA</div><div class='ex-protein-g'><span>"+esc(model.protein)+"</span></div>"+
       "<div class='ex-signal'><strong>"+esc(model.messenger)+"</strong></div>"+
       "<div class='ex-tissue'><strong>"+esc(model.result)+"</strong></div></div>";
-    return tabs()+heading("ELIX MOLECULAR CINEMA","Dentro una cellula.","Dalla diffusione del ligando alla risposta del tessuto: una sequenza didattica tridimensionale stilizzata, con accesso alle strutture sperimentali quando identificate.",badge("Animazione illustrativa","warn"))+
-      "<div class='ex-cinema-layout'><div class='ex-cinema-main'><section class='ex-card ex-visual-card'><div class='ex-visual-head'><div><span class='ex-kicker'>"+esc(model.organ)+"</span><h2>"+esc(model.name)+"</h2></div>"+badge((step+1)+" / "+stages.length,"accent")+"</div>"+stageView+
+    return "<a href='#/receptors/"+esc(state.cinemaTarget)+"' class='rx-back'>← Scheda recettore</a>"+tabs()+heading("ELIX MOLECULAR CINEMA","Dentro una cellula.","Dalla diffusione del ligando alla risposta del tessuto: una sequenza didattica tridimensionale stilizzata, con accesso alle strutture sperimentali quando identificate.",badge("Animazione illustrativa","warn"))+
+      "<div class='ex-cinema-layout'><div class='ex-cinema-main'><section class='ex-card ex-visual-card'><div class='ex-visual-head'><div><span class='ex-kicker'>"+esc(model.organ)+"</span><h2>"+esc(model.name)+"</h2></div>"+badge((step+1)+" / "+stages.length,"accent")+"</div><div class='ex-cinema-modes' role='group' aria-label='Modalità del cinema'><button type='button' data-elix='cinema-mode' data-mode='cell' "+(state.cinemaMode==="cell"?"aria-pressed='true'":"aria-pressed='false'")+">Cellula illustrata</button><button type='button' data-elix='cinema-mode' data-mode='3d' "+(state.cinemaMode==="3d"?"aria-pressed='true'":"aria-pressed='false'")+">Recettore 3D sperimentale</button></div>"+(state.cinemaMode==="cell"?stageView:"<iframe class='ex-cinema-atom-viewer' loading='lazy' src='https://molstar.org/viewer/?pdb="+encodeURIComponent(model.pdb)+"&amp;hide-controls=1' title='Struttura molecolare 3D "+esc(model.name)+"' allowfullscreen></iframe>")+
       "<div class='ex-cinema-controls'><button data-elix='cinema-back' "+(step===0?"disabled":"")+" aria-label='Passaggio precedente'>←</button><button class='ex-btn primary' data-elix='cinema-play'>"+(state.cinemaPlaying?"Pausa":"▶ Play")+"</button><button data-elix='cinema-next' "+(step===stages.length-1?"disabled":"")+" aria-label='Passaggio successivo'>→</button><button data-elix='cinema-reset' aria-label='Ricomincia'>↻</button><label>Velocità <select id='ex-speed'><option value='0.5' "+(state.cinemaSpeed===0.5?"selected":"")+">0,5×</option><option value='1' "+(state.cinemaSpeed===1?"selected":"")+">1×</option><option value='2' "+(state.cinemaSpeed===2?"selected":"")+">2×</option></select></label></div></section>"+
       "<section class='ex-card'><h2>Passaggio "+(step+1)+" — "+esc(stage.name)+"</h2><p class='ex-large'>"+esc(stage.zone)+"</p><p>"+esc([
         "Una molecola si muove nell'ambiente extracellulare. Il movimento casuale non è parametrizzato in questa demo.",
@@ -178,7 +234,7 @@ export function createElixStudio({refresh}) {
   function quiz() {
     const total=filteredQuestions().length,session=state.quiz;
     const intro=tabs()+heading("ELIX ACADEMY","Impara. Ragiona. Dimostra.","Quiz originali per teoria, casi clinici, molecola, classe e difficoltà. Le domande vengono mescolate senza ripetersi nella sessione.",badge(ELIX_QUESTIONS.length+" domande iniziali","accent"))+
-      "<div class='ex-card ex-filter-card'><h2>Configura il tuo allenamento</h2>"+quizFilters()+"<div class='ex-filter-footer'><span class='ex-muted'>"+total+" quesiti compatibili con i filtri</span><button class='ex-btn primary' data-elix='quiz-start' "+(total===0?"disabled":"")+">Inizia nuovo mazzo →</button></div></div>";
+      "<div class='ex-card ex-filter-card'><h2>Configura il tuo allenamento</h2><p class='ex-muted'>Vuoi esercitarti sulle decisioni? <a href='#/cases' class='rx-primary'>Apri i casi clinici interattivi →</a></p>"+quizFilters()+"<div class='ex-filter-footer'><span class='ex-muted'>"+total+" quesiti compatibili con i filtri</span><button class='ex-btn primary' data-elix='quiz-start' "+(total===0?"disabled":"")+">Inizia nuovo mazzo →</button></div></div>";
     if(!session) return intro+"<div class='ex-stats ex-overview'><div><span>Risposte complessive</span><strong>"+state.progress.answered+"</strong></div><div><span>Corrette</span><strong>"+state.progress.correct+"</strong></div><div><span>Sessioni concluse</span><strong>"+state.progress.sessions+"</strong></div></div><div class='ex-next-card'><strong>Una risposta, una spiegazione.</strong><p>Ogni quiz collega il quesito al principio farmacologico, non solo alla soluzione. Le statistiche sono conservate localmente nel tuo browser.</p></div>";
     const count=session.deck.length;
     if(session.index>=count){
@@ -197,7 +253,7 @@ export function createElixStudio({refresh}) {
     if(p==="textbook")return textbook(id);
     if(p==="dose")return dose();
     if(p==="evidence")return evidence();
-    if(p==="cinema")return cinema();
+    if(p==="cinema"){if(id&&cinemaModels[id]&&id!==state.cinemaTarget){stopCinema();state.cinemaTarget=id;state.cinemaStep=0;state.cinemaMode="cell";}return cinema();}
     if(p==="quiz")return quiz();
     return null;
   }
@@ -228,6 +284,7 @@ export function createElixStudio({refresh}) {
       if(s.index===s.deck.length){state.progress.sessions++;store("elix-academy-progress",state.progress);}
       refresh();return;
     }
+    if(a==="cinema-mode"){stopCinema();state.cinemaMode=el.dataset.mode==="3d"?"3d":"cell";refresh();return;}
     if(a==="cinema-play"){if(state.cinemaPlaying){stopCinema();refresh();}else playCinema();return;}
     if(a==="cinema-reset"){stopCinema();state.cinemaStep=0;refresh();return;}
     if(a==="cinema-next"||a==="cinema-back"||a==="cinema-jump"){
@@ -247,7 +304,7 @@ export function createElixStudio({refresh}) {
     const key={"ex-kind":"kind","ex-group":"group","ex-drug":"drug","ex-max":"maxDifficulty"}[el.id];
     if(key){state[key]=el.value;refresh();}
     if(el.id==="ex-cinema-target"&&cinemaModels[el.value]){
-      stopCinema();state.cinemaTarget=el.value;state.cinemaStep=0;refresh();
+      stopCinema();state.cinemaTarget=el.value;state.cinemaStep=0;state.cinemaMode="cell";location.hash="#/cinema/"+encodeURIComponent(el.value);refresh();
     }
     if(el.id==="ex-speed"){
       state.cinemaSpeed=Number(el.value);
