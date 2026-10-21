@@ -1,10 +1,21 @@
-# ELIX — Farmacologia & Principi Attivi · Alpha 0.7
+# ELIX — Farmacologia & Principi Attivi · Alpha 0.8
 
 **App made by Eliseo Peirano · 2026**
 
 Sito: https://eliseopeirano79-droid.github.io/PHARMA/ (l'URL GitHub resta invariato; ELIX è il nuovo nome dell'app).
 
 Estensione del progetto recuperato da `PHARMA-Alpha03-pronta-per-Dock-e-GitHub-Pages.zip`. I laboratori, il simulatore ADME, i casi e il quiz originali restano disponibili. ISOELETTRICA e la copia separata ELIX non sono coinvolte in questa pubblicazione.
+
+## Alpha 0.8 — dati pubblici acquisiti, non generati
+
+Importazione: 2026-10-21T21:05:39.576837+00:00.
+
+- 1904 misure ChEMBL per 138 molecole; 680 record Ki/Kd. Identità, bersaglio, specie, condizioni, unità, relazioni, DOI/PMID quando presenti e record di fonte. Non è una revisione clinica di ogni articolo.
+- 172 documenti di prodotto USA, 2862 sezioni, 977 frasi PK nel contesto originale. Nessuna traduzione automatica delle dosi o trasferimento a un RCP italiano.
+- 4887 confezioni con prezzo AIFA, raggruppate in 222 famiglie. Prezzo pubblico, riferimento e differenza distinti; non costo di trattamento.
+- Dati dentro Farmaci con filtri, paginazione e caricamento progressivo. Restano cinque sezioni principali.
+- Metodo e scarti: data/verified/report.json. Dati derivati ChEMBL: CC BY-SA 3.0, attribuzione EMBL-EBI. Le altre fonti mantengono provenienza distinta.
+
 
 ## Alpha 0.7 — Densità scientifica e collegamenti (21 ottobre 2026)
 

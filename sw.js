@@ -1,6 +1,6 @@
 /* PHARMA • servizio offline e aggiornamenti delle versioni pubblicate */
-const CACHE = 'elix-alpha-0.7.0';
-const FILES = ['./', './index.html', './styles.css', './app.js', './evidence-atlas.js', './evidence-atlas.css', './elix-studio.js', './elix-content.js', './elix-expanded-chapters.js', './elix-expanded-questions.js', './elix-deep-drugs.js', './elix-rich-reader.js', './elix-research.js', './elix-targets.js', './elix-extra-cases.js', './italian-names.js', './elix-studio.css', './elix-deep.css', './receptors.js', './elix-focus.css', './data/catalog.json', './data/registry.json', './data/editorial.json', './data/labels-index.json', './data/news.json', './assets/heparin-subunits.jpg', './manifest.webmanifest', './assets/elix-pill-original.svg', './assets/elix-pill-192.png'];
+const CACHE = 'elix-alpha-0.8.0';
+const FILES = ['./', './index.html', './styles.css', './app.js', './evidence-atlas.js', './evidence-atlas.css', './elix-studio.js', './elix-content.js', './elix-expanded-chapters.js', './elix-expanded-questions.js', './elix-deep-drugs.js', './elix-rich-reader.js', './elix-research.js', './elix-targets.js', './elix-extra-cases.js', './italian-names.js', './elix-studio.css', './elix-deep.css', './elix-verified.js', './elix-verified.css', './data/verified/index.json', './receptors.js', './elix-focus.css', './data/catalog.json', './data/registry.json', './data/editorial.json', './data/labels-index.json', './data/news.json', './assets/heparin-subunits.jpg', './manifest.webmanifest', './assets/elix-pill-original.svg', './assets/elix-pill-192.png'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(FILES)));
   self.skipWaiting();
