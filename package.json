@@ -3,6 +3,6 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node scripts/validate-data.mjs && node scripts/validate-elix.mjs"
+    "test": "node scripts/validate-data.mjs && node scripts/validate-elix.mjs && node scripts/validate-it-localization.mjs"
   }
 }
