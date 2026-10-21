@@ -511,7 +511,7 @@ export const GUIDELINES_09=[
     "year": 2022,
     "type": "Farmacogenetica",
     "status": "aggiornamento CPIC 2022",
-    "url": "https://cpicpgx.org/guidelines/guideline-for-clopidogrel-and-cyp2c19/",
+    "url": "https://files.cpicpgx.org/data/guideline/publication/clopidogrel/2022/35034351.pdf",
     "note": "Interpreta il rapporto fra fenotipo CYP2C19 e bioattivazione del clopidogrel in contesti definiti; non è un semplice calcolatore posologico.",
     "drugs": [
       "clopidogrel"
