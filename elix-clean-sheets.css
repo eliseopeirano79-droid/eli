@@ -1,0 +1,93 @@
+/* ELIX 0.10 · readable monographs and large molecular illustrations.
+   The five application sections remain unchanged. */
+.ev-drug-sheet{max-width:1300px;margin:0 auto}
+.ev-drug-hero{display:grid!important;grid-template-columns:minmax(0,1.15fr) minmax(350px,.85fr)!important;align-items:stretch!important;gap:clamp(20px,3vw,35px)!important;margin:12px 0 26px!important}
+.ev-drug-intro{padding:18px 0 10px;min-width:0;display:flex;flex-direction:column;align-items:start;justify-content:center}
+.ev-drug-intro .ev-heading{margin:0 0 12px}
+.ev-drug-intro .ev-heading h1{font-size:clamp(30px,3.4vw,51px);line-height:1.08;letter-spacing:-.043em;margin:8px 0 13px}
+.ev-drug-intro .ev-heading p{max-width:62ch;color:var(--muted);line-height:1.6;font-size:12px}
+.ev-intro-state{display:flex;align-items:center;gap:8px;margin-top:20px;font-size:11px;color:var(--muted)}
+.ev-intro-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);flex:none}
+.ev-identity-disclosure{margin-top:23px!important;border-top:1px solid var(--line)!important;width:100%;padding:12px 0!important}
+.ev-identity-disclosure summary{cursor:pointer;color:var(--muted);font-size:12px;font-weight:730}
+.ev-identity-disclosure p{font-size:12px;line-height:1.7;overflow-wrap:anywhere}
+.ev-identity-disclosure a{color:var(--accent)}
+.ev-drug-hero>.ev-chem{align-self:stretch;width:100%;margin:0!important;border-radius:20px;border:1px solid var(--line);background:var(--panel);overflow:hidden}
+.ev-drug-hero .ev-chem-stage{height:clamp(285px,27vw,410px);width:100%;overflow:hidden;position:relative}
+.ev-drug-hero .ev-chem-stage img{display:block;width:100%;height:100%;object-fit:contain;background:#fff;padding:3px!important;box-sizing:border-box}
+.ev-chem-source-badge{position:absolute;left:13px;bottom:12px;font-size:10px;font-weight:730;letter-spacing:.02em;padding:6px 9px;border-radius:100px;color:#406151;background:rgba(245,250,247,.94);border:1px solid #d9e5de}
+.ev-chem-stage{position:relative;background:white;min-width:0;overflow:hidden}
+.ev-chem-stage img{display:block;width:100%;height:100%;object-fit:contain;background:#fff;padding:4px;box-sizing:border-box}
+.ev-drug-hero .ev-chem figcaption{padding:12px 18px 15px;font-size:11px}
+.ev-drug-hero .ev-chem figcaption p{line-height:1.55;font-size:11px;margin:8px 0 0;color:var(--muted)}
+.ev-drug-hero .ev-chem small{font-size:10px;line-height:1.4}
+.ev-drug-sheet>.ev-card-group{margin:18px 0 30px}
+.ev-drug-sheet>.ev-card-group>h2{font-size:18px}
+.ev-drug-sheet .ev-facts{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.ev-drug-sheet .ev-fact{min-height:95px;padding:15px 16px}
+.ev-drug-sheet .ev-fact strong{font-size:clamp(14px,1.65vw,20px);line-height:1.4;margin:7px 0 4px}
+.ev-drug-sheet .ev-card-group .ev-note{line-height:1.65}
+.ev-reading-head{display:flex;justify-content:space-between;align-items:end;gap:15px;margin:24px 0 15px;padding-top:12px}
+.ev-reading-head h2{font-size:clamp(23px,2.7vw,32px);letter-spacing:-.034em;margin:7px 0 7px}
+.ev-reading-head p{font-size:12px;color:var(--muted);line-height:1.6;max-width:70ch;margin:0}
+.ev-reading-count{font-size:11px;color:var(--accent);font-weight:750;white-space:nowrap;margin-bottom:5px}
+.ev-topics{display:grid;gap:10px}
+.ev-topic{background:var(--panel);border:1px solid var(--line);border-radius:15px;overflow:hidden;transition:border-color .18s}
+.ev-topic[open]{border-color:color-mix(in srgb,var(--accent) 46%,var(--line));box-shadow:var(--sh)}
+.ev-topic>summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:46px minmax(0,1fr) auto 20px;align-items:center;gap:13px;padding:19px 21px;min-height:83px}
+.ev-topic>summary::-webkit-details-marker{display:none}
+.ev-topic>summary:focus-visible{outline:2px solid var(--accent);outline-offset:-3px}
+.ev-topic-number{font-size:11px;font-weight:820;letter-spacing:.12em;color:var(--accent);align-self:center}
+.ev-topic-title{min-width:0}
+.ev-topic-title strong{font-size:clamp(14px,1.3vw,17px);line-height:1.45;letter-spacing:-.015em;display:block;color:var(--text)}
+.ev-topic-title small{display:block;font-size:11px;color:var(--muted);line-height:1.5;margin-top:5px}
+.ev-topic-status{border:1px solid var(--line);border-radius:100px;padding:7px 10px;font-size:10px;font-weight:650;color:var(--muted);white-space:nowrap;background:var(--panel2)}
+.ev-topic-chevron{font-size:23px;line-height:1;color:var(--accent);display:block;transform:rotate(0);transition:transform .18s}
+.ev-topic[open] .ev-topic-chevron{transform:rotate(180deg)}
+.ev-topic>summary:hover{background:var(--glow)}
+.ev-topic-body{border-top:1px solid var(--line);padding:clamp(16px,2.5vw,29px);background:color-mix(in srgb,var(--panel) 95%,var(--panel2))}
+.ev-topic-body>.ev-panel,.ev-topic-body>.vd-panel,.ev-topic-body>.ev-card-group{margin:0 0 15px}
+.ev-topic-body>.vd-panel{padding:clamp(14px,1.9vw,22px)}
+.ev-topic-body .ev-panel p,.ev-topic-body .vd-panel p{font-size:12px;line-height:1.8}
+.ev-topic-body .ev-panel h2,.ev-topic-body .vd-panel h3{font-size:17px}
+.ev-topic-body .ev-deep-grid article p{font-size:12px;line-height:1.78}
+.ev-topic-body .vd-table-wrap{max-width:100%;overflow:auto}
+.ev-topic-body .vd-label-sections details .vd-source-text{max-height:460px;overflow:auto}
+.ev-more{border:1px solid var(--line);background:var(--panel2);padding:16px;border-radius:12px;margin:16px 0}
+.ev-more>summary{font-size:12px;font-weight:720;color:var(--accent);cursor:pointer}
+.ev-more>.ev-panel{margin-top:14px}
+.ev-sheet-foot{font-size:10.5px;color:var(--muted);line-height:1.65;margin:22px 0}
+.ev-missing{padding:16px;color:var(--muted);font-size:12px;line-height:1.7;border:1px dashed var(--line);border-radius:11px;background:var(--panel2)}
+.ev-missing a{color:var(--accent)}
+/* Catalog illustrations now occupy the full usable width and height of each card. */
+.ev-catalog-grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:15px!important}
+.ev-molecule-card{display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:12px!important;padding:12px!important;border-radius:18px!important;background:var(--panel)!important;min-width:0;min-height:330px}
+.ev-molecule-card>.ev-chem.mini{width:100%!important;min-width:0!important;flex:0 0 auto!important;max-width:none!important;background:transparent!important;margin:0!important;overflow:visible!important}
+.ev-molecule-card>.ev-chem.mini .ev-chem-stage{height:clamp(185px,17vw,245px);min-height:170px;width:100%;border-radius:13px}
+.ev-molecule-card>.ev-chem.mini .ev-chem-stage img{width:100%!important;height:100%!important;object-fit:contain!important;padding:2px!important;background:#fff}
+.ev-molecule-card>.ev-chem.mini .ev-chem-stage .ev-chem-source-badge{bottom:9px;left:10px;font-size:9px}
+.ev-molecule-card>.ev-chem.mini figcaption{padding:8px 5px 0!important;min-height:21px;font-size:10px}
+.ev-molecule-card>.ev-chem.mini .ev-formula{font-size:12px!important;line-height:1.3}
+.ev-formula-missing{font-size:10px;color:var(--muted)}
+.ev-molecule-card>div:last-child{width:100%;min-width:0;padding:2px 7px 12px;flex:1}
+.ev-molecule-card h2{font-size:clamp(15px,1.15vw,17px);line-height:1.45;overflow-wrap:anywhere;word-break:normal;hyphens:auto;margin:6px 0!important}
+.ev-molecule-card .ev-card-alias{font-size:10px;line-height:1.5;opacity:.85}
+.ev-molecule-card .ev-tags{margin-top:13px;display:flex;flex-wrap:wrap;gap:5px}
+.ev-molecule-card .ev-tags .ev-tag{font-size:9px}
+/* Meaningful category illustration when atomistic identity cannot be drawn. */
+.ev-concept-art{height:100%;width:100%;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;isolation:isolate;background:radial-gradient(circle at 49% 43%,rgba(79,168,143,.20),transparent 66%),linear-gradient(137deg,#122632,#1a3440)}
+.ev-concept-art svg{display:block;width:100%;height:100%;max-height:100%;padding:0 5% 28px;filter:drop-shadow(0 8px 12px rgba(1,10,16,.21))}
+.ev-concept-model{transform-origin:240px 140px;animation:ev-concept-sway 9s ease-in-out infinite alternate}
+@keyframes ev-concept-sway{from{transform:perspective(450px) rotateX(-7deg) rotateY(-10deg) translateX(-3px)}to{transform:perspective(450px) rotateX(9deg) rotateY(12deg) translateX(3px)}}
+.ev-concept-meta{position:absolute;bottom:10px;left:10px;right:10px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px;color:#c9f6e1;font-size:10px;line-height:1.3;letter-spacing:.01em}
+.ev-concept-meta strong{font-weight:780}
+.ev-concept-meta span{font-size:9px;opacity:.82}
+.ev-chem.has-concept .ev-chem-stage{background:#162b39}
+.ev-chem-stage-concept .ev-concept-art{height:100%}
+.ev-chem.mini .ev-concept-meta{font-size:9px}
+.ev-chem.mini .ev-concept-meta span{font-size:8px}
+@media(max-width:1220px){.ev-catalog-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}.ev-molecule-card>.ev-chem.mini .ev-chem-stage{height:230px}}
+@media(max-width:900px){.ev-drug-hero{grid-template-columns:1fr!important}.ev-drug-intro{padding:8px 0}.ev-drug-hero .ev-chem-stage{height:320px}.ev-drug-sheet .ev-facts{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:660px){.ev-catalog-grid{grid-template-columns:1fr!important}.ev-molecule-card{min-height:0}.ev-molecule-card>.ev-chem.mini .ev-chem-stage{height:240px}.ev-reading-head{align-items:start;flex-direction:column}.ev-topic>summary{grid-template-columns:32px minmax(0,1fr) 18px;gap:9px;padding:16px 14px;min-height:75px}.ev-topic-status{grid-column:2;font-size:9px;padding:4px 9px;width:max-content}.ev-topic-chevron{grid-column:3;grid-row:1/3}.ev-topic-body{padding:15px}.ev-drug-hero .ev-chem-stage{height:290px}}
+@media(max-width:370px){.ev-drug-sheet .ev-facts{grid-template-columns:1fr}.ev-chem.mini .ev-concept-meta{flex-direction:column}}
+@media(prefers-reduced-motion:reduce){.ev-concept-model{animation:none}.ev-topic-chevron,.ev-topic{transition:none!important}}
