@@ -890,7 +890,7 @@ export const ELIX_QUESTIONS = [
   {
     "id": "q39",
     "kind": "clinico",
-    "group": "Emostasi",
+    "group": "Cardiovascolare",
     "drug": "digossina",
     "difficulty": 4,
     "question": "Scenario didattico: digossina, ipokaliemia e funzione renale ridotta. Perché serve prudenza?",
