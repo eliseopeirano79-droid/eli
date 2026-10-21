@@ -1,6 +1,7 @@
 import {loadVerifiedIndex,verifiedRecord,verifiedBadges,verifiedOverview,renderVerifiedData,verifiedMarketSummary,verifiedPublicPrice,hasVerifiedData} from './elix-verified.js';
 import {italianDrugName, hasReviewedItalianName, internationalDrugName} from './italian-names.js';
 import {renderDeepDrug,renderTrialEvidence,firstTrialMetric} from './elix-rich-reader.js';
+import {schematicStructure} from './elix-structure-visuals.js';
 import {GUIDELINES_09} from './elix-09-content.js';
 /* Source-aware expansion of the recovered Alpha 0.3. No patient-specific decisions. */
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -50,12 +51,18 @@ export function createEvidenceAtlas({refresh,legacyDrugs}){
  function title(kicker,t,lead){return `<div class="ev-heading"><span class="eyebrow">${esc(kicker)}</span><h1>${esc(t)}</h1><p>${esc(lead)}</p></div>`;}
  function loadingPage(){return `${nav()}${card(error?'Catalogo non disponibile':'Caricamento del catalogo',`<p role="status">${esc(error||'Sto aprendo molecole, fonti e registri ufficiali…')}</p>${error?'<button class="btn" data-ev="retry">Riprova</button>':''}`)}`;}
  function chemistry(m,mini=false){
-  const heparin=m.id==='CHEMBL4650299'||/^HEPARIN( |$)/.test(m.name);
-  const source=heparin?'https://dailymed.nlm.nih.gov/dailymed/lookup.cfm?setid=a120bdfd-21e1-4024-82a7-13cfeed290c1':`https://www.ebi.ac.uk/chembl/explore/compound/${m.id}`;
-  const image=heparin?'./assets/heparin-subunits.jpg':m.smiles?`https://www.ebi.ac.uk/chembl/api/data/image/${m.id}.svg`:null;
-  const note=heparin?'Eparina: miscela di catene. Subunità rappresentative dalla label; non esiste una formula molecolare unica della preparazione.':m.name.includes('ENOXAPARIN')?'Miscela di frammenti di eparina: formula unica non applicabile.':!m.smiles?'Struttura 2D non disponibile in questo record. Per biologici, vaccini e miscele, una formula unica può non descrivere il prodotto.':'Struttura del record chimico indicato; distinguere base, sale, stereoisomero e formulazione commerciale.';
-  return `<figure class="ev-chem ${mini?'mini':''}">${image?`<img src="${esc(image)}" alt="${heparin?'Subunità rappresentative dell’eparina':`Struttura 2D di ${esc(name(m))}`}" loading="lazy" referrerpolicy="no-referrer"/>`:'<div class="ev-no-structure">Struttura non univoca<br>o non disponibile</div>'}<figcaption>${m.formula?`<span class="ev-formula">${formula(m.formula)}</span>`:mini?'Formula non univoca / non disponibile':'<strong>Formula unica non disponibile</strong>'}${mini?'':`<p>${esc(note)}</p>${m.mass?`<p>Massa del record: ${esc(m.mass)} g/mol</p>`:''}${external(source,heparin?'Fonte della rappresentazione: DailyMed':'Identità e struttura: ChEMBL')}<small>${esc(m.id)}${m.inchiKey?' · '+esc(m.inchiKey):''}</small>`}</figcaption></figure>`;
- }
+ const heparin=m.id==="CHEMBL4650299"||/^HEPARIN( |$)/.test(m.name);
+ const source=heparin?"https://dailymed.nlm.nih.gov/dailymed/lookup.cfm?setid=a120bdfd-21e1-4024-82a7-13cfeed290c1":`https://www.ebi.ac.uk/chembl/explore/compound/${m.id}`;
+ const image=heparin?"./assets/heparin-subunits.jpg":m.smiles?`https://www.ebi.ac.uk/chembl/api/data/image/${m.id}.svg`:null;
+ const note=heparin?"Eparina: miscela di catene. Le subunità sono rappresentative, non una molecola unica.":
+   m.name.includes("ENOXAPARIN")?"Miscela di catene a massa diversa: nessuna formula unica della preparazione.":
+   !m.smiles?"Non è disponibile una rappresentazione 2D univoca in questo record. Il modello mostrato è un'illustrazione tridimensionale di categoria, non la struttura reale del farmaco.":
+   "Rappresentazione 2D dal record chimico ChEMBL; forma parent, sale e stereoisomero possono essere differenti.";
+ const content=image?
+ `<div class="ev-chem-stage ev-chem-stage-source"><img src="${esc(image)}" data-ev-image="${esc(m.id)}" alt="${heparin?"Frammenti rappresentativi dell'eparina":`Rappresentazione 2D di ${name(m)}`}" loading="lazy" referrerpolicy="no-referrer"/><span class="ev-chem-source-badge">${heparin?"Frammento illustrativo":"Struttura 2D · ChEMBL"}</span></div>`:
+ `<div class="ev-chem-stage ev-chem-stage-concept">${schematicStructure(m,mini)}</div>`;
+ return `<figure class="ev-chem ${mini?"mini":""} ${image?"has-depiction":"has-concept"}">${content}<figcaption>${m.formula?`<span class="ev-formula">${formula(m.formula)}</span>`:mini?'<span class="ev-formula-missing">Formula non univoca</span>':'<strong>Formula unica non disponibile</strong>'}${mini?'':`<p>${esc(note)}</p>${m.mass?`<p>Massa del record: ${esc(m.mass)} g/mol</p>`:""}${external(source,heparin?"Documento DailyMed":"Identità e struttura · ChEMBL")}<small>${esc(m.id)}${m.inchiKey?" · "+esc(m.inchiKey):""}</small>`}</figcaption></figure>`;
+}
  function status(m,c){
   const r=registry(m),rows=r[c]||[];
   if(!rows.length)return 'Non verificato';
