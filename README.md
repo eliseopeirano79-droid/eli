@@ -1,10 +1,23 @@
-# ELIX — Farmacologia & Principi Attivi · Alpha 0.9
+# ELIX — Farmacologia & Principi Attivi · Alpha 0.10
 
 **App made by Eliseo Peirano · 2026**
 
 Sito: https://eliseopeirano79-droid.github.io/PHARMA/ (l'URL GitHub resta invariato; ELIX è il nuovo nome dell'app).
 
 Estensione del progetto recuperato da `PHARMA-Alpha03-pronta-per-Dock-e-GitHub-Pages.zip`. I laboratori, il simulatore ADME, i casi e il quiz originali restano disponibili. ISOELETTRICA e la copia separata ELIX non sono coinvolte in questa pubblicazione.
+
+## Alpha 0.10 — monografie leggibili e illustrazioni scientificamente oneste
+
+**Nessun nuovo tab principale:** Panoramica, Farmaci, Recettori, Teoria, Quiz rimangono le cinque sezioni.
+
+- Scheda del singolo farmaco riorganizzata come **pagina di sintesi + sei capitoli espandibili**: meccanismo, ADME, dose e sicurezza, bersagli e misure, studi, prodotti e prezzi. Dati ed estratti originali rimangono tutti accessibili senza comparire come muri di testo in prima apertura.
+- Schede del catalogo con strutture 2D ChEMBL finalmente ingrandite (anteprima a tutta larghezza della card) e hero del principio attivo con struttura ampia; impaginazione responsive da 3 a 2 a 1 colonna. Test mobile per assenza di tagli o scorrimento laterale.
+- Dove un record **non possiede una struttura 2D univoca** (biologici, miscele, alcuni composti), il vuoto è sostituito da una **illustrazione 3D concettuale originale** appropriata alla tipologia, con esplicita dicitura che NON è un modello atomistico reale. Nessun PDB inventato né struttura di una miscela spacciata per una molecola. Se l'immagine esterna ChEMBL non è disponibile, appare lo stesso fallback al posto dell'icona rotta.
+- Le sezioni espanse mantengono lo stato anche quando un documento farmacologico caricato asincronamente aggiorna la pagina. Navigazione nativa via details/summary, accessibile da tastiera e indicazione visuale di apertura.
+- ChEMBL, AIFA, DailyMed, letteratura, RCP e indicazioni mantengono i dati sorgente originali e i limiti scientifici della Alpha 0.9.
+
+### Direzione successiva
+Associare progressivamente veri modelli 3D PDB a proteine e principi attivi quando è verificabile la relazione con l'identità esatta. Per macromolecole biologiche, miscele, vaccini o principi attivi non univoci non attribuire una struttura atomistica fittizia.
 
 ## Alpha 0.9 — ADME, posologia per indicazione e teoria originale (21 ottobre 2026)
 
