@@ -9,6 +9,9 @@ on:
   workflow_dispatch:
 permissions:
   contents: write
+defaults:
+  run:
+    shell: bash
 concurrency:
   group: elix-apply-audit-${{ github.ref }}
   cancel-in-progress: true
@@ -28,6 +31,15 @@ jobs:
           test "${GITHUB_REF_NAME}" = 'feature/elix-11-systematic-audit'
           mkdir -p /tmp/elix-audit
           python3 scripts/apply_audit_11.py
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('scripts/browser-systematic-audit.cjs')
+          s=p.read_text()
+          before="await page.keyboard.press('Escape');\n assert.equal(await page.locator('dialog').count(),0);"
+          after="await page.keyboard.press('Escape');\n await page.waitForSelector('dialog',{state:'detached'});\n assert.equal(await page.locator('dialog').count(),0);"
+          assert before in s, 'Native-dialog lifecycle test not found'
+          p.write_text(s.replace(before,after))
+          PY
           git diff --check
           for file in *.js; do node --check "$file"; done
           npm test | tee /tmp/elix-audit/unit-tests.log
@@ -39,9 +51,12 @@ jobs:
         run: |
           python3 -m http.server 8765 > /tmp/elix-audit/http.log 2>&1 &
           PLAYWRIGHT_MODULE=/tmp/elix-audit-deps/node_modules/playwright node scripts/browser-systematic-audit.cjs | tee /tmp/elix-audit/browser.log
+          test -s /tmp/elix-audit/audit-report.json
+          python3 -c 'import json; assert json.load(open("/tmp/elix-audit/audit-report.json"))["passed"] is True'
       - name: Commit only the verified implementation to the feature branch
         run: |
-          git rm -f scripts/apply_audit_11.py scripts/.audit-payload-00 scripts/.audit-payload-01 scripts/.audit-payload-02 scripts/.audit-payload-03 .github/workflows/elix-apply-audit.yml
+          git restore --source=HEAD -- .github/workflows
+          git rm -f scripts/apply_audit_11.py scripts/.audit-payload-00 scripts/.audit-payload-01 scripts/.audit-payload-02 scripts/.audit-payload-03
           git add -A
           git config user.name 'ELIX Audit Checks'
           git config user.email 'elix-audit@users.noreply.github.com'
