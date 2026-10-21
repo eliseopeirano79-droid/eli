@@ -1,6 +1,4 @@
-/* Original educational explanations for the 37 curated ELIX active ingredients.
- * Differential explanations are NOT patient-specific dosing advice.
- * Source-linked numeric PK values remain in data/editorial.json + product labels. */
+/* Original educational explanations for the 37 curated ELIX active ingredients. */
 export const DEEP_DRUGS = Object.freeze({
   "bisoprololo": {
     "mechanism": "Il blocco β1 riduce la risposta cardiaca alle catecolamine e la liberazione di renina; la minore stimolazione Gs/cAMP spiega parte del rallentamento della frequenza. La β1-selettività è relativa, non una garanzia di assenza di effetti bronchiali.",
@@ -300,7 +298,7 @@ export const DEEP_DRUGS = Object.freeze({
   "ivabradina": {
     "mechanism": "Inibisce la corrente pacemaker If, mediata da canali HCN del nodo senoatriale. Riduce la frequenza in ritmo sinusale senza agire come antagonista β1.",
     "risks": "Bradicardia e fenomeni luminosi (fosfeni) hanno basi farmacologiche riconducibili a canali del sistema cardiaco/visivo. Non è un mezzo di controllo della frequenza nella fibrillazione atriale.",
-    "pk": "Metabolismo principalmente CYP3A4; inibitori potenti e certe interazioni possono aumentare esposizione.",
+    "pk": "Il metabolismo avviene soprattutto attraverso CYP3A4; inibitori potenti possono aumentare l'esposizione e modificare la frequenza cardiaca. L'emivita effettiva può differire dalla fase distributiva iniziale: entrambi i valori richiedono la fonte del prodotto per essere interpretati.",
     "application": "La riduzione della frequenza non implica automaticamente miglioramento degli stessi endpoint in tutte le cardiopatie; la selezione dei pazienti è specifica.",
     "chain": [
       "If/HCN nel nodo SA ↓",
@@ -400,7 +398,7 @@ export const DEEP_DRUGS = Object.freeze({
   "empagliflozin": {
     "mechanism": "Inibisce SGLT2 nel tubulo prossimale causando glucosuria e natriuresi. Il feedback tubuloglomerulare e le modifiche emodinamiche si collegano ai benefici cardiorenali osservati in popolazioni definite.",
     "risks": "Possibile chetoacidosi con glicemia non marcatamente aumentata, infezioni genitali e deplezione di volume. Il cambiamento iniziale dell'eGFR non va interpretato isolatamente.",
-    "pk": "L'emivita plasmatica non predice da sola glucosuria, eventi clinici o risposta nell'insufficienza renale.",
+    "pk": "L'emivita plasmatica da sola non predice glucosuria, efficacia glicemica o protezione renale. La quantità di glucosio filtrato e la funzione renale influenzano l'effetto tubulare; gli endpoint clinici richiedono invece studi longitudinali dedicati, come EMPA-KIDNEY.",
     "application": "EMPA-KIDNEY associa il farmaco a riduzione di un endpoint renale/cardiovascolare; il dato va discusso con inclusione dei pazienti e durata del trial.",
     "chain": [
       "SGLT2 ↓",
