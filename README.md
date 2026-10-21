@@ -1,10 +1,26 @@
-# ELIX — Farmacologia & Principi Attivi · Alpha 0.6
+# ELIX — Farmacologia & Principi Attivi · Alpha 0.7
 
 **App made by Eliseo Peirano · 2026**
 
 Sito: https://eliseopeirano79-droid.github.io/PHARMA/ (l'URL GitHub resta invariato; ELIX è il nuovo nome dell'app).
 
 Estensione del progetto recuperato da `PHARMA-Alpha03-pronta-per-Dock-e-GitHub-Pages.zip`. I laboratori, il simulatore ADME, i casi e il quiz originali restano disponibili. ISOELETTRICA e la copia separata ELIX non sono coinvolte in questa pubblicazione.
+
+## Alpha 0.7 — Densità scientifica e collegamenti (21 ottobre 2026)
+
+**L'app mantiene soltanto Panoramica, Farmaci, Recettori, Teoria, Quiz** come sezioni principali, senza nuove tab nella navigazione.
+
+- **42 capitoli originali** (32 nuovi, con 129 sezioni scientifiche e connessioni), distribuiti su tutti i 18 volumi editoriali. Ogni capitolo ampliato collega i farmaci e i bersagli pertinenti.
+- **37 approfondimenti monografici originali** per tutti i principi attivi già curati: meccanismo causale, effetti indesiderati spiegati, farmacocinetica ragionata, confronto clinico e schemi causa→effetto. Questi testi affiancano e non sostituiscono i valori documentati della fonte.
+- **7 trial primari** sintetizzati e collegati al principio attivo: HOPE, DAPA-HF, DAPA-CKD, EMPA-KIDNEY, ARISTOTLE, RALES, ASCEND. Ogni card conserva popolazione, campione, comparatore, endpoint, follow-up, misure statistiche, DOI e limiti. NNT/NNH calcolati solo da rischi cumulativi appropriati, mai dai tassi annualizzati.
+- **131 quesiti Academy** (91 nuovi con ragionamento clinico e biostatistica), filtrabili per gruppo, molecola e difficoltà; introdotto il ripasso degli errori salvati localmente e il collegamento contestuale da capitoli e farmaci.
+- **12 casi clinici sintetici** (7 nuovi su tossicità digitalica, SGLT2, CYP2C19, cGMP/nitrati, amiodarone, ASCEND e bradichinina). Restano scenari didattici, non pazienti reali.
+- **22 bersagli di farmacologia** con scheda di meccanismo, fisiologia e farmaci collegati: 5 recettori PDB già curati e altri 17 canali, enzimi e trasportatori; per questi 17 la struttura atomica è esplicitamente non associata.
+- Bibliografia originale e data del controllo nelle card trial. Le pubblicazioni vengono citate tramite link DOI; nessuna riproduzione di testo editoriale protetto.
+- Implementazione modulare in `elix-expanded-chapters.js`, `elix-expanded-questions.js`, `elix-deep-drugs.js`, `elix-research.js`, `elix-rich-reader.js`, `elix-targets.js`, `elix-extra-cases.js`; nuovi stili in `elix-deep.css`.
+
+### Confini scientifici
+I **4.225 record ChEMBL non sono 4.225 schede farmacologiche complete**. Il prezzo reale, le posologie autorizzate, le affinità sperimentali e tutte le strutture 3D richiedono acquisizione per fonte/indicazione/prodotto. Non vengono simulati dati clinici mancanti e non si deducono NNT da HR isolati.
 
 ## Affinamento italiano e logo piatto (21 ottobre 2026)
 
