@@ -62,7 +62,7 @@ const aristotle=VERIFIED_TRIALS.find(t=>t.id==="aristotle-2011");
 assert.ok(aristotle.results.every(o=>trialMetrics(o).nnt===null));
 assert.match(renderTrialEvidence("ramipril"),/HOPE/);
 assert.match(renderTrialEvidence("apixaban"),/annualizzati/);
-assert.match(renderDeepDrug(editorial.drugs.find(d=>d.id==="digossina"))),/Ca²⁺/);
+assert.match(renderDeepDrug(editorial.drugs.find(d=>d.id==="digossina")),/Ca²⁺/);
 assert.equal(renderDeepDrug({id:"unknown"}),"");
 for(const item of EXTRA_CASES){
  assert.ok(item.id&&item.history.length>120);
