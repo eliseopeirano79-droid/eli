@@ -1,5 +1,6 @@
 import {EXPANDED_CHAPTERS} from './elix-expanded-chapters.js';
 import {EXPANDED_QUESTIONS} from './elix-expanded-questions.js';
+import {CHAPTERS_09} from './elix-09-content.js';
 /* ELIX · Contenuti didattici originali Alpha 0.5. Revisione specialistica ancora da completare. */
 
 export const ELIX_VOLUMES = [
@@ -923,5 +924,5 @@ const BASE_QUESTIONS = [
   }
 ];
 
-export const ELIX_CHAPTERS = Object.freeze([...BASE_CHAPTERS,...EXPANDED_CHAPTERS]);
+export const ELIX_CHAPTERS = Object.freeze([...BASE_CHAPTERS,...EXPANDED_CHAPTERS,...CHAPTERS_09]);
 export const ELIX_QUESTIONS = Object.freeze([...BASE_QUESTIONS,...EXPANDED_QUESTIONS]);
