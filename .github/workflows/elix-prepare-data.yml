@@ -1,0 +1,64 @@
+name: ELIX verified release checks
+on:
+  push:
+    branches: [feature/elix-08-verified-data]
+    paths: [.github/workflows/elix-prepare-data.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: elix-verified-release-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Require the acquired dataset on the branch
+        run: |
+          for attempt in $(seq 1 100); do
+            git fetch origin "${GITHUB_REF_NAME}"
+            if git cat-file -e "origin/${GITHUB_REF_NAME}:data/verified/index.json" 2>/dev/null; then
+              git reset --hard "origin/${GITHUB_REF_NAME}"
+              exit 0
+            fi
+            echo "Source acquisition has not committed its completed dataset (check ${attempt})."
+            sleep 10
+          done
+          echo 'No completed source dataset available'; exit 1
+      - name: Integrate and validate data integrity
+        run: |
+          node --check elix-verified.js
+          node --check scripts/prepare_verified_release.mjs
+          node scripts/prepare_verified_release.mjs
+          node --check evidence-atlas.js
+          npm test
+      - name: Install browser test dependency
+        run: |
+          npm install --prefix /tmp/elix-browser --no-save playwright@1.56.1
+          node /tmp/elix-browser/node_modules/playwright/cli.js install chromium
+      - name: Browser regression desktop and mobile
+        run: |
+          python3 -m http.server 8765 > /tmp/elix-http.log 2>&1 &
+          PLAYWRIGHT_MODULE=/tmp/elix-browser/node_modules/playwright node scripts/browser-verified.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: elix-verified-browser
+          path: /tmp/elix-shots
+          if-no-files-found: ignore
+      - name: Publish tested code changes to the same branch
+        run: |
+          git config user.name 'ELIX Release Checks'
+          git config user.email 'elix-checks@users.noreply.github.com'
+          git add evidence-atlas.js index.html sw.js app.js package.json README.md
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'feat: integrate tested real-source pharmacology data and responsive panels'
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
