@@ -1,0 +1,31 @@
+name: ELIX code and data validation
+on:
+  push:
+    branches: [main, feature/elix-alpha-05]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate catalog and ELIX modules
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Configure Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check JavaScript syntax
+        run: |
+          node --check app.js
+          node --check evidence-atlas.js
+          node --check elix-studio.js
+          node --check elix-content.js
+      - name: Run pharmacology data and UI tests
+        run: npm test
