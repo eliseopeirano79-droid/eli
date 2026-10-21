@@ -1,0 +1,42 @@
+/* ELIX 0.9 · science-rich panels keep the five-tab interface clean. */
+.pk09-surface{border:1px solid var(--line);border-radius:15px;padding:clamp(16px,2.6vw,25px);margin:16px 0;background:var(--panel2);min-width:0}
+.pk09-surface h3{margin:0 0 10px;font-size:16px;letter-spacing:-.025em;color:var(--text)}
+.pk09-note{font-size:11px!important;line-height:1.73;color:var(--muted)!important;margin:9px 0 16px}
+.pk09-topic-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:15px}
+.pk09-topic{min-width:0;padding:12px 14px;border:1px solid var(--line);border-radius:11px;background:var(--panel)}
+.pk09-topic summary{cursor:pointer;font-size:12px;font-weight:760;line-height:1.4;color:var(--text)}
+.pk09-topic summary small{display:block;font-size:10px;letter-spacing:.02em;color:var(--accent);margin-top:5px}
+.pk09-topic>p{font-size:11px;line-height:1.7;color:var(--muted);white-space:normal;overflow-wrap:anywhere;border-top:1px solid var(--line);padding-top:11px;margin:11px 0 0}
+.pk09-field{display:flex;flex-direction:column;gap:8px;margin:18px 0;color:var(--muted);font-size:11px;font-weight:730}
+.pk09-field select,.pk09-field input:not([type=range]){border:1px solid var(--line);background:var(--panel);padding:12px;border-radius:10px;color:var(--text);font-size:12px;min-height:44px;max-width:100%;width:100%}
+.pk09-field input[type=range]{width:100%;accent-color:var(--accent)}
+.pk09-source{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:17px;margin:10px 0;max-height:500px;overflow:auto}
+.pk09-source>strong{font-size:11px;color:var(--accent)}
+.pk09-source>p{font-size:12px!important;line-height:1.8!important;color:var(--text)!important;white-space:pre-wrap}
+.pk09-surface>a{font-size:11px;font-weight:730;color:var(--accent);display:inline-flex;padding:8px 0}
+.pk09-numbers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.pk09-numbers>div{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;min-width:0}
+.pk09-numbers small{font-size:10px;color:var(--muted);display:block;margin-bottom:7px}
+.pk09-numbers strong{font-size:clamp(19px,2vw,26px);letter-spacing:-.04em;display:block;font-variant-numeric:tabular-nums;color:var(--text)}
+.pk09-numbers span{display:block;font-size:10px;color:var(--muted);margin-top:8px;line-height:1.45}
+.pk09-chart{display:block;width:100%;max-height:300px;margin:12px 0}
+.pk09-chart text{fill:var(--muted);font-size:12px}
+.pk09-axis{stroke:var(--line);stroke-width:2;fill:none}
+.pk09-line{stroke:#61b886;stroke-width:3;fill:none;stroke-linecap:round}
+.pk09-guide{stroke:var(--muted);stroke-width:1.2;stroke-dasharray:4 6;opacity:.55;fill:none}
+.pk09-dot{fill:var(--accent);stroke:var(--panel);stroke-width:2}
+.pk09-guideline-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;margin:15px 0}
+.pk09-guideline-list article{border:1px solid var(--line);background:var(--panel2);border-radius:12px;padding:16px}
+.pk09-guideline-list span,.pk09-guideline-list small{font-size:10px;line-height:1.5;color:var(--muted);display:block}
+.pk09-guideline-list a{font-size:13px;line-height:1.5;color:var(--accent);display:block;margin:9px 0;font-weight:760}
+.pk09-guideline-list p{font-size:11px;line-height:1.7;color:var(--muted)}
+.ex-guides{margin:26px 0;border-top:1px solid var(--line);padding-top:20px}
+.ex-guides h3{font-size:17px;margin:0 0 14px}
+.ex-guides>a{display:flex;flex-direction:column;gap:4px;border:1px solid var(--line);background:var(--panel2);padding:14px 16px;border-radius:12px;margin:9px 0;color:var(--text)}
+.ex-guides>a:hover{border-color:var(--accent)}
+.ex-guides strong{font-size:12px;color:var(--accent);line-height:1.5}
+.ex-guides small{font-size:10px;color:var(--muted)}
+.ex-guides span{font-size:11px;line-height:1.6;color:var(--text)}
+@media(max-width:760px){.pk09-topic-grid,.pk09-guideline-list{grid-template-columns:1fr}.pk09-numbers{grid-template-columns:1fr 1fr}}
+@media(max-width:440px){.pk09-numbers{grid-template-columns:1fr}.pk09-surface{padding:16px}}
+@media(prefers-reduced-motion:reduce){.pk09-surface *, .pk09-chart *{animation:none!important;transition:none!important}}
