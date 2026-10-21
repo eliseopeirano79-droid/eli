@@ -6,6 +6,13 @@ Sito: https://eliseopeirano79-droid.github.io/PHARMA/ (l'URL GitHub resta invari
 
 Estensione del progetto recuperato da `PHARMA-Alpha03-pronta-per-Dock-e-GitHub-Pages.zip`. I laboratori, il simulatore ADME, i casi e il quiz originali restano disponibili. ISOELETTRICA e la copia separata ELIX non sono coinvolte in questa pubblicazione.
 
+## Affinamento italiano e logo piatto (21 ottobre 2026)
+
+- Il catalogo usa l'italiano come lingua principale per le denominazioni **espressamente curate**. Le denominazioni ChEMBL originali rimangono visibili in piccolo (EN), fra i sinonimi e nella ricerca.
+- Nuovo dizionario `italian-names.js` con 216 nomi esatti verificati o editorialmente revisionati, indipendente dalle molecole e dai codici ChEMBL. Le denominazioni più difficili/non verificate rimangono internazionali, senza traduzioni automatiche di sali, isomeri o biologici.
+- Ricerca, ordinamento alfabetico, scheda del farmaco e tipologia molecolare condividono la localizzazione; il catalogo sorgente non è modificato, rendendo futura una lingua inglese indipendente.
+- Il marchio è rigorosamente la pillola verde centrata su sfondo blu scuro uniforme: nessuna ombra o sfumatura; corretti anche favicon, icona Apple, schermata di caricamento e cache offline.
+
 ## Correzioni ELIX Alpha 0.6 (21 ottobre 2026)
 
 - Logo a pillola verde ricavato dall'immagine di riferimento già scelta; scala cromatica verde menta e blu notte, nome e sottotitolo esatti. SVG per la UI e icona PNG PWA.
