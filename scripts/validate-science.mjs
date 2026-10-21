@@ -12,7 +12,7 @@ import {createReceptorAtlas} from "../receptors.js";
 const read=rel=>fs.readFileSync(fileURLToPath(new URL("../"+rel,import.meta.url)),"utf8");
 const editorial=JSON.parse(read("data/editorial.json"));
 assert.equal(ELIX_VOLUMES.length,18);
-assert.equal(ELIX_CHAPTERS.length,42);
+assert.equal(ELIX_CHAPTERS.length,54);
 assert.equal(ELIX_QUESTIONS.length,131);
 assert.equal(Object.keys(DEEP_DRUGS).length,37);
 assert.equal(VERIFIED_TRIALS.length,7);
