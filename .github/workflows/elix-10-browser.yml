@@ -1,0 +1,36 @@
+name: ELIX clean sheets browser check
+on:
+  push:
+    branches: [feature/elix-10-clean-sheets-visual-structures]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Test source and code
+        run: |
+          node --check evidence-atlas.js
+          node --check elix-structure-visuals.js
+          node --check elix-verified.js
+          npm test
+      - name: Install Chromium
+        run: |
+          npm install --prefix /tmp/elix-browser --no-save playwright@1.56.1
+          node /tmp/elix-browser/node_modules/playwright/cli.js install --with-deps chromium
+      - name: Test layout desktop and iPhone size
+        run: |
+          python3 -m http.server 8765 > /tmp/elix-http.log 2>&1 &
+          PLAYWRIGHT_MODULE=/tmp/elix-browser/node_modules/playwright node scripts/browser-clean-sheets.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: elix-10-screenshots
+          path: /tmp/elix-sheets
+          if-no-files-found: ignore
