@@ -97,9 +97,9 @@ export function createElixStudio({refresh}) {
       return "<article class='ex-volume'><div class='ex-volume-meta'>VOLUME "+String(v.id).padStart(2,"0")+"</div><h3>"+esc(v.title)+"</h3><p>"+(list.length?list.length+" capitoli originali disponibili":"Indice programmato; stesura ancora da avviare")+"</p>"+list.map(c=>"<a href='#/textbook/"+esc(c.id)+"' class='ex-chapter-link'>"+esc(c.title)+" <span aria-hidden='true'>↗</span></a>").join("")+"</article>";
     }).join("");
     const intro=heading("ELIX TEXTBOOK","La Bibbia dei Farmaci","Biblioteca originale strutturata in 18 volumi: testo, recettori, molecole, studi, casi e quiz collegati.",
-      badge(ELIX_CHAPTERS.length+" capitoli in stesura","accent"));
+      badge(ELIX_CHAPTERS.length+" capitoli disponibili","accent"));
     if(chapter) {
-      return tabs()+intro+"<div class='ex-book-layout'><aside class='ex-chapter-index'><a class='ex-back' href='#/textbook'>← Tutti i capitoli</a><p class='ex-mini'>VOLUME "+chapter.volume+"</p><h3>"+esc(chapter.title)+"</h3><p>"+esc(chapter.lead)+"</p><div class='ex-index-list'>"+chapter.sections.map((section,i)=>"<button type='button' data-elix='chapter-jump' data-index='"+i+"'>"+String(i+1).padStart(2,"0")+" · "+esc(section.title)+"</button>").join("")+"</div></aside><article class='ex-reading'><div class='ex-reading-meta'>Contenuto didattico originale • revisione specialistica in corso</div><h2>"+esc(chapter.title)+"</h2><p class='ex-intro'>"+esc(chapter.lead)+"</p>"+chapter.sections.map((section,i)=>"<section id='part-"+i+"'><h3>"+esc(section.title)+"</h3><p>"+esc(section.text)+"</p></section>").join("")+"<div class='ex-footer-links'><a href='#/quiz'>Verifica la comprensione →</a><a href='#/cinema'>Osserva un meccanismo →</a></div><p class='ex-disclaimer'>Questi capitoli non riproducono manuali commerciali. Sono prime unità editoriali originali e non costituiscono ancora un trattato completo, né raccomandazioni cliniche.</p></article></div>";
+      return tabs()+intro+"<div class='ex-book-layout'><aside class='ex-chapter-index'><a class='ex-back' href='#/textbook'>← Tutti i capitoli</a><p class='ex-mini'>VOLUME "+chapter.volume+"</p><h3>"+esc(chapter.title)+"</h3><p>"+esc(chapter.lead)+"</p><div class='ex-index-list'>"+chapter.sections.map((section,i)=>"<button type='button' data-elix='chapter-jump' data-index='"+i+"'>"+String(i+1).padStart(2,"0")+" · "+esc(section.title)+"</button>").join("")+"</div></aside><article class='ex-reading'><div class='ex-reading-meta'>Contenuto didattico originale • revisione specialistica in corso</div><h2>"+esc(chapter.title)+"</h2><p class='ex-intro'>"+esc(chapter.lead)+"</p>"+chapter.sections.map((section,i)=>"<section id='part-"+i+"'><h3>"+esc(section.title)+"</h3><p>"+esc(section.text)+"</p></section>").join("")+"<div class='ex-related'>"+(chapter.drugs?.length?"<div><strong>Farmaci collegati</strong><div>"+chapter.drugs.map(id=>"<a href='#/drug/"+encodeURIComponent(id)+"'>"+esc(id)+" ↗</a>").join("")+"</div></div>":"")+(chapter.targets?.length?"<div><strong>Bersagli da esplorare</strong><div>"+chapter.targets.map(id=>"<a href='#/receptors/"+encodeURIComponent(id)+"'>"+esc(id)+" ↗</a>").join("")+"</div></div>":"")+"</div><div class='ex-footer-links'><a href='#/quiz'>Verifica la comprensione →</a><a href='#/receptors'>Esplora recettori e bersagli →</a></div><p class='ex-disclaimer'>Questi capitoli non riproducono manuali commerciali. Sono prime unità editoriali originali e non costituiscono ancora un trattato completo, né raccomandazioni cliniche.</p></article></div>";
     }
     return tabs()+intro+"<div class='ex-toolbar'><label>Volume da esplorare<select id='ex-volume'><option value='all'>Tutti i 18 volumi</option>"+ELIX_VOLUMES.map(v=>"<option value='"+v.id+"' "+(state.volume===String(v.id)?"selected":"")+">"+v.id+" · "+esc(v.title)+"</option>").join("")+"</select></label><span class='ex-muted'>"+ELIX_CHAPTERS.length+" capitoli scritti · "+ELIX_VOLUMES.length+" volumi in indice</span></div><div class='ex-volume-grid'>"+chapterList+"</div>";
   }
@@ -233,8 +233,8 @@ export function createElixStudio({refresh}) {
   }
   function quiz() {
     const total=filteredQuestions().length,session=state.quiz;
-    const intro=tabs()+heading("ELIX ACADEMY","Impara. Ragiona. Dimostra.","Quiz originali per teoria, casi clinici, molecola, classe e difficoltà. Le domande vengono mescolate senza ripetersi nella sessione.",badge(ELIX_QUESTIONS.length+" domande iniziali","accent"))+
-      "<div class='ex-card ex-filter-card'><h2>Configura il tuo allenamento</h2><p class='ex-muted'>Vuoi esercitarti sulle decisioni? <a href='#/cases' class='rx-primary'>Apri i casi clinici interattivi →</a></p>"+quizFilters()+"<div class='ex-filter-footer'><span class='ex-muted'>"+total+" quesiti compatibili con i filtri</span><button class='ex-btn primary' data-elix='quiz-start' "+(total===0?"disabled":"")+">Inizia nuovo mazzo →</button></div></div>";
+    const intro=tabs()+heading("ELIX ACADEMY","Impara. Ragiona. Dimostra.","Quiz originali per teoria, casi clinici, molecola, classe e difficoltà. Le domande vengono mescolate senza ripetersi nella sessione.",badge(ELIX_QUESTIONS.length+" domande originali","accent"))+
+      "<div class='ex-card ex-filter-card'><h2>Configura il tuo allenamento</h2><p class='ex-muted'>Vuoi esercitarti sulle decisioni? <a href='#/cases' class='rx-primary'>Apri i casi clinici interattivi →</a></p>"+quizFilters()+"<div class='ex-filter-footer'><span class='ex-muted'>"+total+" quesiti compatibili con i filtri</span><button class='ex-btn primary' data-elix='quiz-start' "+(total===0?"disabled":"")+">Inizia nuovo mazzo →</button>"+(Object.keys(state.progress.wrong||{}).some(id=>filteredQuestions().some(q=>q.id===id))?"<button class='ex-btn' data-elix='quiz-errors'>Ripassa errori precedenti</button>":"")+"</div></div>";
     if(!session) return intro+"<div class='ex-stats ex-overview'><div><span>Risposte complessive</span><strong>"+state.progress.answered+"</strong></div><div><span>Corrette</span><strong>"+state.progress.correct+"</strong></div><div><span>Sessioni concluse</span><strong>"+state.progress.sessions+"</strong></div></div><div class='ex-next-card'><strong>Una risposta, una spiegazione.</strong><p>Ogni quiz collega il quesito al principio farmacologico, non solo alla soluzione. Le statistiche sono conservate localmente nel tuo browser.</p></div>";
     const count=session.deck.length;
     if(session.index>=count){
@@ -254,7 +254,7 @@ export function createElixStudio({refresh}) {
     if(p==="dose")return dose();
     if(p==="evidence")return evidence();
     if(p==="cinema"){if(id&&cinemaModels[id]&&id!==state.cinemaTarget){stopCinema();state.cinemaTarget=id;state.cinemaStep=0;state.cinemaMode="cell";}return cinema();}
-    if(p==="quiz")return quiz();
+    if(p==="quiz"){if(id&&state.lastQuizFilterId!==id){state.lastQuizFilterId=id;state.drug=ELIX_QUESTIONS.some(q=>q.drug===id)?id:"all";state.quiz=null;}return quiz();}
     return null;
   }
 
@@ -263,6 +263,7 @@ export function createElixStudio({refresh}) {
     event.preventDefault();
     const a=el.dataset.elix;
     if(a==="chapter-jump"){const target=document.getElementById('part-'+el.dataset.index);if(target)target.scrollIntoView({behavior:'smooth',block:'start'});return;}
+    if(a==="quiz-errors"){const candidate=new Set(filteredQuestions().map(q=>q.id));const deck=shuffle(Object.keys(state.progress.wrong||{}).filter(id=>candidate.has(id)));if(!deck.length)return;state.quiz={deck,index:0,selection:null,score:0};refresh();return;}
     if(a==="quiz-start"){
       const deck=shuffle(filteredQuestions().map(q=>q.id));
       if(!deck.length)return;
