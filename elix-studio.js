@@ -43,7 +43,7 @@ export function createElixStudio({refresh}) {
     const intro=heading("ELIX TEXTBOOK","La Bibbia dei Farmaci","Biblioteca originale strutturata in 18 volumi: testo, recettori, molecole, studi, casi e quiz collegati.",
       badge(ELIX_CHAPTERS.length+" capitoli in stesura","accent"));
     if(chapter) {
-      return tabs()+intro+"<div class='ex-book-layout'><aside class='ex-chapter-index'><a class='ex-back' href='#/textbook'>← Tutti i capitoli</a><p class='ex-mini'>VOLUME "+chapter.volume+"</p><h3>"+esc(chapter.title)+"</h3><p>"+esc(chapter.lead)+"</p><div class='ex-index-list'>"+chapter.sections.map((section,i)=>"<a href='#part-"+i+"'>"+String(i+1).padStart(2,"0")+" · "+esc(section.title)+"</a>").join("")+"</div></aside><article class='ex-reading'><div class='ex-reading-meta'>Contenuto didattico originale • revisione specialistica in corso</div><h2>"+esc(chapter.title)+"</h2><p class='ex-intro'>"+esc(chapter.lead)+"</p>"+chapter.sections.map((section,i)=>"<section id='part-"+i+"'><h3>"+esc(section.title)+"</h3><p>"+esc(section.text)+"</p></section>").join("")+"<div class='ex-footer-links'><a href='#/quiz'>Verifica la comprensione →</a><a href='#/cinema'>Osserva un meccanismo →</a></div><p class='ex-disclaimer'>Questi capitoli non riproducono manuali commerciali. Sono prime unità editoriali originali e non costituiscono ancora un trattato completo, né raccomandazioni cliniche.</p></article></div>";
+      return tabs()+intro+"<div class='ex-book-layout'><aside class='ex-chapter-index'><a class='ex-back' href='#/textbook'>← Tutti i capitoli</a><p class='ex-mini'>VOLUME "+chapter.volume+"</p><h3>"+esc(chapter.title)+"</h3><p>"+esc(chapter.lead)+"</p><div class='ex-index-list'>"+chapter.sections.map((section,i)=>"<button type='button' data-elix='chapter-jump' data-index='"+i+"'>"+String(i+1).padStart(2,"0")+" · "+esc(section.title)+"</button>").join("")+"</div></aside><article class='ex-reading'><div class='ex-reading-meta'>Contenuto didattico originale • revisione specialistica in corso</div><h2>"+esc(chapter.title)+"</h2><p class='ex-intro'>"+esc(chapter.lead)+"</p>"+chapter.sections.map((section,i)=>"<section id='part-"+i+"'><h3>"+esc(section.title)+"</h3><p>"+esc(section.text)+"</p></section>").join("")+"<div class='ex-footer-links'><a href='#/quiz'>Verifica la comprensione →</a><a href='#/cinema'>Osserva un meccanismo →</a></div><p class='ex-disclaimer'>Questi capitoli non riproducono manuali commerciali. Sono prime unità editoriali originali e non costituiscono ancora un trattato completo, né raccomandazioni cliniche.</p></article></div>";
     }
     return tabs()+intro+"<div class='ex-toolbar'><label>Volume da esplorare<select id='ex-volume'><option value='all'>Tutti i 18 volumi</option>"+ELIX_VOLUMES.map(v=>"<option value='"+v.id+"' "+(state.volume===String(v.id)?"selected":"")+">"+v.id+" · "+esc(v.title)+"</option>").join("")+"</select></label><span class='ex-muted'>"+ELIX_CHAPTERS.length+" capitoli scritti · "+ELIX_VOLUMES.length+" volumi in indice</span></div><div class='ex-volume-grid'>"+chapterList+"</div>";
   }
@@ -122,8 +122,7 @@ export function createElixStudio({refresh}) {
     state.cinemaPlaying=true;refresh();
     cinemaTimer=setInterval(()=>{
       if(!location.hash.startsWith("#/cinema")||state.cinemaStep>=stages.length-1){stopCinema();refresh();return;}
-      state.cinemaStep++;refresh();
-      if(state.cinemaStep===stages.length-1)stopCinema();
+      state.cinemaStep++;if(state.cinemaStep===stages.length-1)stopCinema();refresh();
     },Math.round(1700/state.cinemaSpeed));
   }
   function cinema() {
@@ -207,6 +206,7 @@ export function createElixStudio({refresh}) {
     const el=event.target.closest("[data-elix]");if(!el)return;
     event.preventDefault();
     const a=el.dataset.elix;
+    if(a==="chapter-jump"){const target=document.getElementById('part-'+el.dataset.index);if(target)target.scrollIntoView({behavior:'smooth',block:'start'});return;}
     if(a==="quiz-start"){
       const deck=shuffle(filteredQuestions().map(q=>q.id));
       if(!deck.length)return;
