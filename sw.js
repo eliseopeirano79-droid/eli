@@ -1,6 +1,6 @@
 /* PHARMA • servizio offline e aggiornamenti delle versioni pubblicate */
-const CACHE = 'elix-alpha-0.5.1';
-const FILES = ['./', './index.html', './styles.css', './app.js', './evidence-atlas.js', './evidence-atlas.css', './elix-studio.js', './elix-content.js', './elix-studio.css', './data/catalog.json', './data/registry.json', './data/editorial.json', './data/labels-index.json', './data/news.json', './assets/heparin-subunits.jpg', './manifest.webmanifest', './assets/elix-logo.svg', './assets/elix-logo-192.png'];
+const CACHE = 'elix-alpha-0.6.0';
+const FILES = ['./', './index.html', './styles.css', './app.js', './evidence-atlas.js', './evidence-atlas.css', './elix-studio.js', './elix-content.js', './elix-studio.css', './receptors.js', './elix-focus.css', './data/catalog.json', './data/registry.json', './data/editorial.json', './data/labels-index.json', './data/news.json', './assets/heparin-subunits.jpg', './manifest.webmanifest', './assets/elix-pill-original.svg', './assets/elix-pill-192.png'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(FILES)));
   self.skipWaiting();
