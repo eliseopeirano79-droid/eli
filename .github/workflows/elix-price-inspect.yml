@@ -1,0 +1,44 @@
+name: Inspect AIFA source format
+on:
+  push:
+    branches: [feature/elix-08-verified-data]
+    paths: [.github/workflows/elix-price-inspect.yml]
+permissions:
+  contents: write
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+      - name: Inspect the original public price file
+        shell: python
+        run: |
+          import urllib.request,json,csv,io,hashlib
+          from pathlib import Path
+          from datetime import datetime,timezone
+          url='https://www.aifa.gov.it/documents/20142/825643/Lista_farmaci_equivalenti.csv'
+          req=urllib.request.Request(url,headers={'User-Agent':'ELIX public data format verification'})
+          with urllib.request.urlopen(req,timeout=90) as response:
+            raw=response.read()
+            headers=dict(response.headers)
+            resolved=response.url
+          result={'url':url,'resolved':resolved,'contentType':headers.get('Content-Type'),'lastModified':headers.get('Last-Modified'),'bytes':len(raw),'sha256':hashlib.sha256(raw).hexdigest(),'retrieved':datetime.now(timezone.utc).isoformat(),'firstBytesHex':raw[:100].hex()}
+          for encoding in ['utf-8-sig','utf-16','cp1252']:
+            try:
+              text=raw.decode(encoding)
+              result[encoding]=text[:6000]
+            except Exception as exc:result[encoding]=str(exc)
+          out=Path('data/verified/aifa-preview.json');out.parent.mkdir(exist_ok=True,parents=True)
+          out.write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf-8')
+          print(json.dumps(result,ensure_ascii=False)[:7000])
+      - name: Save audit to the branch
+        run: |
+          git config user.name 'ELIX Data Import'
+          git config user.email 'elix-data@users.noreply.github.com'
+          git add data/verified/aifa-preview.json
+          git commit -m 'data: retain original AIFA file format audit' || exit 0
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
