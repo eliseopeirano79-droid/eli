@@ -28,5 +28,7 @@ jobs:
           node --check elix-studio.js
           node --check elix-content.js
           node --check receptors.js
+          node --check italian-names.js
+          node --check scripts/validate-it-localization.mjs
       - name: Run pharmacology data and UI tests
         run: npm test
