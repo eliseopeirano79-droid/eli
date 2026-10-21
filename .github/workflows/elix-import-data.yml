@@ -1,0 +1,35 @@
+name: ELIX verified data acquisition
+on:
+  push:
+    branches: [feature/elix-08-verified-data]
+    paths:
+      - scripts/import_verified_data.py
+      - .github/workflows/elix-import-data.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: elix-verified-import-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  acquire:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Import from official public sources
+        run: python scripts/import_verified_data.py
+      - name: Commit acquired data on the same branch
+        run: |
+          git config user.name 'ELIX Data Import'
+          git config user.email 'elix-data@users.noreply.github.com'
+          git add data/verified
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'data: store source-identified public pharmacology records'
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
