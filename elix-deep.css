@@ -1,0 +1,45 @@
+/* ELIX 0.7 — substantive science first, only five main sections. */
+.ev-deep-panel{padding:clamp(20px,3vw,32px)!important}
+.ev-deep-head h2{font-size:clamp(19px,2vw,26px);letter-spacing:-.03em;line-height:1.25;margin:8px 0 22px}
+.ev-deep-path{background:var(--panel2);border:1px solid var(--line);padding:18px 18px 14px;border-radius:15px;margin-bottom:18px}
+.ev-deep-path h3{font-size:12px;font-weight:750;margin:0 0 15px;color:var(--text)}
+.ev-deep-chain{display:flex;flex-wrap:wrap;gap:7px;align-items:center}
+.ev-deep-chain span{display:inline-flex;flex-direction:column;gap:4px;padding:9px 11px;background:var(--panel);border:1px solid var(--line);border-radius:10px;color:var(--text);font-size:11px;line-height:1.45;flex:0 1 auto}
+.ev-deep-chain span small{font-size:9px;font-weight:820;color:var(--accent)}
+.ev-deep-chain b{color:var(--accent);font-size:15px;font-weight:700}
+.ev-deep-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.ev-deep-grid article{background:color-mix(in srgb,var(--panel) 83%,var(--panel2));padding:17px 17px 20px;border:1px solid var(--line);border-radius:13px}
+.ev-deep-grid h3{font-size:14px;letter-spacing:-.015em;margin:0 0 10px}
+.ev-deep-grid p{font-size:13px;line-height:1.78;opacity:.9;color:var(--text)}
+.ev-studies>p{font-size:12px;line-height:1.7;color:var(--muted)}
+.ev-trial{border:1px solid var(--line);background:var(--panel);border-radius:16px;padding:clamp(17px,2.3vw,24px);margin:18px 0;overflow:hidden}
+.ev-trial header h3{font-size:clamp(18px,2.2vw,24px);letter-spacing:-.025em;line-height:1.3;margin:9px 0 12px}
+.ev-trial header>p{font-size:12px;line-height:1.7;margin:0 0 17px;color:var(--muted)}
+.ev-trial-meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:15px 0}
+.ev-trial-meta>div{padding:13px;border:1px solid var(--line);border-radius:11px;background:var(--panel2);min-width:0}
+.ev-trial-meta small{display:block;color:var(--muted);font-size:10px;margin-bottom:7px}
+.ev-trial-meta strong{display:block;font-size:12px;line-height:1.5;font-weight:730;overflow-wrap:anywhere}
+.ev-trial-outcome{border-left:3px solid var(--accent);border-radius:4px;background:var(--glow);padding:13px 16px;margin:12px 0}
+.ev-trial-outcome h4{font-size:13px;margin:0 0 12px;line-height:1.45}
+.ev-trial-numbers{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ev-trial-numbers>div{padding:12px 13px;background:var(--panel);border-radius:9px;border:1px solid var(--line)}
+.ev-trial-numbers small{font-size:10px;color:var(--muted);display:block;margin-bottom:5px}
+.ev-trial-numbers b{font-size:clamp(18px,2vw,25px);letter-spacing:-.035em;font-variant-numeric:tabular-nums}
+.ev-trial-outcome p{margin:10px 0 4px;font-size:12px}
+.ev-trial-outcome>small{display:block;color:var(--muted);line-height:1.65;font-size:10px}
+.ev-trial-insight{font-size:12px;line-height:1.8;color:var(--text)}
+.ev-trial>p:not(.ev-trial-insight){font-size:12px;line-height:1.72;color:var(--muted)}
+.ev-trial .ev-link{font-size:12px;font-weight:760;display:inline-block;margin-top:10px}
+.ev-verified{display:block;color:var(--muted);font-size:10px;margin-top:11px}
+.rx-missing-structure{display:flex;min-height:220px;flex-direction:column;align-items:flex-start;justify-content:center;gap:7px;border:1px dashed var(--line);border-radius:13px;background:var(--panel2);padding:23px}
+.rx-missing-structure strong{font-size:15px}.rx-missing-structure p{font-size:12px;line-height:1.75;color:var(--muted)}
+.rx-missing-structure a{color:var(--accent);font-size:11px;font-weight:720}
+.ex-related{display:flex;flex-direction:column;gap:13px;margin:28px 0 10px;padding:16px 18px;background:var(--panel2);border-radius:13px;border:1px solid var(--line)}
+.ex-related>div>strong{font-size:11px;letter-spacing:.03em;display:block;margin-bottom:10px;color:var(--text)}
+.ex-related>div>div{display:flex;gap:7px;flex-wrap:wrap}
+.ex-related a{font-size:11px;color:var(--accent);text-decoration:none;border:1px solid var(--line);padding:7px 9px;border-radius:9px;background:var(--panel)}
+.ex-related a:hover{border-color:var(--accent)}
+.ex-filter-footer{flex-wrap:wrap;row-gap:10px}
+.ex-filter-footer button:not(.primary){background:var(--panel2);color:var(--accent)}
+@media(max-width:750px){.ev-deep-grid{grid-template-columns:1fr}.ev-trial-meta{grid-template-columns:1fr 1fr}.ev-trial{padding:18px}.ev-trial-numbers b{font-size:21px}}
+@media(max-width:475px){.ev-trial-meta{grid-template-columns:1fr}.ev-deep-chain b{display:none}.ev-deep-chain span{flex:1 1 41%}.ex-filter-footer .ex-btn{max-width:100%;white-space:normal}}
