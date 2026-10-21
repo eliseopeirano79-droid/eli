@@ -1,10 +1,22 @@
-# ELIX — The Interactive Pharmacology Atlas · Alpha 0.5
+# ELIX — Farmacologia & Principi Attivi · Alpha 0.6
 
 **App made by Eliseo Peirano · 2026**
 
 Sito: https://eliseopeirano79-droid.github.io/PHARMA/ (l'URL GitHub resta invariato; ELIX è il nuovo nome dell'app).
 
 Estensione del progetto recuperato da `PHARMA-Alpha03-pronta-per-Dock-e-GitHub-Pages.zip`. I laboratori, il simulatore ADME, i casi e il quiz originali restano disponibili. ISOELETTRICA e la copia separata ELIX non sono coinvolte in questa pubblicazione.
+
+## Correzioni ELIX Alpha 0.6 (21 ottobre 2026)
+
+- Logo a pillola verde ricavato dall'immagine di riferimento già scelta; scala cromatica verde menta e blu notte, nome e sottotitolo esatti. SVG per la UI e icona PNG PWA.
+- **Navigazione essenziale:** Panoramica, Farmaci, Recettori, Teoria, Quiz. I laboratori non compaiono più come sezioni principali, ma sono accessibili nel contesto pertinente.
+- **Farmaci:** schede estese con sei campi riassuntivi (emivita, F, legame proteico, dosi, NNT, prezzo), meccanismi, teoria, farmacocinetica verificata, documenti posologici, studi/novità e riferimenti. I campi mancanti restano marcati; non si fabbricano prezzi, studi o dosi.
+- **Recettori:** cinque monografie iniziali con struttura PDB reale (β₁ 7BU6, β₂ 7BZ2, AT₁ 7F6G, α₂A 7EJ8, α₁A 8THL), visualizzatore Mol* incorporato su richiesta, teoria, vie e farmaci collegati. Sono dati verificati per questi cinque bersagli, non la totalità dei recettori.
+- **Molecular Cinema:** è ora contestuale a Recettori, supporta i cinque recettori e permette di passare fra illustrazione cellulare e visualizzazione 3D sperimentale. Non confonde conformazioni statiche con simulazioni atomistiche.
+- Gli URL preesistenti dei laboratori sono mantenuti per non interrompere collegamenti e preferiti.
+
+### Stato di completezza dichiarato
+Il catalogo contiene 4.225 identità ChEMBL, non 4.225 monografie complete. I campi scientifici, le posologie e i prezzi vengono compilati soltanto quando sono presenti fonti sufficienti; per gli altri record sono esposte lacune. I 18 volumi della teoria rappresentano un indice editoriale con 10 capitoli iniziali.
 
 ## Novità ELIX Alpha 0.5 (21 ottobre 2026)
 
