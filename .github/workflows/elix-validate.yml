@@ -1,7 +1,7 @@
 name: ELIX code and data validation
 on:
   push:
-    branches: [main, feature/elix-alpha-05]
+    branches: [main, feature/elix-alpha-05, feature/elix-06-focus-and-brand]
   pull_request:
     branches: [main]
   workflow_dispatch:
@@ -27,5 +27,6 @@ jobs:
           node --check evidence-atlas.js
           node --check elix-studio.js
           node --check elix-content.js
+          node --check receptors.js
       - name: Run pharmacology data and UI tests
         run: npm test
