@@ -1,3 +1,4 @@
+import {renderPK09,renderIndications09,renderAssay09,indicationState09,assayState09,exponentState09,currentValue09} from './elix-pharma-labs.js';
 /* ELIX: source records, not generated pharmacological values. No patient-specific recommendations. */
 const h = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const eur = value => value === null || value === undefined ? 'Non disponibile' : Number(value).toLocaleString('it-IT',{style:'currency',currency:'EUR'});
@@ -67,18 +68,19 @@ function activityRows(file,data) {
  const count = Math.max(1,Math.ceil(rows.length/15));
  const page = Math.min(pages.get(file)||0,count-1);
  const slice = rows.slice(page*15,page*15+15);
- return `<div class="vd-controls"><label>Tipo di misura<select data-vd-filter="${h(file)}">${[['all','Tutte le misure'],['Ki','Ki · inibizione del legame'],['Kd','Kd · dissociazione'],['IC50','IC50 · inibizione al 50%'],['EC50','EC50 · risposta al 50%']].map(([v,label])=>`<option value="${v}" ${v===selected?'selected':''}>${label}</option>`).join('')}</select></label><span>${number(rows.length)} misure · ${h(data.database.version)}</span></div>
+ return `${renderAssay09(data,file)}<div class="vd-controls"><label>Tipo di misura<select data-vd-filter="${h(file)}">${[['all','Tutte le misure'],['Ki','Ki · inibizione del legame'],['Kd','Kd · dissociazione'],['IC50','IC50 · inibizione al 50%'],['EC50','EC50 · risposta al 50%']].map(([v,label])=>`<option value="${v}" ${v===selected?'selected':''}>${label}</option>`).join('')}</select></label><span>${number(rows.length)} misure · ${h(data.database.version)}</span></div>
  <div class="vd-table-wrap" tabindex="0" aria-label="Misure sperimentali scorrevoli"><table class="vd-table"><thead><tr><th>Misura</th><th>Bersaglio</th><th>Sistema sperimentale e fonte</th></tr></thead><tbody>${slice.map(r=>`<tr><td><strong>${h(r.type)} ${h(r.relation)} ${number(r.value)} ${h(r.units)}</strong><small>${r.type==='Ki'||r.type==='Kd'?'Legame · non dose clinica':'Potenza nel test · non affinità'}</small></td><td>${ext('https://www.ebi.ac.uk/chembl/explore/target/'+r.target,r.targetName)}<small>${h(r.targetOrganism)} · ${h(r.targetType)}</small><small>Assegnazione al bersaglio: ${h(r.assayConfidence)}/9</small></td><td><p lang="en">${h(r.assayDescription)}</p><details><summary>Condizioni e riferimento</summary><dl><dt>Saggio</dt><dd>${ext('https://www.ebi.ac.uk/chembl/explore/assay/'+r.assay,r.assay)}</dd><dt>Specie del saggio</dt><dd>${h(r.assayOrganism || 'Non riportata; non dedotta dalla specie del bersaglio')}</dd><dt>Cellula / tessuto</dt><dd>${h([r.assayCell,r.assayTissue].filter(Boolean).join(' · ') || 'Non annotati')}</dd><dt>Variante</dt><dd>${h(r.variant || 'Non annotata')}</dd><dt>Dato originale</dt><dd>${h(r.publishedType)} ${h(r.publishedRelation)} ${h(r.publishedValue)} ${h(r.publishedUnits)}</dd><dt>Articolo</dt><dd>${h(r.documentTitle || r.document)}<br>${h(r.journal)} · ${h(r.year)}</dd></dl><div class="vd-links">${r.doi?ext('https://doi.org/'+r.doi,'DOI '+r.doi):''}${r.pubmedId?ext('https://pubmed.ncbi.nlm.nih.gov/'+r.pubmedId+'/','PubMed '+r.pubmedId):''}${ext('https://www.ebi.ac.uk/chembl/explore/document/'+r.document,'Riferimento ChEMBL')}${ext(r.source,'Record di misura '+r.id)}</div></details></td></tr>`).join('')}</tbody></table></div>${rows.length?'':'<p>Nessuna misura di questo tipo nella selezione importata.</p>'}
  <div class="vd-pager"><button class="btn" data-vd="page" data-file="${h(file)}" data-page="${page-1}" ${page===0?'disabled':''}>← Precedenti</button><span>${page+1} / ${count}</span><button class="btn" data-vd="page" data-file="${h(file)}" data-page="${page+1}" ${page+1>=count?'disabled':''}>Successive →</button></div>
  <p class="vd-note">${data.scope.truncated?`Selezione limitata: ${data.scope.retrievedRows} record acquisiti sui ${data.scope.sourceTotal} restituiti dalla query prima dei filtri di qualità.`:'Acquisiti tutti i record restituiti dalla query selezionata, prima dei filtri di qualità.'} Esclusi valori problematici, duplicati potenziali, endpoint trasformati e assegnazioni del bersaglio non dirette. Nessuna media fra esperimenti. ${ext(data.database.licenseUrl,'Dati derivati ChEMBL · '+data.database.license)}.</p>`;
 }
-function labelSections(data) {
+function labelSections(data,file) {
  const p = data.product;
  const excerpts = Object.entries(data.pkSourceSentences||{}).filter(([,values])=>values.length);
  const names = {halfLife:'Emivita · testo di fonte',bioavailability:'Biodisponibilità · testo di fonte',proteinBinding:'Legame proteico · testo di fonte',elimination:'Metabolismo ed eliminazione · testo di fonte'};
  return `<div class="vd-product-context"><strong>${h(p.generic?.join(' / '))}</strong><p>${h(p.brand?.join(' / '))} · ${h(p.route?.join(' / '))}<br>${h(p.manufacturer?.join(' / '))}</p><small>Versione ${h(date(data.effectiveDate))} · ${h(p.applications?.join(' · '))} · USA</small></div>
  <div class="vd-notice">${h(data.match)} ${h(data.limitation)}</div>
- ${excerpts.length?`<h3>Farmacocinetica documentata</h3><p class="vd-note">Frasi selezionate automaticamente dalla sezione farmacocinetica: mantengono il contesto originale in inglese e non sono valori universali della molecola. Apri la sezione completa per interpretarle.</p><div class="vd-pk-grid">${excerpts.map(([key,values])=>`<article><h4>${h(names[key])}</h4>${values.map(value=>`<p lang="en">${h(value)}</p>`).join('')}</article>`).join('')}</div>`:''}
+ ${renderPK09(data)}
+ ${renderIndications09(data,file)}
  <div class="vd-label-sections">${Object.entries(SECTIONS).filter(([key])=>data.sections[key]).map(([key,label])=>`<details><summary>${h(label)} <small>Fonte USA · EN</small></summary><div lang="en">${data.sections[key].map(text=>`<p>${h(text)}</p>`).join('')}</div></details>`).join('')}</div><div class="vd-links">${ext(data.source,'Apri il documento originale DailyMed')}${ext(data.request.url,'Record openFDA acquisito')}</div>`;
 }
 function marketRows(file,data) {
@@ -92,7 +94,7 @@ export function renderVerifiedData(molecule) {
  if (!data.activity && !data.label && !data.market && !data.parentActivity) return '';
  return `<div class="vd-drug-data"><div class="vd-section-title"><span class="eyebrow">Dati di fonte · importazione ${h(date(index.retrieved))}</span><h2>Misure, documenti e confezioni</h2><p>Ogni dato mantiene la propria identità e provenienza. I valori sperimentali non sono dosaggi e i documenti USA non sostituiscono l’RCP italiano.</p></div>
  ${data.activity?`<section class="vd-panel"><header><h3>Ki, Kd, IC50 ed EC50 misurati</h3><span>${data.activity.count} record · ${data.activity.targets} bersagli</span></header>${available(data.activity.file,d=>activityRows(data.activity.file,d))}</section>`:data.parentActivity?`<section class="vd-panel"><h3>Misure disponibili per la molecola parent</h3><p>Non attribuiamo automaticamente al sale selezionato le misure di un’altra identità chimica.</p><a href="#/molecule/${h(molecule.parent)}">Apri il record con ${data.parentActivity.count} misure →</a></section>`:''}
- ${data.label?`<section class="vd-panel"><header><h3>Farmacocinetica, dosi e sicurezza nella fonte</h3><span>Prodotto specifico · USA · EN</span></header>${available(data.label.file,labelSections)}</section>`:''}
+ ${data.label?`<section class="vd-panel"><header><h3>Farmacocinetica, dosi e sicurezza nella fonte</h3><span>Prodotto specifico · USA · EN</span></header>${available(data.label.file,d=>labelSections(d,data.label.file))}</section>`:''}
  ${data.market?`<section class="vd-panel"><header><h3>Prezzi reali per confezione · AIFA</h3><span>${data.market.packages} confezioni${data.market.minPublicPriceEUR!==null?' · da '+eur(data.market.minPublicPriceEUR):''}</span></header>${available(data.market.file,d=>marketRows(data.market.file,d))}</section>`:''}</div>`;
 }
 export function verifiedMarketSummary(molecule) {
@@ -109,7 +111,17 @@ if (typeof document !== 'undefined') {
   redraw();
  });
  document.addEventListener('change',event=>{
-  const file=event.target?.dataset?.vdFilter;if(!file)return;
-  selections.set(file,event.target.value);pages.set(file,0);redraw();
+  const target=event.target;
+  if(target?.dataset?.pk09Indication){indicationState09.set(target.dataset.pk09Indication,target.value);redraw();return;}
+  if(target?.dataset?.pk09Assay){assayState09.set(target.dataset.pk09Assay,target.value);redraw();return;}
+  const file=target?.dataset?.vdFilter;if(!file)return;
+  selections.set(file,target.value);pages.set(file,0);redraw();
+ });
+ document.addEventListener('input',event=>{
+  const element=event.target,file=element?.dataset?.pk09Slider;
+  if(!file)return;
+  exponentState09.set(file,Math.max(-2,Math.min(2,Number(element.value)||0)));
+  const output=document.getElementById('pk09-'+file.replace(/[^a-z0-9_-]/gi,'_'));
+  if(output)output.innerHTML=currentValue09(file);
  });
 }
