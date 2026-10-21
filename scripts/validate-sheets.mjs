@@ -45,7 +45,7 @@ assert.match(item,/Nome internazionale \(EN\)/);
 const missingHTML=atlas.route('molecule',without.id);
 assert.match(missingHTML,/ev-concept-art/);
 assert.match(missingHTML,/Visualizzazione 3D illustrativa/);
-const target={matches:x=>x==='details[data-ev-section]',dataset:{evSection:sample.id+':adme'},open:true};
+const target={isConnected:true,querySelector(){return {dataset:{loaded:'true'}}},matches:x=>x==='details[data-ev-section]',dataset:{evSection:sample.id+':adme'},open:true};
 for(const fn of hooks.toggle||[])fn({target});
 const opened=atlas.route('molecule',sample.id);
 assert.ok(opened.includes('data-ev-section="'+sample.id+':adme" open'),'Open sections must persist through async refresh');

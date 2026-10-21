@@ -1,10 +1,16 @@
-# ELIX — Farmacologia & Principi Attivi · Alpha 0.10
+# ELIX — Farmacologia & Principi Attivi · Alpha 0.11
 
 **App made by Eliseo Peirano · 2026**
 
 Sito: https://eliseopeirano79-droid.github.io/PHARMA/ (l'URL GitHub resta invariato; ELIX è il nuovo nome dell'app).
 
 Estensione del progetto recuperato da `PHARMA-Alpha03-pronta-per-Dock-e-GitHub-Pages.zip`. I laboratori, il simulatore ADME, i casi e il quiz originali restano disponibili. ISOELETTRICA e la copia separata ELIX non sono coinvolte in questa pubblicazione.
+
+## Alpha 0.11 — screening dell'intera app
+
+Revisione orientata alla qualità, senza aggiungere tab principali. Dossier originali nuovamente accessibili in tutte le sezioni, vero caricamento su richiesta, dettagli stabili, catalogo compatto, menu mobile interamente visibile, ricerca nella teoria e nei bersagli, quiz con alternative mescolate e sessioni riprendibili, strutture 2D auto-inquadrate e ingrandimento dedicato, due collegamenti CYP corretti e cache offline controllata.
+
+Il rapporto dettagliato è in [docs/AUDIT-0.11.md](docs/AUDIT-0.11.md). Le prove locali e CI includono tutti i record del catalogo e tutte le sezioni delle label, più una matrice browser di 20 destinazioni × 4 larghezze × 2 temi. I limiti scientifici residui sono espliciti nel rapporto.
 
 ## Alpha 0.10 — monografie leggibili e illustrazioni scientificamente oneste
 

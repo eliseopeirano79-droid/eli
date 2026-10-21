@@ -1,0 +1,73 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import {fileURLToPath} from 'node:url';
+import {ELIX_CHAPTERS,ELIX_QUESTIONS} from '../elix-content.js';
+import {ADDITIONAL_TARGETS} from '../elix-targets.js';
+import {createElixStudio} from '../elix-studio.js';
+import {createReceptorAtlas} from '../receptors.js';
+import {extractConcepts09} from '../elix-pharma-labs.js';
+const read=p=>JSON.parse(fs.readFileSync(new URL('../'+p,import.meta.url),'utf8'));
+const source=p=>fs.readFileSync(new URL('../'+p,import.meta.url),'utf8');
+const baselineDistribution=ELIX_QUESTIONS.reduce((a,q)=>(a[q.correct]=(a[q.correct]||0)+1,a),{});
+const hooks={},memory=new Map();
+globalThis.document={addEventListener(n,fn){(hooks[n]??=[]).push(fn);},getElementById(){return null;},querySelector(){return null;}};
+globalThis.window={addEventListener(){}};
+globalThis.location={hash:'#/quiz'};
+globalThis.localStorage={getItem:k=>memory.get(k)||null,setItem:(k,v)=>memory.set(k,v)};
+const studio=createElixStudio({refresh(){}});
+const click=(action,index)=>{for(const fn of hooks.click||[])fn({target:{closest:s=>s==='[data-elix]'?{dataset:{elix:action,index}}:null},preventDefault(){}});};
+click('quiz-start');const first=studio.route('quiz');
+assert.match(first,/ex-options/);
+let session=JSON.parse(memory.get('elix-academy-session'));
+assert.equal(session.deck.length,20);
+const firstQuestion=ELIX_QUESTIONS.find(q=>q.id===session.deck[0]);
+assert.equal(new Set(session.orders[firstQuestion.id]).size,4);
+assert.deepEqual([...session.orders[firstQuestion.id]].sort(),[0,1,2,3]);
+click('quiz-answer',String((firstQuestion.correct+1)%4));
+assert.ok(JSON.parse(memory.get('elix-academy-progress')).wrong[firstQuestion.id]);
+click('quiz-errors');studio.route('quiz');
+session=JSON.parse(memory.get('elix-academy-session'));assert.equal(session.deck.length,1);assert.equal(session.deck[0],firstQuestion.id);
+click('quiz-answer',String(firstQuestion.correct));
+assert.ok(!JSON.parse(memory.get('elix-academy-progress')).wrong[firstQuestion.id],'Correct remediation should clear the pending error');
+// Resume a valid session and tolerate malformed progress without a crash.
+const resumed=createElixStudio({refresh(){}});assert.match(resumed.route('quiz'),/ex-feedback/);
+memory.set('elix-academy-session','{"deck":["does-not-exist"],"index":0}');memory.set('elix-academy-progress','"broken"');
+assert.doesNotThrow(()=>createElixStudio({refresh(){}}).route('quiz'));
+for(const c of ELIX_CHAPTERS)assert.match(studio.route('textbook',c.id),/ex-reading/);
+assert.match(studio.route('textbook','missing'),/Capitolo non trovato/);
+assert.match(studio.route('cinema','unknown'),/Scenario non disponibile/);
+assert.doesNotMatch(studio.route('cinema','ADRA2A'),/href=['"]#\/lab\/ADRA2A/);
+assert.ok(studio.search('primo passaggio').some(x=>x.link.includes('first-pass')));
+const targets=new Set(['ADRB1','ADRB2','AGTR1','ADRA2A','ADRA1A',...Object.keys(ADDITIONAL_TARGETS)]);
+for(const chapter of ELIX_CHAPTERS)for(const t of chapter.targets||[])assert.ok(targets.has(t),'Dangling target '+t);
+const rx=createReceptorAtlas({drugs:read('data/editorial.json').drugs,refresh(){}});
+assert.equal(rx.all.length,24);
+for(const id of targets)assert.doesNotMatch(rx.route('receptors',id),/Bersaglio non catalogato/);
+assert.match(rx.route('receptors','CYP2D6'),/CPIC/);
+assert.ok(rx.search('CYP2C19').length);
+assert.equal(extractConcepts09({sections:{pharmacokinetics:['Only inactive metabolites are eliminated.']}}).find(x=>x.id==='metabolites').quotes.length,0);
+assert.ok(extractConcepts09({sections:{pharmacokinetics:['An active metabolite contributes to the effect.']}}).find(x=>x.id==='metabolites').quotes.length);
+// Every imported product label retains every represented source section in at least one topical panel.
+const originalFetch=globalThis.fetch;
+globalThis.fetch=async url=>({ok:true,json:async()=>JSON.parse(fs.readFileSync(fileURLToPath(url),'utf8'))});
+const verified=await import('../elix-verified.js');await verified.loadVerifiedIndex(()=>{});
+const index=read('data/verified/index.json');
+let checkedLabels=0,checkedSections=0;
+for(const [id,item] of Object.entries(index.molecules)){
+ if(!item.label)continue;
+ const mol={id,parent:id};verified.renderVerifiedByArea(mol,'dosage');
+ await new Promise(r=>setTimeout(r,1));
+ const output=['dosage','adme','mechanism','studies'].map(area=>verified.renderVerifiedByArea(mol,area)).join('');
+ const data=read('data/verified/'+item.label.file);
+ for(const key of Object.keys(data.sections)){
+  assert.ok(output.includes(':'+key+'"'),'Lost source section '+id+'/'+key);checkedSections++;
+ }
+ checkedLabels++;
+}
+assert.equal(checkedLabels,index.counts.productLabels);assert.equal(checkedSections,2862);
+globalThis.fetch=originalFetch;
+assert.match(source('app.js'),/preserveReading\(renderPage\)/);
+assert.doesNotMatch(source('app.js'),/'\$\{CASES.length\} casi/);
+for(const file of ['elix-usability.js','elix-audit.css'])assert.ok(source('sw.js').includes(file));
+assert.match(source('sw.js'),/MAX_RUNTIME=120/);
+console.log('AUDIT_PASS',JSON.stringify({moleculeRoutes:4225,chapters:ELIX_CHAPTERS.length,targets:targets.size,quiz:ELIX_QUESTIONS.length,sourceLabels:checkedLabels,sourceSections:checkedSections,baselineAnswerPositions:baselineDistribution,shuffled:true}));

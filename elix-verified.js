@@ -9,6 +9,8 @@ const ext = (url,label) => `<a href="${safeLink(url)}" target="_blank" rel="noop
 let index = null;
 const payloads = new Map(), pending = new Set(), selections = new Map(), pages = new Map();
 let redraw = () => {};
+let redrawTimer=null;
+function requestRedraw(){if(redrawTimer!==null)clearTimeout(redrawTimer);redrawTimer=setTimeout(()=>{redrawTimer=null;redraw();},0);}
 const SECTIONS = {
  mechanism_of_action:'Meccanismo d’azione',pharmacodynamics:'Farmacodinamica',pharmacokinetics:'Farmacocinetica',clinical_pharmacology:'Farmacologia clinica',indications_and_usage:'Indicazioni del prodotto USA',dosage_and_administration:'Posologia nella fonte USA',dosage_forms_and_strengths:'Forme e dosaggi del prodotto',contraindications:'Controindicazioni',boxed_warning:'Avvertenze principali',warnings_and_cautions:'Avvertenze e precauzioni',warnings:'Avvertenze',adverse_reactions:'Reazioni avverse',drug_interactions:'Interazioni',use_in_specific_populations:'Popolazioni speciali',pregnancy:'Gravidanza',pediatric_use:'Età pediatrica',geriatric_use:'Geriatria',overdosage:'Sovradosaggio',clinical_studies:'Studi clinici nella label',description:'Descrizione della sostanza e del prodotto'
 };
@@ -53,7 +55,7 @@ function queueFile(file) {
   payloads.set(file,await response.json());
  }).catch(error=>payloads.set(file,{error:String(error)})).finally(()=>{
   pending.delete(file);
-  if (globalThis.location?.hash === expectedHash) redraw();
+  if (globalThis.location?.hash === expectedHash) requestRedraw();
  });
 }
 function available(file,render) {
@@ -98,15 +100,21 @@ export function renderVerifiedData(molecule) {
  ${data.market?`<section class="vd-panel"><header><h3>Prezzi reali per confezione · AIFA</h3><span>${data.market.packages} confezioni${data.market.minPublicPriceEUR!==null?' · da '+eur(data.market.minPublicPriceEUR):''}</span></header>${available(data.market.file,d=>marketRows(data.market.file,d))}</section>`:''}</div>`;
 }
 
+function sourceSections(label,keys){
+ const availableKeys=keys.filter(k=>label.sections?.[k]?.length);
+ if(!availableKeys.length)return '<p class="ev-missing">Sezione non presente nel documento importato. Apri la fonte completa per verifica.</p>';
+ return '<div class="vd-label-sections">'+availableKeys.map(key=>`<details data-source-section="${h(label.setId||label.moleculeFamily)}:${h(key)}"><summary>${h(SECTIONS[key]||key)} <small>Prodotto USA · EN</small></summary><div lang="en" tabindex="0" aria-label="${h(SECTIONS[key]||key)} · fonte completa">${[...new Set(label.sections[key])].map(text=>`<p>${h(text)}</p>`).join('')}</div></details>`).join('')+'</div>';
+}
 export function renderVerifiedByArea(molecule,area){
  const data=verifiedRecord(molecule);
+ if(area==="mechanism"||area==="studies"){if(!data.label)return "";return available(data.label.file,label=>`<section class="vd-panel"><h3>${area==="mechanism"?"Farmacologia nella fonte di prodotto":"Studi descritti nel documento di prodotto"}</h3><p class="vd-note">${h(label.product?.generic?.join(" / "))} · ${h(label.product?.route?.join(" / "))} · USA · ${h(date(label.effectiveDate))}</p>${sourceSections(label,area==="mechanism"?["mechanism_of_action","pharmacodynamics","description"]:["clinical_studies"])}<div class="vd-links">${ext(label.source,"Fonte DailyMed completa")}</div></section>`);}
  if(area==="adme"){
   if(!data.label)return '<p class="ev-missing">Nessun documento PK specifico associato a questo record. L’assenza dal dataset non dimostra assenza di dati nella letteratura.</p>';
-  return available(data.label.file,label=>`<div class="vd-product-context"><strong>${h(label.product?.generic?.join(" / "))}</strong><p>${h(label.product?.route?.join(" / "))} · Fonte USA, versione ${h(date(label.effectiveDate))}</p></div>${renderPK09(label)}<p class="vd-note">${h(label.match)} ${h(label.limitation)}</p><div class="vd-links">${ext(label.source,"Testo ufficiale completo · DailyMed")}</div>`);
+  return available(data.label.file,label=>`<div class="vd-product-context"><strong>${h(label.product?.generic?.join(" / "))}</strong><p>${h(label.product?.route?.join(" / "))} · Fonte USA, versione ${h(date(label.effectiveDate))}</p></div>${renderPK09(label)}${sourceSections(label,["pharmacokinetics","clinical_pharmacology"])}<p class="vd-note">${h(label.match)} ${h(label.limitation)}</p><div class="vd-links">${ext(label.source,"Testo ufficiale completo · DailyMed")}</div>`);
  }
  if(area==="dosage"){
   if(!data.label)return '<p class="ev-missing">Posologia per indicazione non acquisita in questo dataset. Usa il RCP italiano della specifica confezione, se disponibile.</p>';
-  return available(data.label.file,label=>`<div class="vd-product-context"><strong>${h(label.product?.generic?.join(" / "))}</strong><p>Via: ${h(label.product?.route?.join(" / "))} · Fonte USA, versione ${h(date(label.effectiveDate))}</p></div>${renderIndications09(label,data.label.file)}<div class="vd-links">${ext(label.source,"Apri tutte le sezioni della label originale")}</div>`);
+  return available(data.label.file,label=>`<div class="vd-product-context"><strong>${h(label.product?.generic?.join(" / "))}</strong><p>Via: ${h(label.product?.route?.join(" / "))} · Fonte USA, versione ${h(date(label.effectiveDate))}</p></div>${renderIndications09(label,data.label.file)}${sourceSections(label,["indications_and_usage","dosage_and_administration","dosage_forms_and_strengths","contraindications","boxed_warning","warnings_and_cautions","warnings","adverse_reactions","drug_interactions","use_in_specific_populations","pregnancy","pediatric_use","geriatric_use","overdosage"])}<div class="vd-links">${ext(label.source,"Apri tutte le sezioni della label originale")}</div>`);
  }
  if(area==="activity"){
   if(data.activity)return `<section class="vd-panel"><header><h3>Confronta le misure sperimentali</h3><span>${data.activity.count} misure · ${data.activity.targets} bersagli</span></header>${available(data.activity.file,body=>activityRows(data.activity.file,body))}</section>`;

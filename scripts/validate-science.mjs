@@ -16,7 +16,7 @@ assert.equal(ELIX_CHAPTERS.length,54);
 assert.equal(ELIX_QUESTIONS.length,131);
 assert.equal(Object.keys(DEEP_DRUGS).length,37);
 assert.equal(VERIFIED_TRIALS.length,7);
-assert.equal(Object.keys(ADDITIONAL_TARGETS).length,17);
+assert.equal(Object.keys(ADDITIONAL_TARGETS).length,19);
 assert.equal(EXTRA_CASES.length,7);
 const ids=arr=>new Set(arr).size===arr.length;
 assert.ok(ids(ELIX_CHAPTERS.map(x=>x.id)),"Duplicated chapter ID");
@@ -81,7 +81,7 @@ const receptors=createReceptorAtlas({drugs:[{id:"ramipril",name:"Ramipril",subgr
 const index=receptors.route("receptors");
 assert.match(index,/PDB 7BZ2/);
 assert.match(index,/CaV1.2/);
-assert.equal(receptors.all.length,22);
+assert.equal(receptors.all.length,24);
 const ace=receptors.route("receptors","ACE");
 assert.match(ace,/angiotensina/);
 assert.match(ace,/#\/drug\/ramipril/);
@@ -95,4 +95,4 @@ for(const asset of ["elix-deep.css","elix-expanded-chapters.js","elix-expanded-q
 assert.match(read("index.html"),/elix-deep\.css/);
 const nav=read("app.js").split("\n").find(x=>x.startsWith("const nav="));
 assert.equal((nav.match(/\['(?:home|atlas|receptors|textbook|quiz)'/g)||[]).length,5,"Only five primary tabs");
-console.log("ELIX 0.7 scientific regression PASS: 42 chapters, 131 quiz, 37 deep drugs, 7 trials, 12 cases, 22 target profiles.");
+console.log("ELIX 0.7 scientific regression PASS: 54 chapters, 131 quiz, 37 deep drugs, 7 trials, 12 cases, 24 target profiles.");

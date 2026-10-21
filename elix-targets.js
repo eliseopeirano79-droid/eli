@@ -1,5 +1,5 @@
-/* ELIX curated secondary targets: mechanisms with source-independent original explanations. No invented PDB structures. */
-export const ADDITIONAL_TARGETS={
+/* Original target explanations. Metabolic relationships remain distinct from pharmacodynamic targets. */
+export const ADDITIONAL_TARGETS = {
   "ACE": {
     "id": "ACE",
     "name": "Enzima di conversione dell'angiotensina",
@@ -271,5 +271,46 @@ export const ADDITIONAL_TARGETS={
     "mechanism": "SGLT2 recupera glucosio e sodio nel tubulo prossimale. Gli inibitori riducono questo processo, modificando anche segnali emodinamici renali che contribuiscono agli effetti cardiometabolici documentati.",
     "insight": "DAPA-CKD ed EMPA-KIDNEY collegano un trasportatore tubulare a esiti clinici renali in popolazioni selezionate, anche senza diabete.",
     "chapter": "metabolismo-diabetico"
+  },
+  "CYP2C19": {
+    "id": "CYP2C19",
+    "name": "CYP2C19 · citocromo P450",
+    "kind": "Enzima del metabolismo · non recettore",
+    "tissue": "Metabolismo epatico",
+    "signal": [
+      "Clopidogrel (profarmaco)",
+      "Bioattivazione, anche CYP2C19-dipendente",
+      "Metabolita attivo",
+      "Antagonismo P2Y₁₂ piastrinico"
+    ],
+    "mechanism": "CYP2C19 partecipa alla bioattivazione del clopidogrel. Le varianti che riducono l’attività enzimatica possono ridurre la formazione del metabolita attivo e la risposta antiaggregante. Questo enzima non è il recettore farmacodinamico del clopidogrel: il metabolita agisce su P2Y₁₂.",
+    "insight": "Il significato di una variante dipende dalla relazione gene–farmaco, dall’indicazione e dalle altre condizioni cliniche; un genotipo non impone una dose da solo. Consultare la linea guida CPIC 2022, non applicare una regola identica a tutti i substrati.",
+    "chapter": "metabolismo-farmacogenetica",
+    "metabolizes": [
+      "clopidogrel"
+    ],
+    "source": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9287492/",
+    "reference": "CPIC, CYP2C19–clopidogrel, aggiornamento 2022"
+  },
+  "CYP2D6": {
+    "id": "CYP2D6",
+    "name": "CYP2D6 · citocromo P450",
+    "kind": "Enzima del metabolismo · non recettore",
+    "tissue": "Metabolismo epatico",
+    "signal": [
+      "Metoprololo (farmaco attivo)",
+      "Biotrasformazione CYP2D6-dipendente",
+      "Esposizione sistemica variabile",
+      "Risposta β-bloccante"
+    ],
+    "mechanism": "CYP2D6 contribuisce al metabolismo del metoprololo. Una ridotta attività può aumentare l’esposizione al farmaco attivo: il senso della variazione è diverso dalla minore attivazione di un profarmaco. Le interazioni enzimatiche sono un altro determinante della variabilità.",
+    "insight": "La linea guida CPIC 2024 riporta evidenza azionabile soprattutto per metoprololo. Non estendere automaticamente le raccomandazioni a tutti i beta-bloccanti o alle altre proteine studiate. La scheda spiega il processo metabolico e non fornisce un algoritmo di dosaggio.",
+    "chapter": "metabolismo-farmacogenetica",
+    "metabolizes": [
+      "metoprololo",
+      "nebivololo"
+    ],
+    "source": "https://pubmed.ncbi.nlm.nih.gov/38951961/",
+    "reference": "CPIC, genotipi e terapia con beta-bloccanti, 2024"
   }
 };

@@ -115,21 +115,22 @@ const RECEPTORS=[
 export function createReceptorAtlas({drugs,refresh}){
   const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
   const state={query:"",viewer:null};
+  const searchNorm=value=>String(value||'').normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/β/g,'beta').replace(/α/g,'alfa');
   const known=new Map(RECEPTORS.map(x=>[x.id,x]));
   const targets=[...new Set(drugs.flatMap(d=>d.targets||[]))];
-  const matches=id=>drugs.filter(d=>(d.targets||[]).includes(id));
+  const matches=id=>drugs.filter(d=>(d.targets||[]).includes(id)||(ADDITIONAL_TARGETS[id]?.metabolizes||[]).includes(d.id));
   const drugLinks=id=> {
     const list=matches(id);
     return list.length?list.map(d=>`<a href="#/drug/${encodeURIComponent(d.id)}" class="rx-drug"><strong>${esc(d.name)}</strong><small>${esc(d.subgroup)}</small><span>↗</span></a>`).join(""):"<p class='rx-muted'>Non sono ancora disponibili collegamenti revisionati con farmaci nella selezione didattica attuale.</p>";
   };
   function listHTML(){
- const q=state.query.toLocaleLowerCase("it").trim();
- const xs=[...RECEPTORS,...Object.values(ADDITIONAL_TARGETS)].filter(x=>(x.id+" "+x.name+" "+(x.coupling||x.kind)+" "+(x.organ||x.tissue)).toLocaleLowerCase("it").includes(q));
+ const q=searchNorm(state.query).trim();
+ const xs=[...RECEPTORS,...Object.values(ADDITIONAL_TARGETS)].filter(x=>searchNorm(x.id+" "+x.name+" "+(x.coupling||x.kind)+" "+(x.organ||x.tissue)).includes(q));
  return xs.length?xs.map(x=>`<a class="rx-result" href="#/receptors/${encodeURIComponent(x.id)}"><span class="rx-gene">${esc(x.id)}</span><span><strong>${esc(x.name)}</strong><small>${esc(x.coupling||x.kind)} · ${esc(x.organ||x.tissue)}</small></span><span class="rx-pdb">${x.pdb?'PDB '+x.pdb+' ↗':'Scheda teorica ↗'}</span></a>`).join(""):"<p class='rx-muted'>Nessun bersaglio trovato nella selezione curata.</p>";
 }
 
   function index(){
-    return `<div class="rx-wrap"><header class="rx-heading"><span class="eyebrow">ELIX · Strutture e fisiologia</span><h1>Recettori</h1><p>Un'unica scheda per struttura atomica 3D, fisiologia, segnalazione e farmaci che interagiscono con il bersaglio.</p></header>
+    return `<div class="rx-wrap"><header class="rx-heading"><span class="eyebrow">ELIX · Strutture e fisiologia</span><h1>Recettori e bersagli</h1><p>Un'unica scheda per struttura atomica 3D, fisiologia, segnalazione e farmaci che interagiscono con il bersaglio.</p></header>
       <p class="rx-summary"><strong>${RECEPTORS.length} modelli PDB · ${Object.keys(ADDITIONAL_TARGETS).length} altri bersagli approfonditi</strong><span>Primo nucleo editoriale. Il catalogo dei recettori non è ancora esaustivo.</span></p>
       <label class="rx-search">Cerca per nome, gene o via di segnalazione<input id="rx-search" type="search" value="${esc(state.query)}" placeholder="β₂, ADRB1, Gq, muscolatura…" autocomplete="off"></label>
       <div class="rx-results" id="rx-results">${listHTML()}</div>
@@ -137,7 +138,7 @@ export function createReceptorAtlas({drugs,refresh}){
       </div>`;
   }
   function extraDetail(item){
- return `<div class="rx-wrap"><a href="#/receptors" class="rx-back">← Recettori e bersagli</a><header class="rx-heading"><span class="eyebrow">${esc(item.kind)} · ${esc(item.id)}</span><h1>${esc(item.name)}</h1><p>${esc(item.tissue)}</p></header><div class="rx-two"><section class="rx-panel"><h2>Funzione e farmacologia</h2><p class="rx-theory">${esc(item.mechanism)}</p><h3>Perché è importante</h3><p>${esc(item.insight)}</p></section><section class="rx-panel"><h2>Struttura tridimensionale</h2><div class="rx-missing-structure"><strong>Modello atomico non ancora associato</strong><p>Non assegniamo strutture per semplice somiglianza. Servono identificatore PDB, stato conformazionale e fonte bibliografica verificati.</p><a href="https://www.rcsb.org/" target="_blank" rel="noopener noreferrer">Cerca nel Protein Data Bank ↗</a></div></section></div><section class="rx-panel"><div class="rx-panel-head"><h2>Via fisiologica e farmacologica</h2><a class="rx-primary" href="#/textbook/${encodeURIComponent(item.chapter)}">Capitolo collegato →</a></div><div class="rx-cascade">${item.signal.map((step,i)=>`<span><small>${String(i+1).padStart(2,"0")}</small>${esc(step)}</span>`).join("<b aria-hidden='true'>→</b>")}</div><p class="rx-muted">Schema meccanicistico didattico; non equivale a dinamica molecolare sperimentale o a una previsione clinica.</p></section><section class="rx-panel"><h2>Farmaci collegati al bersaglio</h2><div class="rx-drugs">${drugLinks(item.id)}</div></section></div>`;
+ return `<div class="rx-wrap"><a href="#/receptors" class="rx-back">← Recettori e bersagli</a><header class="rx-heading"><span class="eyebrow">${esc(item.kind)} · ${esc(item.id)}</span><h1>${esc(item.name)}</h1><p>${esc(item.tissue)}</p></header><div class="rx-two"><section class="rx-panel"><h2>Funzione e farmacologia</h2><p class="rx-theory">${esc(item.mechanism)}</p><h3>Perché è importante</h3><p>${esc(item.insight)}</p>${item.source?`<p class="rx-source"><a href="${esc(item.source)}" target="_blank" rel="noopener noreferrer">${esc(item.reference)} ↗</a></p>`:""}</section><section class="rx-panel"><h2>Struttura tridimensionale</h2><div class="rx-missing-structure"><strong>Modello atomico non ancora associato</strong><p>Non assegniamo strutture per semplice somiglianza. Servono identificatore PDB, stato conformazionale e fonte bibliografica verificati.</p><a href="https://www.rcsb.org/" target="_blank" rel="noopener noreferrer">Cerca nel Protein Data Bank ↗</a></div></section></div><section class="rx-panel"><div class="rx-panel-head"><h2>Via fisiologica e farmacologica</h2><a class="rx-primary" href="#/textbook/${encodeURIComponent(item.chapter)}">Capitolo collegato →</a></div><div class="rx-cascade">${item.signal.map((step,i)=>`<span><small>${String(i+1).padStart(2,"0")}</small>${esc(step)}</span>`).join("<b aria-hidden='true'>→</b>")}</div><p class="rx-muted">Schema meccanicistico didattico; non equivale a dinamica molecolare sperimentale o a una previsione clinica.</p></section><section class="rx-panel"><h2>${item.metabolizes?"Farmaci collegati al metabolismo (non ligandi del recettore)":"Farmaci collegati al bersaglio"}</h2><div class="rx-drugs">${drugLinks(item.id)}</div></section></div>`;
 }
   function detail(id){
     const x=known.get(id);
@@ -166,5 +167,5 @@ export function createReceptorAtlas({drugs,refresh}){
     if(e.target?.id!=="rx-search")return;
     state.query=e.target.value;const el=document.getElementById("rx-results");if(el)el.innerHTML=listHTML();
   });
-  return {route:(p,id)=>p!=="receptors"?null:id?detail(id):index(),all:[...RECEPTORS,...Object.values(ADDITIONAL_TARGETS)]};
+  return {route:(p,id)=>p!=="receptors"?null:id?detail(id):index(),all:[...RECEPTORS,...Object.values(ADDITIONAL_TARGETS)],search(query){const q=searchNorm(query).trim();if(!q)return [];return [...RECEPTORS,...Object.values(ADDITIONAL_TARGETS)].filter(x=>searchNorm(x.id+' '+x.name+' '+(x.kind||x.coupling)).includes(q)).slice(0,5).map(x=>({type:'Bersaglio',name:x.name,sub:x.id+' · '+(x.kind||x.coupling),link:'#/receptors/'+x.id,ic:'target'}));}};
 }
