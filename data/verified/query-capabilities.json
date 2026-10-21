@@ -1,0 +1,23 @@
+{
+  "standard_units": {
+    "accepted": true,
+    "records": 219
+  },
+  "standard_flag": {
+    "accepted": true,
+    "records": 219
+  },
+  "target_organism": {
+    "accepted": true,
+    "records": 293
+  },
+  "src_id": {
+    "accepted": false,
+    "status": 400,
+    "body": "{\"error_message\": \"The 'src_id' field does not allow filtering.\"}"
+  },
+  "order_by": {
+    "accepted": true,
+    "records": 483
+  }
+}
