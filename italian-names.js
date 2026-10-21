@@ -227,9 +227,9 @@ export const normalizeDrugName = value => String(value??'').trim().normalize('NF
 export const internationalDrugName = molecule => String(molecule?.name ?? '');
 export function italianDrugName(molecule, exactEditorialName='') {
   const key = normalizeDrugName(molecule?.name);
+  if (exactEditorialName && exactEditorialName.trim()) return exactEditorialName.trim();
   const direct = ITALIAN_DRUG_NAMES[key];
   if (direct) return direct;
-  if (exactEditorialName && exactEditorialName.trim()) return exactEditorialName.trim();
   return internationalDrugName(molecule); // evitare false traduzioni clinicamente rilevanti
 }
 export function hasReviewedItalianName(molecule, exactEditorialName='') {
