@@ -22,14 +22,22 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Import from official public sources
-        run: python scripts/import_verified_data.py
+      - name: Check API capabilities and acquire sources
+        run: python scripts/fix_verified_import.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: elix-acquired-source-snapshot
+          path: data/verified
+          if-no-files-found: ignore
+          retention-days: 3
       - name: Commit acquired data on the same branch
         run: |
           git config user.name 'ELIX Data Import'
           git config user.email 'elix-data@users.noreply.github.com'
           git add data/verified
           if git diff --cached --quiet; then exit 0; fi
-          git commit -m 'data: store source-identified public pharmacology records'
+          git commit -m 'data: import measured activities, official product labels and AIFA package prices'
+          git restore scripts/import_verified_data.py
           git pull --rebase origin "${GITHUB_REF_NAME}"
           git push origin "HEAD:${GITHUB_REF_NAME}"
