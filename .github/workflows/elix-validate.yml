@@ -1,7 +1,7 @@
 name: ELIX code and data validation
 on:
   push:
-    branches: [main, feature/elix-alpha-05, feature/elix-06-focus-and-brand]
+    branches: [main, feature/elix-alpha-05, feature/elix-06-focus-and-brand, feature/elix-07-deep-scientific-atlas]
   pull_request:
     branches: [main]
   workflow_dispatch:
@@ -30,5 +30,13 @@ jobs:
           node --check receptors.js
           node --check italian-names.js
           node --check scripts/validate-it-localization.mjs
+          node --check elix-expanded-chapters.js
+          node --check elix-expanded-questions.js
+          node --check elix-deep-drugs.js
+          node --check elix-research.js
+          node --check elix-rich-reader.js
+          node --check elix-targets.js
+          node --check elix-extra-cases.js
+          node --check scripts/validate-science.mjs
       - name: Run pharmacology data and UI tests
         run: npm test
