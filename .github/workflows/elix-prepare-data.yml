@@ -11,8 +11,8 @@ concurrency:
   cancel-in-progress: false
 jobs:
   prepare:
-    runs-on: ubuntu-latest
-    timeout-minutes: 25
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
         with:
@@ -20,20 +20,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Require the acquired dataset on the branch
+      - name: Integrate and validate acquired source data
         run: |
-          for attempt in $(seq 1 100); do
-            git fetch origin "${GITHUB_REF_NAME}"
-            if git cat-file -e "origin/${GITHUB_REF_NAME}:data/verified/index.json" 2>/dev/null; then
-              git reset --hard "origin/${GITHUB_REF_NAME}"
-              exit 0
-            fi
-            echo "Source acquisition has not committed its completed dataset (check ${attempt})."
-            sleep 10
-          done
-          echo 'No completed source dataset available'; exit 1
-      - name: Integrate and validate data integrity
-        run: |
+          test -f data/verified/index.json
           node --check elix-verified.js
           node --check scripts/prepare_verified_release.mjs
           node scripts/prepare_verified_release.mjs
@@ -42,7 +31,7 @@ jobs:
       - name: Install browser test dependency
         run: |
           npm install --prefix /tmp/elix-browser --no-save playwright@1.56.1
-          node /tmp/elix-browser/node_modules/playwright/cli.js install chromium
+          node /tmp/elix-browser/node_modules/playwright/cli.js install --with-deps chromium
       - name: Browser regression desktop and mobile
         run: |
           python3 -m http.server 8765 > /tmp/elix-http.log 2>&1 &
