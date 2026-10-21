@@ -62,7 +62,7 @@ const app=fs.readFileSync(fileURLToPath(new URL("../app.js",import.meta.url)),"u
 assert.equal((app.split("\n").find(x=>x.startsWith("const nav="))?.match(/\['(?:home|atlas|receptors|textbook|quiz)'/g)||[]).length,5);
 const evidence=fs.readFileSync(fileURLToPath(new URL("../evidence-atlas.js",import.meta.url)),"utf8");
 assert.match(evidence,/guidelineLinks09\(m,d\)/);
-assert.match(evidence,/renderVerifiedData\(m\)/);
+assert.match(evidence,/renderVerifiedByArea\(m,/);
 const ui=fs.readFileSync(fileURLToPath(new URL("../elix-verified.js",import.meta.url)),"utf8");
 assert.match(ui,/renderAssay09\(data,file\)/);
 assert.match(ui,/renderPK09\(data\)/);
