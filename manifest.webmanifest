@@ -1,22 +1,22 @@
 {
-  "name": "ELIX — The Interactive Pharmacology Atlas",
+  "name": "ELIX — Farmacologia & Principi Attivi",
   "short_name": "ELIX",
-  "description": "ELIX, la Bibbia dei Farmaci: atlante molecolare, trattato interattivo, academy e laboratori didattici. App made by Eliseo Peirano · 2026.",
+  "description": "ELIX: Farmacologia & Principi Attivi. Enciclopedia didattica di farmaci, recettori, teoria, studi e quiz.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#0d151b",
-  "theme_color": "#0d151b",
+  "background_color": "#182230",
+  "theme_color": "#182230",
   "lang": "it",
   "icons": [
     {
-      "src": "./assets/elix-logo-192.png",
+      "src": "./assets/elix-pill-192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
-      "src": "./assets/elix-logo.svg",
+      "src": "./assets/elix-pill-original.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any maskable"
