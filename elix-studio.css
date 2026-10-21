@@ -163,3 +163,6 @@ box-shadow:0 0 55px rgba(46,215,174,.16),inset 0 0 30px rgba(97,221,176,.12)}
 .sidebar{overflow-y:auto;overscroll-behavior:contain}
 .top-navigation{overflow-x:auto;max-width:min(72vw,930px);scrollbar-width:thin;flex-shrink:1}
 @media(max-width:1100px){.top-navigation{max-width:100%}}
+
+.ex-index-list button{appearance:none;background:transparent;color:var(--muted);border:0;border-bottom:1px solid var(--line);text-align:left;padding:10px 0;font-size:11px;cursor:pointer;line-height:1.5}
+.ex-index-list button:hover,.ex-index-list button:focus-visible{color:var(--accent)}
