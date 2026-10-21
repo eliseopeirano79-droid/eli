@@ -1,10 +1,23 @@
-# ELIX — Farmacologia & Principi Attivi · Alpha 0.8
+# ELIX — Farmacologia & Principi Attivi · Alpha 0.9
 
 **App made by Eliseo Peirano · 2026**
 
 Sito: https://eliseopeirano79-droid.github.io/PHARMA/ (l'URL GitHub resta invariato; ELIX è il nuovo nome dell'app).
 
 Estensione del progetto recuperato da `PHARMA-Alpha03-pronta-per-Dock-e-GitHub-Pages.zip`. I laboratori, il simulatore ADME, i casi e il quiz originali restano disponibili. ISOELETTRICA e la copia separata ELIX non sono coinvolte in questa pubblicazione.
+
+## Alpha 0.9 — ADME, posologia per indicazione e teoria originale (21 ottobre 2026)
+
+- **54 capitoli didattici originali** nei consueti 18 volumi: +12 capitoli su primo passaggio, profarmaci/metaboliti attivi, escrezione, formulazioni, concentrazione-effetto, modalità di somministrazione, dosi per indicazione, insufficienza d'organo, farmacogenomica, TDM, adattamenti del recettore e fonti cliniche. Le 48 nuove sezioni sono di nostra redazione, non copiate da Katzung o Goodman & Gilman.
+- **ADME nel prodotto specifico**: nuova navigazione delle frasi realmente importate dalle 172 schede di prodotto USA per primo passaggio, metaboliti attivi, vie di eliminazione, emivita, assorbimento, enzimi CYP, distribuzione e popolazioni speciali. Le frasi vengono mostrate in originale e il riconoscimento automatico può essere incompleto.
+- **Dosaggi per indicazione**: navigatore per le sottosezioni della sezione 2 FDA quando la struttura è individuabile, con avvertenza su prodotto/via/giurisdizione/data. Non diventa un regime posologico italiano: per questo serve l'RCP AIFA pertinente.
+- **Curva interattiva per saggio**: usa dati veri ChEMBL EC50, IC50 o Kd, selezione del target e scala logaritmica di concentrazione; il tracciato matematico è una curva di Hill teorica con n=1, non una previsione clinica dose-effetto. Non estrapola da Ki.
+- **Fonti tracciate**: portale AIFA Medicinali, standard EMA SmPC, GINA 2026, KDIGO 2024 (bozza 2027 distinta), ESC 2024 ipertensione, CPIC 2022 CYP2C19/clopidogrel. Le linee guida affiancano e non sostituiscono le indicazioni del RCP.
+- Interfaccia invariata a cinque sezioni principali; nessuna aggiunta di menu o testo protetto dei manuali.
+
+### Validazione prevista
+
+Aggiunta una suite dedicata con verifica dei valori ChEMBL, selettore fonte, ADME e intervalli per indicazione dalla label originale, protezione HTML e separazione di modello e misure.
 
 ## Alpha 0.8 — dati pubblici acquisiti, non generati
 
