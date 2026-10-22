@@ -1,3 +1,4 @@
+import {appendContentBatches,renderBatchPharmacology} from './elix-content-batches.js';
 import {loadVerifiedIndex,verifiedRecord,verifiedBadges,verifiedOverview,renderVerifiedData,renderVerifiedByArea,renderReviewedProductSource,verifiedMarketSummary,verifiedPublicPrice,hasVerifiedData} from './elix-verified.js';
 import {reviewedProfiles,reviewedProfile,profileSource,profileContext,isMissingPK,renderPKContext,renderReviewedPK} from './elix-pk-reviewed.js';
 import {italianDrugName, hasReviewedItalianName, internationalDrugName} from './italian-names.js';
@@ -37,6 +38,7 @@ export function createEvidenceAtlas({refresh,legacyDrugs}){
   try{
    const [catalog,registry,ed,labelIndex,news,pkReviewed]=await Promise.all([...['catalog','registry','editorial','labels-index','news'].map(n=>json(`data/${n}.json`)),json('data/pk-reviewed.json').catch(e=>{pkWarning='Sintesi PK revisionate non caricate. Restano consultabili il catalogo e i documenti già disponibili.';console.warn('ELIX reviewed PK unavailable',e);return {profiles:[],sources:[]};})]);
    await loadVerifiedIndex(refresh);
+   appendContentBatches(ed,pkReviewed);
    db={catalog,registry,ed,labelIndex,news,pkReviewed};
    for(const d of ed.drugs){byLegacy.set(d.id,d);editorial.set(d.chembl,d);}
    for(const m of catalog.molecules)byId.set(m.id,m);
@@ -49,7 +51,7 @@ export function createEvidenceAtlas({refresh,legacyDrugs}){
  const english=m=>internationalDrugName(m);
  const info=m=>editorial.get(m.id)||editorial.get(m.parent);
  const selectedPK=m=>reviewedProfile(m,db?.pkReviewed,pkSelections.get(m.id));
- const primaryPKSource=profile=>profile?.sourceIds?.map(id=>profileSource(db.pkReviewed,id)).find(source=>source?.setId);
+ const primaryPKSource=profile=>{const sources=(profile?.sourceIds||[]).map(id=>profileSource(db.pkReviewed,id)).filter(Boolean);return sources.find(source=>source.setId)||sources[0];};
  const registry=m=>db.registry.records[m.parent||m.id]||{};
  function nav(){return '';}
 
@@ -170,7 +172,7 @@ export function createEvidenceAtlas({refresh,legacyDrugs}){
  const targets=d?.targets?.length?`<div class="ev-inline-dots">${d.targets.map(t=>`<a class="ev-tag" href="#/receptors/${encodeURIComponent(t)}">${esc(t)} · bersaglio →</a>`).join("")}</div>`:"";
  const directTheory=()=>d?card("Teoria farmacologica",`${maybeParent}<div class="ev-theory"><article><h3>Meccanismo</h3><p>${esc(d.mechanism)}</p></article><article><h3>Impieghi descritti</h3><p>${esc(d.clinical)}</p></article><article><h3>Rischi</h3><p>${esc(d.critical)}</p></article></div><p class="ev-note">${esc(d.review)}</p>${db.ed.classes.some(c=>c.family===d.family)?`<a class="ev-link" href="#/class/${db.ed.classes.find(c=>c.family===d.family).id}">Approfondisci la classe →</a>`:""}`):
  card("Meccanismo da approfondire",'<p>Non è ancora disponibile una monografia editoriale per questa identità. Non deduciamo indicazioni o rischi dal solo nome della sostanza.</p>');
- const theory=()=>directTheory()+renderDeepDrug(d)+renderVerifiedByArea(m,"mechanism");
+ const theory=()=>directTheory()+renderDeepDrug(d)+renderBatchPharmacology(d)+renderVerifiedByArea(m,"mechanism");
  const kinetic=()=>profile?renderReviewedPK(profile,db.pkReviewed)+`<details class="ev-more ev-pk-source-drawer" data-pk-original="${esc(profile.id)}"><summary>Leggi la farmacocinetica nel documento originale</summary>${renderReviewedProductSource(pkSource,'adme')}</details>`:(own&&d?.comparison?card("Dati PK della sintesi verificata",pkTable([d])):"")+renderVerifiedByArea(m,"adme");
  const doses=()=>(profile?renderReviewedProductSource(pkSource,"dosage"):renderVerifiedByArea(m,"dosage"))+drugPosology(m,d,l)+guidelineLinks09(m,d)+(l?`<details class="ev-more"><summary>Consulta le altre sezioni complete della label USA</summary>${labelPanel(d)}</details>`:"");
  const annotated=()=>refs.length?card("Meccanismi annotati in ChEMBL",`<p>Testo sperimentale in lingua originale, con bersaglio e riferimenti. Non è necessariamente una indicazione clinica.</p>${refs.map(r=>`<article class="ev-mechanism"><h3 lang="en">${esc(r.text)}</h3><p>${esc(r.action)}${r.target?" · "+external("https://www.ebi.ac.uk/chembl/explore/target/"+r.target,r.target):""}</p><div class="ev-ref-list">${(r.references||[]).map(x=>external(x.url,x.title)).join("")}</div></article>`).join("")}`):"";
@@ -198,7 +200,7 @@ export function createEvidenceAtlas({refresh,legacyDrugs}){
   <div class="ev-intro-state"><span class="ev-intro-dot" aria-hidden="true"></span>${esc(qualityNote)}</div>
   ${identityDetail}
   </div>${chemistry(m)}</header>
- ${drugSummary(m,d,l)}<div class="ev-sheet-actions"><button type="button" data-ev="expand-all">Apri tutte le sezioni</button><button type="button" data-ev="collapse-all">Richiudi tutto</button>${d?`<a href="#/quiz/${encodeURIComponent(d.id)}">Allenati su questo farmaco →</a>`:""}</div>
+ ${drugSummary(m,d,l)}<div class="ev-sheet-actions"><button type="button" data-ev="expand-all">Apri tutte le sezioni</button><button type="button" data-ev="collapse-all">Richiudi tutto</button>${d&&d.quizAvailable!==false?`<a href="#/quiz/${encodeURIComponent(d.id)}">Allenati su questo farmaco →</a>`:""}</div>
  <div class="ev-reading-head"><div><span class="eyebrow">ATLANTE FARMACOLOGICO</span><h2>Esplora la scheda</h2><p>Le informazioni sono organizzate per argomento. Apri quello che ti interessa, senza dover scorrere tutte le fonti.</p></div><span class="ev-reading-count">${sections.length} sezioni</span></div>
  <div class="ev-topics">${accordion}</div>
  <p class="ev-sheet-foot">Contenuti per studio e ricerca, non decisioni terapeutiche individuali. Fonte, prodotto, specie e contesto determinano la validità di ogni valore.</p></div>`;

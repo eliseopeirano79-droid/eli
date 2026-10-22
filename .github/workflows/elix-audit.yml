@@ -36,6 +36,8 @@ jobs:
           python3 -m http.server 8765 > /tmp/elix-audit/http.log 2>&1 &
           PLAYWRIGHT_MODULE=/tmp/elix-audit-deps/node_modules/playwright node scripts/browser-systematic-audit.cjs
           python3 -c 'import json; assert json.load(open("/tmp/elix-audit/audit-report.json"))["passed"] is True'
+          PLAYWRIGHT_MODULE=/tmp/elix-audit-deps/node_modules/playwright node scripts/browser-content-batch.cjs
+          python3 -c 'import json; assert json.load(open("/tmp/elix-audit/content-batch-report.json"))["passed"] is True'
       - uses: actions/upload-artifact@v4
         if: always()
         with:
