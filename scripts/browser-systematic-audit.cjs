@@ -37,10 +37,17 @@ const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
  assert.equal(await page.locator('details.ev-topic[open]').count(),0);
  assert.ok(!requests.some(x=>/\/data\/verified\/(labels|activities|market)\//.test(x)),'Collapsed content fetched eagerly');
  await page.locator('[data-ev="goto-topic"][data-topic="adme"]').first().click();
- await page.waitForSelector('.pk09-topic');await page.locator('.pk09-topic summary').first().click();
+ await page.waitForSelector('.ev-pk-metric details');
+ assert.equal(await page.locator('.ev-pk-metric details').count(),6);
+ assert.equal(await page.locator('.ev-pk-metric details[open]').count(),0);
+ await page.locator('.ev-pk-metric details>summary').first().click();
+ const pkDetailsBefore=await page.locator('.ev-pk-metric details[open]').evaluateAll(es=>es.map(e=>e.dataset.pkSource));
+ assert.equal(pkDetailsBefore.length,1,'Only the chosen PK source detail should open');
  await page.locator('[data-act="theme"]').click();
  assert.ok(await page.locator('details[data-ev-section="CHEMBL13:adme"]').evaluate(e=>e.open));
- assert.ok(await page.locator('.pk09-topic').first().evaluate(e=>e.open));
+ const pkDetailsAfter=await page.locator('.ev-pk-metric details[open]').evaluateAll(es=>es.map(e=>e.dataset.pkSource));
+ assert.deepEqual(pkDetailsAfter,pkDetailsBefore,'Theme changes must retain this PK detail without opening the other five identical summaries');
+ assert.equal(await page.locator('.ev-pk-metric details:not([open])').count(),5);
  await page.locator('[data-ev="collapse-all"]').click();
  assert.equal(await page.locator('details.ev-topic[open]').count(),0);
  await page.locator('[data-structure-zoom]').click();await page.waitForSelector('dialog[open]');await page.keyboard.press('Escape');
@@ -52,6 +59,93 @@ const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
  assert.ok(await page.locator('[data-source-section$=":dosage_and_administration"]').count());
  await page.locator('[data-source-section$=":contraindications"]>summary').click();
  assert.match(await page.locator('[data-source-section$=":contraindications"]').innerText(),/METFORMIN|metformin|contraindicat/i);
+ // Review the actual product-bound dataset, including both contexts of the metoprolol parent.
+ // These rows are added to the report only after their UI and provenance assertions succeed.
+ const pkDataset=JSON.parse(fs.readFileSync(path.join(__dirname,'../data/pk-reviewed.json'),'utf8'));
+ const pkProfiles=pkDataset.profiles.filter(p=>p.reviewStatus==='source-checked');
+ const pkSourceById=new Map(pkDataset.sources.map(s=>[s.id,s]));
+ const pkFields=['halfLife','bioavailability','proteinBinding','metabolism','metabolites','excretion'];
+ const reviewedPKMatrix=[],reviewedPKExclusions=[];
+ let reviewedPKDosageChecks=0;
+ const openTopic=async(id,topic)=>{
+  const selector='details[data-ev-section="'+id+':'+topic+'"]';
+  if(!await page.locator(selector).evaluate(e=>e.open))await page.locator(selector+'>summary').click();
+  await page.waitForFunction(s=>document.querySelector(s+' > .ev-topic-body')?.dataset.loaded==='true',selector);
+  return page.locator(selector);
+ };
+ const checkOverflow=async(label)=>{
+  const size=await page.evaluate(()=>({page:document.documentElement.scrollWidth,viewport:innerWidth}));
+  assert.ok(size.page<=size.viewport+2,'Reviewed PK overflow '+label+' '+JSON.stringify(size));
+ };
+ for(const width of [1440,390,320])for(const theme of ['light','dark']){
+  await page.setViewportSize({width,height:width<700?844:1000});
+  if(await page.locator('body').getAttribute('data-theme')!==theme)await page.locator('[data-act="theme"]').click();
+  for(const profile of pkProfiles)for(const moleculeId of profile.applicableMoleculeIds){
+   const label=profile.id+' / '+moleculeId+' / '+width+' / '+theme;
+   await go('molecule/'+moleculeId);
+   await page.waitForSelector('.ev-facts [data-molecule="'+moleculeId+'"]');
+   await page.locator('[data-ev="collapse-all"]').click();
+   const available=pkProfiles.filter(p=>p.applicableMoleculeIds.includes(moleculeId));
+   if(available.length>1){
+    const selector=page.locator('#ev-pk-formulation');
+    assert.deepEqual((await selector.locator('option').evaluateAll(es=>es.map(e=>e.value))).sort(),available.map(p=>p.id).sort(),'Selector contains a product from a different identity: '+label);
+    await selector.selectOption(profile.id);
+    assert.equal(await page.locator('#ev-pk-formulation').inputValue(),profile.id,'Selector value is stale: '+label);
+   }else assert.equal(await page.locator('#ev-pk-formulation').count(),0,'A salt-specific sheet must not offer unrelated formulations: '+label);
+   await page.waitForSelector('[data-pk-context="'+profile.id+'"]');
+   const summary=await page.locator('.ev-facts .ev-fact').evaluateAll(es=>Object.fromEntries(es.map(e=>[e.querySelector('span')?.textContent.trim(),e.querySelector('strong')?.textContent.trim()])));
+   for(const [key,title] of [['halfLife','Emivita'],['bioavailability','Biodisponibilità'],['proteinBinding','Legame proteico']])assert.equal(summary[title],profile.metrics[key].summary,'Wrong compact PK value '+key+': '+label);
+   assert.equal(await page.locator('details.ev-topic').count(),6,'Primary sections changed: '+label);
+   await checkOverflow(label+' collapsed');
+   const adme=await openTopic(moleculeId,'adme');
+   await page.waitForSelector('[data-reviewed-pk="'+profile.id+'"]');
+   const metricCount=await adme.locator('.ev-pk-metric').count();
+   assert.equal(metricCount,6,'Missing reviewed PK metrics: '+label);
+   for(const key of pkFields)assert.equal((await adme.locator('[data-pk-metric="'+key+'"] .ev-pk-value').innerText()).trim(),profile.metrics[key].summary,'Wrong expanded PK value '+key+': '+label);
+   assert.equal(await adme.locator('.ev-pk-metric details[data-pk-source]').count(),6,'Missing per-metric provenance: '+label);
+   const original=adme.locator('[data-pk-original="'+profile.id+'"]');
+   if(!await original.evaluate(e=>e.open))await original.locator(':scope>summary').click();
+   const source=pkSourceById.get(profile.sourceIds[0]);
+   assert.ok(source,'Missing primary product source: '+label);
+   await original.locator('a[href="'+source.url+'"]').first().waitFor({state:'visible'});
+   if(source.localFile){
+    await original.locator('[data-source-section]').first().waitFor({state:'attached'});
+    assert.ok(await original.locator('[data-source-section]').count(),'Imported original PK sections unavailable: '+label);
+   }else{
+    assert.match(await original.innerText(),/consultato online|non è importato/i,'A live-only source must retain its import limitation: '+label);
+   }
+   await checkOverflow(label+' expanded');
+   if(profile.id==='metoprolol-tartrate-ir'){
+    assert.doesNotMatch(await original.innerText(),/succinat/i,'IR original source shows ER product: '+label);
+    const doses=await openTopic(moleculeId,'dosage');
+    await doses.locator('a[href="'+source.url+'"]').first().waitFor({state:'visible'});
+    assert.match(await doses.innerText(),/tartrate|tartrato/i,'IR dosage section lost the selected product: '+label);
+    assert.doesNotMatch(await doses.innerText(),/succinat/i,'IR dosage section inherited ER data: '+label);
+    assert.equal(await doses.locator('a[href*="a46cbf09-20e3-4f0d-ab41-221f60fde068"]').count(),0,'IR dosage linked the wrong ER label: '+label);
+    await checkOverflow(label+' dosage');
+    reviewedPKDosageChecks++;
+   }
+   reviewedPKMatrix.push({profile:profile.id,molecule:moleculeId,width,theme,metricChecks:metricCount,summaryChecks:3,source:source.id,overflow:false});
+   if(moleculeId==='CHEMBL13'&&theme==='light'&&[1440,390].includes(width))await page.screenshot({path:path.join(out,'reviewed-pk-'+profile.id+'-'+width+'.png')});
+   await page.locator('[data-ev="collapse-all"]').click();
+  }
+  // A related but unreviewed salt can link to its parent without acquiring the parent's ER values.
+  await go('molecule/CHEMBL3989566');
+  await page.waitForSelector('.ev-facts [data-molecule="CHEMBL3989566"]');
+  assert.doesNotMatch(await page.locator('.ev-facts').innerText(),/77\s*%/,'Fumarate inherited ER bioavailability');
+  assert.equal(await page.locator('[data-pk-context]').count(),0,'Fumarate acquired an unreviewed context');
+  const fumarateADME=await openTopic('CHEMBL3989566','adme');
+  assert.equal(await fumarateADME.locator('.ev-pk-metric').count(),0);
+  await fumarateADME.locator('.ev-pk-inheritance a[href="#/molecule/CHEMBL13"]').waitFor({state:'visible'});
+  assert.doesNotMatch(await fumarateADME.innerText(),/77\s*%/);
+  await checkOverflow('fumarate exclusion '+width+' '+theme);
+  reviewedPKExclusions.push({molecule:'CHEMBL3989566',width,theme,parentLink:true,inheritedValue:false});
+  await page.locator('[data-ev="collapse-all"]').click();
+ }
+ const reviewedPK={matrixChecks:reviewedPKMatrix.length,profiles:new Set(reviewedPKMatrix.map(row=>row.profile)).size,identities:new Set(reviewedPKMatrix.map(row=>row.molecule)).size,summaryChecks:reviewedPKMatrix.reduce((n,row)=>n+row.summaryChecks,0),metricChecks:reviewedPKMatrix.reduce((n,row)=>n+row.metricChecks,0),sourceChecks:reviewedPKMatrix.length,dosageChecks:reviewedPKDosageChecks,excludedSaltChecks:reviewedPKExclusions.length,viewports:[1440,390,320],themes:['light','dark'],detailRetention:{before:pkDetailsBefore,after:pkDetailsAfter},matrix:reviewedPKMatrix,exclusions:reviewedPKExclusions};
+ assert.equal(reviewedPK.profiles,pkProfiles.length,'Not all reviewed PK contexts were exercised');
+ assert.equal(reviewedPK.identities,new Set(pkProfiles.flatMap(profile=>profile.applicableMoleculeIds)).size,'Not all exact identity bindings were exercised');
+ await page.setViewportSize({width:1440,height:1000});
  await go('textbook');await page.locator('#ex-book-search').pressSequentially('primo passaggio');
  assert.equal(await page.locator('#ex-book-search').inputValue(),'primo passaggio');
  const books=await page.locator('.ex-chapter-link').count();assert.ok(books>0&&books<54);
@@ -88,7 +182,7 @@ const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
  await offlinePage.evaluate(()=>navigator.serviceWorker.ready);await offlineContext.setOffline(true);
  await offlinePage.reload();await offlinePage.waitForSelector('.topnav-link');assert.equal(await offlinePage.locator('.topnav-link').count(),5);
  await offlinePage.waitForSelector('#elix-offline');await offlineContext.close();
- const report={passed:true,matrixChecks:matrix.length,viewports:[1440,768,390,320],themes:['light','dark'],routes:routes.length,lazyLoading:true,safetyRestored:true,answerShuffle:true,sessionResume:true,svgTest,offline:true,errors,matrix};
- fs.writeFileSync(path.join(out,'audit-report.json'),JSON.stringify(report,null,2));console.log('SYSTEMATIC_BROWSER_PASS',JSON.stringify({...report,matrix:undefined}));
+ const report={passed:true,matrixChecks:matrix.length,viewports:[1440,768,390,320],themes:['light','dark'],routes:routes.length,lazyLoading:true,safetyRestored:true,answerShuffle:true,sessionResume:true,svgTest,offline:true,reviewedPK,errors,matrix};
+ fs.writeFileSync(path.join(out,'audit-report.json'),JSON.stringify(report,null,2));console.log('SYSTEMATIC_BROWSER_PASS',JSON.stringify({...report,matrix:undefined,reviewedPK:{...reviewedPK,matrix:undefined,exclusions:undefined}}));
  await browser.close();
 })().catch(e=>{console.error(e);process.exit(1)});

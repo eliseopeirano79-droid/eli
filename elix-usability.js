@@ -20,6 +20,9 @@ export function preserveReading(render){
 }
 function detailKey(el){
  if(el.dataset.evSection)return el.dataset.evSection;
+ if(el.dataset.pkSource)return 'pk:'+el.dataset.pkSource;
+ if(el.dataset.pkOriginal)return 'pk-original:'+el.dataset.pkOriginal;
+ if(el.dataset.sourceSection)return 'source:'+el.dataset.sourceSection;
  const parent=el.closest('[data-ev-section]')?.dataset.evSection||'';
  return parent+'|'+(el.querySelector(':scope>summary')?.textContent||'').trim();
 }

@@ -3,6 +3,7 @@
    Base: denominazioni italiane AIFA/Farmacopea e revisione editoriale del progetto.
    Fonti: https://www.aifa.gov.it/sites/default/files/bif0203_04.pdf
           https://www.gazzettaufficiale.it/eli/gu/2008/11/28/279/sg/pdf
+   Il lotto 0.12 ha fonti, sezioni e identità esplicite in ITALIAN_NAME_REVIEW_012.
    I nomi senza corrispondenza sicura mantengono la denominazione internazionale;
    nessun dato clinico o regolatorio viene dedotto dalla traduzione. */
 export const ITALIAN_DRUG_NAMES = Object.freeze({
@@ -55,6 +56,7 @@ export const ITALIAN_DRUG_NAMES = Object.freeze({
   "AMITRIPTYLINE HYDROCHLORIDE": "Amitriptilina cloridrato",
   "AMLODIPINE": "Amlodipina",
   "AMLODIPINE BESYLATE": "Amlodipina besilato",
+  "AMLODIPINE MALEATE": "Amlodipina maleato",
   "AMOXICILLIN": "Amoxicillina",
   "AMOXICILLIN TRIHYDRATE": "Amoxicillina triidrato",
   "AMPICILLIN": "Ampicillina",
@@ -89,10 +91,16 @@ export const ITALIAN_DRUG_NAMES = Object.freeze({
   "CHLORPROMAZINE": "Clorpromazina",
   "CHLORPROMAZINE HYDROCHLORIDE": "Clorpromazina cloridrato",
   "CLARITHROMYCIN": "Claritromicina",
+  "CIPROFLOXACIN": "Ciprofloxacina",
+  "CIPROFLOXACIN HYDROCHLORIDE": "Ciprofloxacina cloridrato",
+  "CISPLATIN": "Cisplatino",
   "CLONIDINE": "Clonidina",
   "CLONIDINE HYDROCHLORIDE": "Clonidina cloridrato",
   "CLOPIDOGREL": "Clopidogrel",
   "CLOPIDOGREL BISULFATE": "Clopidogrel bisolfato",
+  "CLOPIDOGREL BESILATE": "Clopidogrel besilato",
+  "CLOPIDOGREL HYDROCHLORIDE": "Clopidogrel cloridrato",
+  "CLOZAPINE": "Clozapina",
   "CYCLOSPORIN": "Ciclosporina",
   "CYCLOSPORINE": "Ciclosporina",
   "DABIGATRAN ETEXILATE": "Dabigatran etexilato",
@@ -106,6 +114,8 @@ export const ITALIAN_DRUG_NAMES = Object.freeze({
   "DILTIAZEM HYDROCHLORIDE": "Diltiazem cloridrato",
   "DOBUTAMINE": "Dobutamina",
   "DOBUTAMINE HYDROCHLORIDE": "Dobutamina cloridrato",
+  "DOPAMINE": "Dopamina",
+  "DOPAMINE HYDROCHLORIDE": "Dopamina cloridrato",
   "DOXYCYCLINE": "Doxiciclina",
   "DOXYCYCLINE HYCLATE": "Doxiciclina iclato",
   "EDOXABAN": "Edoxaban",
@@ -126,6 +136,7 @@ export const ITALIAN_DRUG_NAMES = Object.freeze({
   "FLUCONAZOLE": "Fluconazolo",
   "FLUOXETINE": "Fluoxetina",
   "FLUOXETINE HYDROCHLORIDE": "Fluoxetina cloridrato",
+  "FLURBIPROFEN": "Flurbiprofene",
   "FONDAPARINUX": "Fondaparinux",
   "FONDAPARINUX SODIUM": "Fondaparinux sodico",
   "FORMOTEROL": "Formoterolo",
@@ -134,6 +145,7 @@ export const ITALIAN_DRUG_NAMES = Object.freeze({
   "GABAPENTIN": "Gabapentin",
   "GLIBENCLAMIDE": "Glibenclamide",
   "GLIMEPIRIDE": "Glimepiride",
+  "GLYBURIDE": "Glibenclamide",
   "HALOPERIDOL": "Aloperidolo",
   "HEPARIN": "Eparina",
   "HEPARIN CALCIUM": "Eparina calcica",
@@ -141,6 +153,7 @@ export const ITALIAN_DRUG_NAMES = Object.freeze({
   "HYDROCHLOROTHIAZIDE": "Idroclorotiazide",
   "IBUPROFEN": "Ibuprofene",
   "IMATINIB": "Imatinib",
+  "INDOMETHACIN": "Indometacina",
   "INSULIN GLARGINE": "Insulina glargine",
   "INSULIN HUMAN": "Insulina umana",
   "INSULIN LISPRO": "Insulina lispro",
@@ -149,6 +162,7 @@ export const ITALIAN_DRUG_NAMES = Object.freeze({
   "IVABRADINE": "Ivabradina",
   "KETAMINE": "Ketamina",
   "KETAMINE HYDROCHLORIDE": "Ketamina cloridrato",
+  "KETOPROFEN": "Ketoprofene",
   "LAMOTRIGINE": "Lamotrigina",
   "LANSOPRAZOLE": "Lansoprazolo",
   "LEVETIRACETAM": "Levetiracetam",
@@ -163,22 +177,32 @@ export const ITALIAN_DRUG_NAMES = Object.freeze({
   "LOSARTAN POTASSIUM": "Losartan potassico",
   "METFORMIN": "Metformina",
   "METFORMIN HYDROCHLORIDE": "Metformina cloridrato",
+  "MESALAMINE": "Mesalazina",
   "METHOTREXATE": "Metotrexato",
   "METHYLPHENIDATE": "Metilfenidato",
   "METHYLPHENIDATE HYDROCHLORIDE": "Metilfenidato cloridrato",
+  "METHYLPREDNISOLONE": "Metilprednisolone",
   "METOPROLOL": "Metoprololo",
   "METOPROLOL SUCCINATE": "Metoprololo succinato",
   "METOPROLOL TARTRATE": "Metoprololo tartrato",
   "METRONIDAZOLE": "Metronidazolo",
   "MIDAZOLAM": "Midazolam",
   "MIDAZOLAM HYDROCHLORIDE": "Midazolam cloridrato",
+  "MIRTAZAPINE": "Mirtazapina",
   "MORPHINE": "Morfina",
   "MORPHINE SULFATE": "Morfina solfato",
+  "MOXIFLOXACIN": "Moxifloxacina",
+  "NAPROXEN": "Naproxene",
+  "NAPROXEN SODIUM": "Naproxene sodico",
   "NEBIVOLOL": "Nebivololo",
   "NEBIVOLOL HYDROCHLORIDE": "Nebivololo cloridrato",
   "NITROGLYCERIN": "Nitroglicerina",
+  "NITROFURANTOIN": "Nitrofurantoina",
   "NORADRENALINE": "Noradrenalina",
   "NOREPINEPHRINE": "Noradrenalina",
+  "NORFLOXACIN": "Norfloxacina",
+  "NORTRIPTYLINE": "Nortriptilina",
+  "OFLOXACIN": "Ofloxacina",
   "OMEPRAZOLE": "Omeprazolo",
   "ONDANSETRON": "Ondansetron",
   "OXAZEPAM": "Oxazepam",
@@ -186,6 +210,7 @@ export const ITALIAN_DRUG_NAMES = Object.freeze({
   "PARACETAMOL": "Paracetamolo",
   "PAROXETINE": "Paroxetina",
   "PAROXETINE HYDROCHLORIDE": "Paroxetina cloridrato",
+  "PHENYTOIN": "Fenitoina",
   "PRAZOSIN": "Prazosina",
   "PRAZOSIN HYDROCHLORIDE": "Prazosina cloridrato",
   "PREDNISOLONE": "Prednisolone",
@@ -211,6 +236,7 @@ export const ITALIAN_DRUG_NAMES = Object.freeze({
   "TRAMADOL": "Tramadolo",
   "TRAMADOL HYDROCHLORIDE": "Tramadolo cloridrato",
   "VALPROIC ACID": "Acido valproico",
+  "VALPROATE SODIUM": "Valproato di sodio",
   "VALSARTAN": "Valsartan",
   "VANCOMYCIN": "Vancomicina",
   "VANCOMYCIN HYDROCHLORIDE": "Vancomicina cloridrato",
@@ -222,6 +248,65 @@ export const ITALIAN_DRUG_NAMES = Object.freeze({
   "ZOLPIDEM": "Zolpidem",
   "ZOLPIDEM TARTRATE": "Zolpidem tartrato",
   "ZOPICLONE": "Zopiclone"
+});
+
+/* Tracciabilità del lotto 0.12. La verifica riguarda il nome dell'identità chimica,
+   non autorizzazioni, equivalenza fra formulazioni o completezza della monografia.
+   Gli ID ChEMBL rendono verificabile il collegamento anche per sinonimi USA
+   (glyburide/glibenclamide, mesalamine/mesalazine) e sali. Nessun parent fallback. */
+export const ITALIAN_NAME_REVIEW_012 = Object.freeze({
+  checked: "2026-10-22",
+  scope: "Revisione terminologica di 25 denominazioni esatte; nessuna inferenza clinica o regolatoria.",
+  sources: Object.freeze({
+    "farmacopea-2026": Object.freeze({
+      title: "Ministero della salute — Farmacopea europea, elenco delle denominazioni italiane, G.U. n. 54 del 6 marzo 2026",
+      url: "https://www.gazzettaufficiale.it/do/gazzetta/downloadPdf?dataPubblicazioneGazzetta=20260306&edizione=0&estensione=pdf&home=true&numeroGazzetta=54&numeroSupplemento=0&progressivo=0&tipoSerie=SG&tipoSupplemento=GU",
+      date: "2026-03-06"
+    }),
+    "aifa-categorie-2023": Object.freeze({
+      title: "AIFA — Rapporto regionale anno 2023, elenco delle categorie terapeutiche e dei principi attivi",
+      url: "https://www.aifa.gov.it/documents/20142/2758201/Elenco_categorie_terapeutiche_2023.pdf",
+      date: "2023"
+    }),
+    "ema-amlovita": Object.freeze({
+      title: "EMA — Amlovita, informazioni generali e allegati, denominazione amlodipina maleato",
+      url: "https://www.ema.europa.eu/it/documents/referral/opinion-following-article-29-referral-amlovita-international-non-proprietary-name-inn-amlodipine-background-information-and-annex-i-ii-iii_it.pdf",
+      date: "2004-04-26"
+    }),
+    "aifa-registry": Object.freeze({
+      title: "AIFA — Confezioni, denominazione del principio attivo nello snapshot importato",
+      url: "https://drive.aifa.gov.it/farmaci/confezioni_fornitura.csv",
+      retrieved: "2026-10-20",
+      localFile: "data/registry.json"
+    })
+  }),
+  records: Object.freeze([
+    {name:"AMLODIPINE MALEATE",chembl:"CHEMBL1200984",source:"ema-amlovita",section:"Informazioni generali; allegato II"},
+    {name:"CLOPIDOGREL BESILATE",chembl:"CHEMBL6068333",source:"farmacopea-2026",section:"Clopidogreli besilas (2790)"},
+    {name:"CLOPIDOGREL HYDROCHLORIDE",chembl:"CHEMBL6068338",source:"farmacopea-2026",section:"Clopidogreli hydrochloridum (2791)"},
+    {name:"CIPROFLOXACIN",chembl:"CHEMBL8",source:"farmacopea-2026",section:"Ciprofloxacinum (1089)"},
+    {name:"CIPROFLOXACIN HYDROCHLORIDE",chembl:"CHEMBL1202",source:"farmacopea-2026",section:"Ciprofloxacini hydrochloridum (0888)"},
+    {name:"OFLOXACIN",chembl:"CHEMBL4",source:"farmacopea-2026",section:"Ofloxacinum (1455)"},
+    {name:"NORFLOXACIN",chembl:"CHEMBL9",source:"farmacopea-2026",section:"Norfloxacinum (1248)"},
+    {name:"MOXIFLOXACIN",chembl:"CHEMBL32",source:"aifa-categorie-2023",section:"Antibiotici — Fluorochinolonici"},
+    {name:"INDOMETHACIN",chembl:"CHEMBL6",source:"farmacopea-2026",section:"Indometacinum (0092)",identitySynonym:"Indometacin"},
+    {name:"KETOPROFEN",chembl:"CHEMBL571",source:"farmacopea-2026",section:"Ketoprofenum (0922)"},
+    {name:"FLURBIPROFEN",chembl:"CHEMBL563",source:"farmacopea-2026",section:"Flurbiprofenum (1519)"},
+    {name:"NAPROXEN",chembl:"CHEMBL154",source:"farmacopea-2026",section:"Naproxenum (0731)",note:"Naprossene resta ricercabile nella descrizione ATC del record."},
+    {name:"NAPROXEN SODIUM",chembl:"CHEMBL1200806",source:"farmacopea-2026",section:"Naproxenum natricum (1702)"},
+    {name:"CLOZAPINE",chembl:"CHEMBL42",source:"farmacopea-2026",section:"Clozapinum (1191)"},
+    {name:"NORTRIPTYLINE",chembl:"CHEMBL445",source:"aifa-categorie-2023",section:"Antidepressivi di I generazione"},
+    {name:"MIRTAZAPINE",chembl:"CHEMBL654",source:"farmacopea-2026",section:"Mirtazapinum (2338)"},
+    {name:"DOPAMINE",chembl:"CHEMBL59",source:"aifa-registry",section:"records.CHEMBL59.IT — ingredient DOPAMINA"},
+    {name:"DOPAMINE HYDROCHLORIDE",chembl:"CHEMBL1557",source:"farmacopea-2026",section:"Dopamini hydrochloridum (0664)"},
+    {name:"GLYBURIDE",chembl:"CHEMBL472",source:"farmacopea-2026",section:"Glibenclamidum (0718)",identitySynonym:"Glibenclamide"},
+    {name:"NITROFURANTOIN",chembl:"CHEMBL572",source:"farmacopea-2026",section:"Nitrofurantoinum (0101)"},
+    {name:"MESALAMINE",chembl:"CHEMBL704",source:"farmacopea-2026",section:"Mesalazinum (1699)",identitySynonym:"Mesalazine"},
+    {name:"METHYLPREDNISOLONE",chembl:"CHEMBL650",source:"farmacopea-2026",section:"Methylprednisolonum (0561)"},
+    {name:"VALPROATE SODIUM",chembl:"CHEMBL433",source:"farmacopea-2026",section:"Natrii valproas (0678)",identitySynonym:"Sodium valproate",note:"Valproato di sodio è la forma del nome già adottata per il sinonimo esatto SODIUM VALPROATE; sale distinto dall'acido valproico."},
+    {name:"PHENYTOIN",chembl:"CHEMBL16",source:"farmacopea-2026",section:"Phenytoinum (1253)"},
+    {name:"CISPLATIN",chembl:"CHEMBL11359",source:"farmacopea-2026",section:"Cisplatinum (0599)"}
+  ].map(Object.freeze))
 });
 export const normalizeDrugName = value => String(value??'').trim().normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase();
 export const internationalDrugName = molecule => String(molecule?.name ?? '');

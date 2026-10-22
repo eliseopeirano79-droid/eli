@@ -28,7 +28,7 @@ export function verifiedRecord(molecule) {
  if (!molecule || !index) return {};
  const own = index.molecules[molecule.id] || {};
  const family = index.molecules[molecule.parent || molecule.id] || {};
- return {activity:own.activity,label:own.label || family.label,market:own.market || family.market,parentActivity:!own.activity && molecule.parent !== molecule.id ? family.activity : null};
+ return {activity:own.activity,label:own.label,market:own.market || family.market,parentLabel:!own.label && molecule.parent !== molecule.id ? family.label : null,parentActivity:!own.activity && molecule.parent !== molecule.id ? family.activity : null};
 }
 export function hasVerifiedData(molecule,kind='any') {
  const data = verifiedRecord(molecule);
@@ -37,9 +37,9 @@ export function hasVerifiedData(molecule,kind='any') {
 export function verifiedPublicPrice(molecule) {
  return verifiedRecord(molecule).market?.minPublicPriceEUR ?? null;
 }
-export function verifiedBadges(molecule) {
+export function verifiedBadges(molecule,reviewedPK=false) {
  const data = verifiedRecord(molecule);
- return (data.activity?`<span class="ev-tag green">${data.activity.count} misure</span>`:'')+(data.label?'<span class="ev-tag">Documento PK</span>':'')+(data.market?'<span class="ev-tag">Prezzi AIFA</span>':'');
+ return (data.activity?`<span class="ev-tag green">${data.activity.count} misure</span>`:'')+(reviewedPK?'<span class="ev-tag green">PK della formulazione</span>':data.label?'<span class="ev-tag">Documento PK</span>':data.parentLabel?'<span class="ev-tag">Fonte della molecola parent</span>':'')+(data.market?'<span class="ev-tag">Prezzi AIFA</span>':'');
 }
 export function verifiedOverview() {
  if (!index) return '';
@@ -105,8 +105,23 @@ function sourceSections(label,keys){
  if(!availableKeys.length)return '<p class="ev-missing">Sezione non presente nel documento importato. Apri la fonte completa per verifica.</p>';
  return '<div class="vd-label-sections">'+availableKeys.map(key=>`<details data-source-section="${h(label.setId||label.moleculeFamily)}:${h(key)}"><summary>${h(SECTIONS[key]||key)} <small>Prodotto USA · EN</small></summary><div lang="en" tabindex="0" aria-label="${h(SECTIONS[key]||key)} · fonte completa">${[...new Set(label.sections[key])].map(text=>`<p>${h(text)}</p>`).join('')}</div></details>`).join('')+'</div>';
 }
+function parentLabelLink(molecule,data){
+ return data.parentLabel?`<p class="ev-missing ev-pk-inheritance">È disponibile un documento associato alla molecola parent. Le sezioni di quel documento non sono assegnate automaticamente a questo record: dati e dosi restano riferiti al prodotto documentato. <a href="#/molecule/${h(molecule.parent)}">Apri la molecola parent e la fonte associata →</a></p>`:'';
+}
+export function renderReviewedProductSource(source,area){
+ if(!source)return '<p class="ev-missing">Documento di prodotto non collegato alla sintesi selezionata.</p>';
+ const file=source.localFile?.startsWith('data/verified/labels/')?source.localFile.slice('data/verified/'.length):null;
+ if(!file)return `<section class="vd-panel"><h3>Documento della formulazione selezionata</h3><p>${h(source.product)} · ${h(source.jurisdiction)} · ${h(date(source.effectiveDate))}</p><p class="vd-note">Il documento è stato consultato online; il testo integrale non è importato in questa versione.</p>${ext(source.url,area==='dosage'?'Apri posologia e sicurezza del prodotto':'Apri la farmacocinetica originale')}</section>`;
+ const reference=`<div class="vd-links">${ext(source.url,'Documento originale DailyMed')}</div>`;
+ return available(file,label=>{
+  if(label.setId!==source.setId)return '<p class="ev-missing">Il documento importato non coincide con la fonte della sintesi selezionata. Consulta il documento pertinente dal collegamento qui sotto.</p>';
+  const keys=area==='dosage'?['indications_and_usage','dosage_and_administration','dosage_forms_and_strengths','contraindications','boxed_warning','warnings_and_cautions','warnings','adverse_reactions','drug_interactions','use_in_specific_populations','pregnancy','pediatric_use','geriatric_use','overdosage']:['pharmacokinetics','clinical_pharmacology'];
+  return `<div class="vd-product-context"><strong>${h(label.product?.generic?.join(' / '))}</strong><p>${h(label.product?.route?.join(' / '))} · USA · versione ${h(date(label.effectiveDate))}</p></div>${area==='dosage'?renderIndications09(label,file):''}${sourceSections(label,keys)}`;
+ })+reference;
+}
 export function renderVerifiedByArea(molecule,area){
  const data=verifiedRecord(molecule);
+ if(['adme','dosage','mechanism','studies'].includes(area)&&!data.label&&data.parentLabel)return parentLabelLink(molecule,data);
  if(area==="mechanism"||area==="studies"){if(!data.label)return "";return available(data.label.file,label=>`<section class="vd-panel"><h3>${area==="mechanism"?"Farmacologia nella fonte di prodotto":"Studi descritti nel documento di prodotto"}</h3><p class="vd-note">${h(label.product?.generic?.join(" / "))} · ${h(label.product?.route?.join(" / "))} · USA · ${h(date(label.effectiveDate))}</p>${sourceSections(label,area==="mechanism"?["mechanism_of_action","pharmacodynamics","description"]:["clinical_studies"])}<div class="vd-links">${ext(label.source,"Fonte DailyMed completa")}</div></section>`);}
  if(area==="adme"){
   if(!data.label)return '<p class="ev-missing">Nessun documento PK specifico associato a questo record. L’assenza dal dataset non dimostra assenza di dati nella letteratura.</p>';

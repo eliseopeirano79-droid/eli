@@ -1,10 +1,20 @@
-# ELIX — Farmacologia & Principi Attivi · Alpha 0.11
+# ELIX — Farmacologia & Principi Attivi · Alpha 0.12
 
 **App made by Eliseo Peirano · 2026**
 
 Sito: https://eliseopeirano79-droid.github.io/PHARMA/ (l'URL GitHub resta invariato; ELIX è il nuovo nome dell'app).
 
 Estensione del progetto recuperato da `PHARMA-Alpha03-pronta-per-Dock-e-GitHub-Pages.zip`. I laboratori, il simulatore ADME, i casi e il quiz originali restano disponibili. ISOELETTRICA e la copia separata ELIX non sono coinvolte in questa pubblicazione.
+
+## Alpha 0.12 — nomi italiani e farmacocinetica contestuale
+
+Primo lotto di **7 profili di prodotto per 6 molecole**, con **42 metriche strutturate**, associazioni esplicite a **10 identità chimiche** e **8 fonti primarie** controllate il 22 ottobre 2026. Emivita, biodisponibilità, legame proteico, metabolismo, metaboliti ed escrezione sono ora leggibili con contesto e riferimenti. Metoprololo tartrato a rilascio immediato e succinato a rilascio prolungato hanno profili distinti; le schede dei sali non ereditano automaticamente farmacocinetica o posologia del parent.
+
+Aggiunte **25 denominazioni italiane documentate**, mantenendo gli identificatori e i nomi internazionali; la ricerca privilegia il nome esatto italiano o inglese. Brevi spiegazioni originali collegano i dati PK senza trasformarli in istruzioni di dose.
+
+**Stile Isoelettrica come vincolo permanente:** palette salvia/petrolio tramite le variabili esistenti, temi chiaro/scuro, cinque sezioni principali, sei sezioni espandibili nella scheda, pillola verde su blu scuro uniforme e firma «App made by Eliseo Peirano · 2026».
+
+Metodo, esempi, limiti e verifiche riproducibili: [docs/REVIEW-0.12.md](docs/REVIEW-0.12.md). Questa è una revisione circoscritta: il catalogo non diventa una raccolta di monografie tutte complete. Le dieci suite locali sono passate dopo le correzioni; controllati anche i due temi nell’interfaccia. La matrice browser automatizzata e la distribuzione sono verificate separatamente tramite la PR della release.
 
 ## Alpha 0.11 — screening dell'intera app
 

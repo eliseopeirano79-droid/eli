@@ -1,0 +1,1326 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-10-22",
+  "reviewStatus": "source-checked",
+  "scope": "Sintesi didattiche confrontate con fonti primarie per prodotto, formulazione e popolazione. Il controllo delle fonti non equivale a revisione clinica indipendente né a copertura completa del principio attivo.",
+  "profiles": [
+    {
+      "id": "metoprolol-succinate-er",
+      "title": "Succinato · rilascio prolungato",
+      "formulation": "Metoprololo succinato, compresse a rilascio prolungato",
+      "route": "Orale",
+      "population": "Adulti; condizioni generali della label. La biodisponibilità relativa si riferisce allo stato stazionario.",
+      "sourceId": "metoprolol-succinate-er-us",
+      "metrics": {
+        "halfLife": {
+          "summary": "3–7 h",
+          "substance": "Metoprololo",
+          "measurementType": "Emivita plasmatica di eliminazione",
+          "supportingExcerpt": "3 to 7 hours",
+          "reviewStatus": "source-checked",
+          "values": [
+            {
+              "range": [
+                3,
+                7
+              ],
+              "unit": "h"
+            }
+          ],
+          "sourceIds": [
+            "metoprolol-succinate-er-us"
+          ],
+          "detail": "La durata del rilascio dalla compressa non coincide con l’emivita della molecola.",
+          "excerptSourceId": "metoprolol-succinate-er-us"
+        },
+        "bioavailability": {
+          "summary": "77% relativa alla formulazione convenzionale",
+          "substance": "Metoprololo",
+          "measurementType": "Biodisponibilità relativa",
+          "supportingExcerpt": "77% relative",
+          "reviewStatus": "source-checked",
+          "values": [
+            {
+              "value": 77,
+              "unit": "%",
+              "relation": "mean"
+            }
+          ],
+          "sourceIds": [
+            "metoprolol-succinate-er-us"
+          ],
+          "detail": "Stato stazionario; 50–400 mg/die nella fonte, confronto con dosi orali convenzionali corrispondenti. Non è biodisponibilità assoluta.",
+          "excerptSourceId": "metoprolol-succinate-er-us"
+        },
+        "proteinBinding": {
+          "summary": "≈12% all’albumina",
+          "substance": "Metoprololo",
+          "measurementType": "Legame proteico",
+          "supportingExcerpt": "about 12%",
+          "reviewStatus": "source-checked",
+          "values": [
+            {
+              "value": 12,
+              "unit": "%",
+              "relation": "approx"
+            }
+          ],
+          "sourceIds": [
+            "metoprolol-succinate-er-us"
+          ],
+          "detail": "",
+          "excerptSourceId": "metoprolol-succinate-er-us"
+        },
+        "metabolism": {
+          "summary": "Epatico, soprattutto CYP2D6",
+          "substance": "Metoprololo",
+          "measurementType": "Via metabolica",
+          "supportingExcerpt": "primarily metabolized by CYP2D6",
+          "reviewStatus": "source-checked",
+          "sourceIds": [
+            "metoprolol-succinate-er-us"
+          ],
+          "detail": "Fenotipo CYP2D6 e suoi inibitori modificano l’esposizione.",
+          "excerptSourceId": "metoprolol-succinate-er-us"
+        },
+        "metabolites": {
+          "summary": "Metaboliti senza apparente attività β-bloccante",
+          "substance": "Metaboliti del metoprololo",
+          "measurementType": "Attività dei metaboliti",
+          "supportingExcerpt": "no beta-blocking activity",
+          "reviewStatus": "source-checked",
+          "sourceIds": [
+            "metoprolol-succinate-er-us"
+          ],
+          "detail": "",
+          "excerptSourceId": "metoprolol-succinate-er-us"
+        },
+        "excretion": {
+          "summary": "Urine: <5% della dose orale immodificato; restante quota come metaboliti",
+          "substance": "Metoprololo",
+          "measurementType": "Recupero urinario della molecola immodificata",
+          "supportingExcerpt": "Less than 5%",
+          "reviewStatus": "source-checked",
+          "values": [
+            {
+              "value": 5,
+              "unit": "% della dose orale",
+              "relation": "<",
+              "species": "metoprololo immodificato"
+            }
+          ],
+          "sourceIds": [
+            "metoprolol-succinate-er-us"
+          ],
+          "detail": "",
+          "excerptSourceId": "metoprolol-succinate-er-us"
+        }
+      },
+      "applicableMoleculeIds": [
+        "CHEMBL13",
+        "CHEMBL2356097"
+      ],
+      "moleculeId": "CHEMBL13",
+      "name": "Metoprololo",
+      "sourceIds": [
+        "metoprolol-succinate-er-us"
+      ],
+      "teaching": {
+        "title": "Rilascio ed eliminazione sono processi diversi",
+        "body": "La compressa a rilascio prolungato distribuisce l’ingresso del metoprololo nel tempo; CYP2D6 regola la sua trasformazione dopo l’assorbimento. Per interpretare un valore di emivita occorre quindi distinguere la formulazione dal metabolismo. La quota escreta nelle urine comprende soprattutto metaboliti: non equivale alla quota di molecola attiva eliminata dal rene.",
+        "sourceIds": [
+          "metoprolol-succinate-er-us",
+          "metoprolol-tartrate-ir-us"
+        ]
+      },
+      "reviewStatus": "source-checked",
+      "checkedAt": "2026-10-22"
+    },
+    {
+      "id": "metoprolol-tartrate-ir",
+      "title": "Tartrato · rilascio immediato",
+      "formulation": "Metoprololo tartrato, compresse convenzionali a rilascio immediato",
+      "route": "Orale",
+      "population": "Adulti; metabolizzatori CYP2D6 estensivi salvo diversa specificazione.",
+      "sourceId": "metoprolol-tartrate-ir-us",
+      "metrics": {
+        "halfLife": {
+          "summary": "3–4 h; 7–9 h nei metabolizzatori CYP2D6 lenti",
+          "substance": "Metoprololo",
+          "measurementType": "Emivita media di eliminazione",
+          "supportingExcerpt": "3 to 4 hours",
+          "reviewStatus": "source-checked",
+          "values": [
+            {
+              "range": [
+                3,
+                4
+              ],
+              "unit": "h",
+              "population": "Metabolismo CYP2D6 abituale"
+            },
+            {
+              "range": [
+                7,
+                9
+              ],
+              "unit": "h",
+              "population": "Metabolizzatori CYP2D6 lenti"
+            }
+          ],
+          "sourceIds": [
+            "metoprolol-tartrate-ir-us"
+          ],
+          "detail": "",
+          "excerptSourceId": "metoprolol-tartrate-ir-us"
+        },
+        "bioavailability": {
+          "summary": "≈50% orale",
+          "substance": "Metoprololo",
+          "measurementType": "Biodisponibilità orale stimata",
+          "supportingExcerpt": "about 50%",
+          "reviewStatus": "source-checked",
+          "values": [
+            {
+              "value": 50,
+              "unit": "%",
+              "relation": "approx"
+            }
+          ],
+          "sourceIds": [
+            "metoprolol-tartrate-ir-us"
+          ],
+          "detail": "Primo passaggio saturabile: l’esposizione non cresce sempre proporzionalmente alla dose.",
+          "excerptSourceId": "metoprolol-tartrate-ir-us"
+        },
+        "proteinBinding": {
+          "summary": "≈10% all’albumina",
+          "substance": "Metoprololo",
+          "measurementType": "Legame proteico",
+          "supportingExcerpt": "About 10%",
+          "reviewStatus": "source-checked",
+          "values": [
+            {
+              "value": 10,
+              "unit": "%",
+              "relation": "approx"
+            }
+          ],
+          "sourceIds": [
+            "metoprolol-tartrate-ir-us"
+          ],
+          "detail": "",
+          "excerptSourceId": "metoprolol-tartrate-ir-us"
+        },
+        "metabolism": {
+          "summary": "Epatico, soprattutto CYP2D6",
+          "substance": "Metoprololo",
+          "measurementType": "Via metabolica",
+          "supportingExcerpt": "primarily metabolized by CYP2D6",
+          "reviewStatus": "source-checked",
+          "sourceIds": [
+            "metoprolol-tartrate-ir-us"
+          ],
+          "detail": "",
+          "excerptSourceId": "metoprolol-tartrate-ir-us"
+        },
+        "metabolites": {
+          "summary": "Metaboliti senza apparente attività β-bloccante",
+          "substance": "Metaboliti del metoprololo",
+          "measurementType": "Attività dei metaboliti",
+          "supportingExcerpt": "no beta-blocking activity",
+          "reviewStatus": "source-checked",
+          "sourceIds": [
+            "metoprolol-tartrate-ir-us"
+          ],
+          "detail": "",
+          "excerptSourceId": "metoprolol-tartrate-ir-us"
+        },
+        "excretion": {
+          "summary": "Urine: ≈95% totale; <5% immodificato dopo assunzione orale",
+          "substance": "Metoprololo",
+          "measurementType": "Recupero urinario totale e immodificato",
+          "supportingExcerpt": "Approximately 95%",
+          "reviewStatus": "source-checked",
+          "values": [
+            {
+              "value": 95,
+              "unit": "% della dose",
+              "relation": "approx",
+              "species": "molecola e metaboliti"
+            },
+            {
+              "value": 5,
+              "unit": "% della dose orale",
+              "relation": "<",
+              "species": "metoprololo immodificato",
+              "population": "Metabolizzatori CYP2D6 estensivi"
+            },
+            {
+              "value": 30,
+              "unit": "% della dose orale",
+              "relation": "up-to",
+              "species": "metoprololo immodificato",
+              "population": "Metabolizzatori CYP2D6 lenti"
+            }
+          ],
+          "sourceIds": [
+            "metoprolol-tartrate-ir-us"
+          ],
+          "detail": "La quota immodificata orale può arrivare al 30% nei metabolizzatori lenti; il 95% non è tutto farmaco attivo.",
+          "excerptSourceId": "metoprolol-tartrate-ir-us"
+        }
+      },
+      "applicableMoleculeIds": [
+        "CHEMBL13",
+        "CHEMBL2062335"
+      ],
+      "moleculeId": "CHEMBL13",
+      "name": "Metoprololo",
+      "sourceIds": [
+        "metoprolol-tartrate-ir-us"
+      ],
+      "teaching": {
+        "title": "Rilascio ed eliminazione sono processi diversi",
+        "body": "La compressa a rilascio prolungato distribuisce l’ingresso del metoprololo nel tempo; CYP2D6 regola la sua trasformazione dopo l’assorbimento. Per interpretare un valore di emivita occorre quindi distinguere la formulazione dal metabolismo. La quota escreta nelle urine comprende soprattutto metaboliti: non equivale alla quota di molecola attiva eliminata dal rene.",
+        "sourceIds": [
+          "metoprolol-succinate-er-us",
+          "metoprolol-tartrate-ir-us"
+        ]
+      },
+      "reviewStatus": "source-checked",
+      "checkedAt": "2026-10-22"
+    },
+    {
+      "id": "ramipril-oral-capsules",
+      "title": "Capsule orali · ramipril e ramiprilato",
+      "formulation": "Ramipril, capsule orali",
+      "route": "Orale",
+      "population": "Adulti; 13–17 h riferite a dosi ripetute di 5–10 mg/die nella fonte, non indicazione posologica.",
+      "sourceId": "ramipril-capsules-us",
+      "metrics": {
+        "halfLife": {
+          "summary": "Ramiprilato: 13–17 h effettiva",
+          "substance": "Ramiprilato (metabolita attivo)",
+          "measurementType": "Emivita effettiva e terminale, distinte",
+          "supportingExcerpt": "13 to 17 hours",
+          "reviewStatus": "source-checked",
+          "values": [
+            {
+              "range": [
+                13,
+                17
+              ],
+              "unit": "h",
+              "phase": "effective",
+              "condition": "Dosi giornaliere ripetute di ramipril 5–10 mg"
+            },
+            {
+              "value": 50,
+              "unit": "h",
+              "relation": ">",
+              "phase": "terminal"
+            },
+            {
+              "range": [
+                2,
+                4
+              ],
+              "unit": "h",
+              "phase": "initial-distribution"
+            },
+            {
+              "range": [
+                9,
+                18
+              ],
+              "unit": "h",
+              "phase": "apparent-elimination"
+            }
+          ],
+          "sourceIds": [
+            "ramipril-capsules-us"
+          ],
+          "detail": "Dopo dosi ripetute di ramipril 5–10 mg/die. Fase iniziale 2–4 h, eliminazione apparente 9–18 h, terminale >50 h. La coda terminale riflette il lento distacco dall’ACE. Questi valori riguardano il metabolita, non l’emivita del ramipril parent.",
+          "excerptSourceId": "ramipril-capsules-us"
+        },
+        "bioavailability": {
+          "summary": "28% ramipril; 44% esposizione a ramiprilato",
+          "substance": "Ramipril / Ramiprilato (metabolita attivo)",
+          "measurementType": "Biodisponibilità assoluta riportata dalla label",
+          "supportingExcerpt": "28% and 44%",
+          "reviewStatus": "source-checked",
+          "values": [
+            {
+              "value": 28,
+              "unit": "%",
+              "substance": "Ramipril"
+            },
+            {
+              "value": 44,
+              "unit": "%",
+              "substance": "Ramiprilato (metabolita attivo)"
+            }
+          ],
+          "sourceIds": [
+            "ramipril-capsules-us"
+          ],
+          "detail": "Confronto fra 5 mg di ramipril orale ed endovenoso. Assorbimento ≥50–60%: misura distinta dalla biodisponibilità.",
+          "excerptSourceId": "ramipril-capsules-us"
+        },
+        "proteinBinding": {
+          "summary": "≈73% ramipril; ≈56% ramiprilato",
+          "substance": "Ramipril / Ramiprilato (metabolita attivo)",
+          "measurementType": "Legame proteico sierico",
+          "supportingExcerpt": "about 73%",
+          "reviewStatus": "source-checked",
+          "values": [
+            {
+              "value": 73,
+              "unit": "%",
+              "relation": "approx",
+              "substance": "Ramipril"
+            },
+            {
+              "value": 56,
+              "unit": "%",
+              "relation": "approx",
+              "substance": "Ramiprilato (metabolita attivo)"
+            }
+          ],
+          "sourceIds": [
+            "ramipril-capsules-us"
+          ],
+          "detail": "",
+          "excerptSourceId": "ramipril-capsules-us"
+        },
+        "metabolism": {
+          "summary": "Idrolisi dell’estere, soprattutto epatica, a ramiprilato",
+          "substance": "Ramipril",
+          "measurementType": "Attivazione del profarmaco",
+          "supportingExcerpt": "primarily in the liver",
+          "reviewStatus": "source-checked",
+          "sourceIds": [
+            "ramipril-capsules-us"
+          ],
+          "detail": "",
+          "excerptSourceId": "ramipril-capsules-us"
+        },
+        "metabolites": {
+          "summary": "Ramiprilato attivo; dichetopiperazine e glucuronidi inattivi",
+          "substance": "Ramiprilato (metabolita attivo) e altri metaboliti",
+          "measurementType": "Identità e attività dei metaboliti",
+          "supportingExcerpt": "all of which are inactive",
+          "reviewStatus": "source-checked",
+          "sourceIds": [
+            "ramipril-capsules-us"
+          ],
+          "detail": "",
+          "excerptSourceId": "ramipril-capsules-us"
+        },
+        "excretion": {
+          "summary": "≈60% urine e ≈40% feci, considerando molecola e metaboliti",
+          "substance": "Ramipril e metaboliti",
+          "measurementType": "Recupero totale e immodificato",
+          "supportingExcerpt": "Less than 2%",
+          "reviewStatus": "source-checked",
+          "values": [
+            {
+              "value": 60,
+              "unit": "%",
+              "relation": "approx",
+              "route": "urine",
+              "species": "molecola e metaboliti"
+            },
+            {
+              "value": 40,
+              "unit": "%",
+              "relation": "approx",
+              "route": "feces",
+              "species": "molecola e metaboliti, anche farmaco non assorbito"
+            },
+            {
+              "value": 2,
+              "unit": "% della dose",
+              "relation": "<",
+              "route": "urine",
+              "species": "ramipril immodificato"
+            }
+          ],
+          "sourceIds": [
+            "ramipril-capsules-us"
+          ],
+          "detail": "<2% della dose nelle urine come ramipril immodificato. La quota fecale non misura da sola l’escrezione biliare.",
+          "excerptSourceId": "ramipril-capsules-us"
+        }
+      },
+      "applicableMoleculeIds": [
+        "CHEMBL1168"
+      ],
+      "moleculeId": "CHEMBL1168",
+      "name": "Ramipril",
+      "sourceIds": [
+        "ramipril-capsules-us"
+      ],
+      "teaching": {
+        "title": "Il profarmaco e il metabolita hanno cinetiche diverse",
+        "body": "Il ramipril viene trasformato in ramiprilato. Quest’ultimo si lega all’ACE e se ne dissocia lentamente: per questo una lunga coda terminale non descrive, da sola, l’andamento delle concentrazioni nell’intervallo terapeutico. Ogni emivita deve indicare quale sostanza e quale fase misura.",
+        "sourceIds": [
+          "ramipril-capsules-us"
+        ]
+      },
+      "reviewStatus": "source-checked",
+      "checkedAt": "2026-10-22"
+    },
+    {
+      "id": "clopidogrel-oral-bisulfate",
+      "moleculeId": "CHEMBL1771",
+      "name": "Clopidogrel",
+      "applicableMoleculeIds": [
+        "CHEMBL1771",
+        "CHEMBL1083385"
+      ],
+      "formulation": "Compresse rivestite: clopidogrel idrogenosolfato (bisolfato)",
+      "route": "Orale",
+      "population": "Adulti; condizioni specifiche indicate per ogni misura",
+      "sourceIds": [
+        "clopidogrel-us-20260929",
+        "clopidogrel-ema-it-20261022"
+      ],
+      "metrics": {
+        "halfLife": {
+          "summary": "≈6 h; metabolita attivo ≈30 min",
+          "detail": "Clopidogrel dopo 75 mg orali singoli. Il principale metabolita inattivo ha emivita ≈8 h (EMA).",
+          "substance": "Clopidogrel e metaboliti distinti",
+          "measurementType": "emivita di eliminazione",
+          "sourceIds": [
+            "clopidogrel-us-20260929",
+            "clopidogrel-ema-it-20261022"
+          ],
+          "reviewStatus": "source-checked",
+          "values": [
+            {
+              "value": 6,
+              "unit": "h",
+              "approximate": true,
+              "substance": "clopidogrel",
+              "conditions": "Singola dose orale di 75 mg",
+              "sourceIds": [
+                "clopidogrel-us-20260929"
+              ]
+            },
+            {
+              "value": 30,
+              "unit": "min",
+              "approximate": true,
+              "substance": "metabolita tiolico attivo",
+              "sourceIds": [
+                "clopidogrel-us-20260929"
+              ]
+            },
+            {
+              "value": 8,
+              "unit": "h",
+              "substance": "principale metabolita circolante inattivo",
+              "sourceIds": [
+                "clopidogrel-ema-it-20261022"
+              ]
+            }
+          ],
+          "supportingExcerpt": "half-life of approximately 6 hours",
+          "excerptSourceId": "clopidogrel-us-20260929"
+        },
+        "bioavailability": {
+          "summary": "Assoluta non quantificata nella fonte",
+          "detail": "Assorbimento ≥50%, stimato dai metaboliti urinari; non misura la biodisponibilità assoluta.",
+          "substance": "Clopidogrel",
+          "measurementType": "biodisponibilità assoluta non riportata; frazione assorbita disponibile",
+          "sourceIds": [
+            "clopidogrel-us-20260929"
+          ],
+          "reviewStatus": "source-checked",
+          "values": [
+            {
+              "value": 50,
+              "relation": "≥",
+              "unit": "%",
+              "measurementType": "frazione assorbita",
+              "sourceIds": [
+                "clopidogrel-us-20260929"
+              ]
+            }
+          ],
+          "supportingExcerpt": "Absorption is at least 50%",
+          "excerptSourceId": "clopidogrel-us-20260929"
+        },
+        "proteinBinding": {
+          "summary": "98% parent; 94% metabolita inattivo",
+          "detail": "Legame reversibile alle proteine plasmatiche umane misurato in vitro.",
+          "substance": "Clopidogrel / principale metabolita inattivo",
+          "measurementType": "legame proteico in vitro",
+          "sourceIds": [
+            "clopidogrel-ema-it-20261022"
+          ],
+          "reviewStatus": "source-checked",
+          "values": [
+            {
+              "value": 98,
+              "unit": "%",
+              "substance": "clopidogrel"
+            },
+            {
+              "value": 94,
+              "unit": "%",
+              "substance": "principale metabolita inattivo"
+            }
+          ],
+          "supportingExcerpt": "98% e 94%, rispettivamente",
+          "excerptSourceId": "clopidogrel-ema-it-20261022"
+        },
+        "metabolism": {
+          "summary": "Esterasi e CYP; attivazione soprattutto CYP2C19",
+          "detail": "Il derivato carbossilico inattivo rappresenta l’85% dei metaboliti circolanti, non l’85% della dose.",
+          "substance": "Clopidogrel",
+          "measurementType": "vie metaboliche e denominatore della frazione",
+          "sourceIds": [
+            "clopidogrel-us-20260929"
+          ],
+          "reviewStatus": "source-checked",
+          "values": [
+            {
+              "value": 85,
+              "unit": "%",
+              "substance": "derivato carbossilico inattivo",
+              "denominator": "metaboliti circolanti"
+            }
+          ],
+          "supportingExcerpt": "85% of circulating metabolites",
+          "excerptSourceId": "clopidogrel-us-20260929"
+        },
+        "metabolites": {
+          "summary": "Tiolico attivo; carbossilico inattivo",
+          "detail": "L’intermedio 2-oxo-clopidogrel precede la formazione del metabolita attivo.",
+          "substance": "Metaboliti di clopidogrel",
+          "measurementType": "identità e attività dei metaboliti",
+          "sourceIds": [
+            "clopidogrel-us-20260929"
+          ],
+          "reviewStatus": "source-checked",
+          "supportingExcerpt": "thiol derivative",
+          "excerptSourceId": "clopidogrel-us-20260929"
+        },
+        "excretion": {
+          "summary": "≈50% urine; ≈46% feci",
+          "detail": "Radioattività totale nei 5 giorni dopo clopidogrel orale marcato; non quote di parent immodificato.",
+          "substance": "Materiale correlato al farmaco marcato con 14C",
+          "measurementType": "recupero della radioattività",
+          "sourceIds": [
+            "clopidogrel-us-20260929"
+          ],
+          "reviewStatus": "source-checked",
+          "values": [
+            {
+              "value": 50,
+              "unit": "%",
+              "approximate": true,
+              "matrix": "urine",
+              "duration": "5 giorni"
+            },
+            {
+              "value": 46,
+              "unit": "%",
+              "approximate": true,
+              "matrix": "feci",
+              "duration": "5 giorni"
+            }
+          ],
+          "supportingExcerpt": "50% of total radioactivity",
+          "excerptSourceId": "clopidogrel-us-20260929"
+        }
+      },
+      "teaching": {
+        "title": "Tre tempi diversi",
+        "sourceIds": [
+          "clopidogrel-us-20260929"
+        ],
+        "sourceSections": [
+          "12.1 Mechanism of Action",
+          "12.2 Pharmacodynamics",
+          "12.3 Pharmacokinetics"
+        ],
+        "body": "Il profarmaco, il metabolita attivo e la piastrina hanno tempi diversi. Il legame irreversibile a P2Y12 fa persistere l’effetto sulla piastrina anche quando il metabolita non circola più: l’emivita plasmatica non descrive da sola la durata dell’antiaggregazione."
+      },
+      "reviewStatus": "source-checked",
+      "checkedAt": "2026-10-22",
+      "title": "Compresse rivestite: clopidogrel idrogenosolfato (bisolfato)"
+    },
+    {
+      "id": "amlodipine-oral-besylate",
+      "moleculeId": "CHEMBL1491",
+      "name": "Amlodipina",
+      "applicableMoleculeIds": [
+        "CHEMBL1491",
+        "CHEMBL1200402"
+      ],
+      "formulation": "Compresse di amlodipina besilato",
+      "route": "Orale",
+      "population": "Adulti; legame proteico misurato ex vivo in pazienti ipertesi",
+      "sourceIds": [
+        "amlodipine-us-20260901"
+      ],
+      "metrics": {
+        "halfLife": {
+          "summary": "30–50 h (terminale)",
+          "detail": "Eliminazione bifasica; stato stazionario dopo 7–8 giorni di assunzione quotidiana.",
+          "substance": "Amlodipina",
+          "measurementType": "emivita terminale",
+          "sourceIds": [
+            "amlodipine-us-20260901"
+          ],
+          "reviewStatus": "source-checked",
+          "values": [
+            {
+              "range": [
+                30,
+                50
+              ],
+              "unit": "h",
+              "approximate": true
+            }
+          ],
+          "supportingExcerpt": "terminal elimination half-life of about 30 to 50 hours",
+          "excerptSourceId": "amlodipine-us-20260901"
+        },
+        "bioavailability": {
+          "summary": "64–90% (assoluta)",
+          "detail": "Compresse orali; l’assunzione di cibo non modifica la biodisponibilità.",
+          "substance": "Amlodipina",
+          "measurementType": "biodisponibilità assoluta",
+          "sourceIds": [
+            "amlodipine-us-20260901"
+          ],
+          "reviewStatus": "source-checked",
+          "values": [
+            {
+              "range": [
+                64,
+                90
+              ],
+              "unit": "%"
+            }
+          ],
+          "supportingExcerpt": "Absolute bioavailability",
+          "excerptSourceId": "amlodipine-us-20260901"
+        },
+        "proteinBinding": {
+          "summary": "≈93%",
+          "detail": "Dato ex vivo nei pazienti ipertesi.",
+          "substance": "Amlodipina circolante",
+          "measurementType": "legame alle proteine plasmatiche",
+          "sourceIds": [
+            "amlodipine-us-20260901"
+          ],
+          "reviewStatus": "source-checked",
+          "values": [
+            {
+              "value": 93,
+              "unit": "%",
+              "approximate": true
+            }
+          ],
+          "supportingExcerpt": "approximately 93%",
+          "excerptSourceId": "amlodipine-us-20260901"
+        },
+        "metabolism": {
+          "summary": "Epatico, circa 90%",
+          "detail": "La clearance diminuisce nell’insufficienza epatica.",
+          "substance": "Amlodipina",
+          "measurementType": "quota metabolizzata",
+          "sourceIds": [
+            "amlodipine-us-20260901"
+          ],
+          "reviewStatus": "source-checked",
+          "values": [
+            {
+              "value": 90,
+              "unit": "%",
+              "approximate": true
+            }
+          ],
+          "supportingExcerpt": "via hepatic metabolism",
+          "excerptSourceId": "amlodipine-us-20260901"
+        },
+        "metabolites": {
+          "summary": "Metaboliti inattivi",
+          "detail": "Il testo PK non elenca nomi individuali.",
+          "substance": "Metaboliti di amlodipina",
+          "measurementType": "attività metaboliti",
+          "sourceIds": [
+            "amlodipine-us-20260901"
+          ],
+          "reviewStatus": "source-checked",
+          "supportingExcerpt": "inactive metabolites",
+          "excerptSourceId": "amlodipine-us-20260901"
+        },
+        "excretion": {
+          "summary": "Urine: ≈10% immodificata; ≈60% metaboliti",
+          "detail": "Quote riportate nella label; mantenere distinta la molecola originaria dai metaboliti.",
+          "substance": "Amlodipina / metaboliti",
+          "measurementType": "escrezione urinaria",
+          "sourceIds": [
+            "amlodipine-us-20260901"
+          ],
+          "reviewStatus": "source-checked",
+          "values": [
+            {
+              "value": 10,
+              "unit": "%",
+              "approximate": true,
+              "substance": "amlodipina immodificata",
+              "matrix": "urine"
+            },
+            {
+              "value": 60,
+              "unit": "%",
+              "approximate": true,
+              "substance": "metaboliti",
+              "matrix": "urine"
+            }
+          ],
+          "supportingExcerpt": "10% of the parent compound",
+          "excerptSourceId": "amlodipine-us-20260901"
+        }
+      },
+      "teaching": {
+        "title": "Una concentrazione che cambia lentamente",
+        "sourceIds": [
+          "amlodipine-us-20260901"
+        ],
+        "body": "L’emivita terminale lunga aiuta a capire perché la concentrazione si assesti gradualmente. Il metabolismo epatico e l’eliminazione urinaria dei metaboliti sono passaggi diversi: trovare metaboliti nelle urine non significa che tutto il farmaco sia eliminato dal rene immodificato."
+      },
+      "reviewStatus": "source-checked",
+      "checkedAt": "2026-10-22",
+      "title": "Compresse di amlodipina besilato"
+    },
+    {
+      "id": "digoxin-oral-tablets",
+      "moleculeId": "CHEMBL1751",
+      "name": "Digossina",
+      "applicableMoleculeIds": [
+        "CHEMBL1751"
+      ],
+      "formulation": "Compresse di digossina; i dati da studi EV sono segnalati separatamente",
+      "route": "Orale; escrezione quantitativa da studio endovenoso",
+      "population": "Adulti; funzione renale normale salvo dato specifico sull’anuria",
+      "sourceIds": [
+        "digoxin-us-20260708"
+      ],
+      "metrics": {
+        "halfLife": {
+          "summary": "1,5–2 giorni; 3,5–5 giorni nell’anuria",
+          "detail": "Il primo intervallo riguarda volontari sani con funzione renale normale.",
+          "substance": "Digossina",
+          "measurementType": "emivita di eliminazione",
+          "sourceIds": [
+            "digoxin-us-20260708"
+          ],
+          "reviewStatus": "source-checked",
+          "values": [
+            {
+              "range": [
+                1.5,
+                2
+              ],
+              "unit": "giorni",
+              "population": "Volontari sani, funzione renale normale"
+            },
+            {
+              "range": [
+                3.5,
+                5
+              ],
+              "unit": "giorni",
+              "population": "Pazienti anurici"
+            }
+          ],
+          "supportingExcerpt": "half-life of 1.5 to 2 days",
+          "excerptSourceId": "digoxin-us-20260708"
+        },
+        "bioavailability": {
+          "summary": "60–80% (compresse, assoluta)",
+          "detail": "Confronto con uguale dose EV; non estendere automaticamente a soluzioni o altre preparazioni.",
+          "substance": "Digossina",
+          "measurementType": "biodisponibilità assoluta",
+          "sourceIds": [
+            "digoxin-us-20260708"
+          ],
+          "reviewStatus": "source-checked",
+          "values": [
+            {
+              "range": [
+                60,
+                80
+              ],
+              "unit": "%",
+              "formulation": "Compresse",
+              "comparator": "Uguale dose endovenosa"
+            }
+          ],
+          "supportingExcerpt": "absolute bioavailability",
+          "excerptSourceId": "digoxin-us-20260708"
+        },
+        "proteinBinding": {
+          "summary": "≈25%",
+          "detail": "Legame alle proteine del plasma.",
+          "substance": "Digossina",
+          "measurementType": "legame proteico plasmatico",
+          "sourceIds": [
+            "digoxin-us-20260708"
+          ],
+          "reviewStatus": "source-checked",
+          "values": [
+            {
+              "value": 25,
+              "unit": "%",
+              "approximate": true
+            }
+          ],
+          "supportingExcerpt": "Approximately 25%",
+          "excerptSourceId": "digoxin-us-20260708"
+        },
+        "metabolism": {
+          "summary": "Limitato: ≈13% della dose",
+          "detail": "Nei volontari sani; metabolismo non dipendente dal sistema CYP450.",
+          "substance": "Digossina",
+          "measurementType": "frazione della dose metabolizzata",
+          "sourceIds": [
+            "digoxin-us-20260708"
+          ],
+          "reviewStatus": "source-checked",
+          "values": [
+            {
+              "value": 13,
+              "unit": "%",
+              "population": "Volontari sani",
+              "denominator": "dose"
+            }
+          ],
+          "supportingExcerpt": "13%",
+          "excerptSourceId": "digoxin-us-20260708"
+        },
+        "metabolites": {
+          "summary": "Diidrodigossina e metaboliti polari",
+          "detail": "La riduzione batterica intestinale produce derivati inattivi; la fonte non classifica ogni metabolita urinario come inattivo.",
+          "substance": "Metaboliti di digossina",
+          "measurementType": "identità e attività dei metaboliti",
+          "sourceIds": [
+            "digoxin-us-20260708"
+          ],
+          "reviewStatus": "source-checked",
+          "supportingExcerpt": "inactive reduction products",
+          "excerptSourceId": "digoxin-us-20260708"
+        },
+        "excretion": {
+          "summary": "50–70% immodificata nelle urine (studio EV)",
+          "detail": "Volontari sani dopo somministrazione endovenosa; la clearance renale segue la clearance della creatinina.",
+          "substance": "Digossina immodificata",
+          "measurementType": "frazione della dose EV escreta nelle urine",
+          "sourceIds": [
+            "digoxin-us-20260708"
+          ],
+          "reviewStatus": "source-checked",
+          "values": [
+            {
+              "range": [
+                50,
+                70
+              ],
+              "unit": "%",
+              "route": "Endovenosa",
+              "population": "Volontari sani",
+              "matrix": "urine",
+              "denominator": "dose EV"
+            }
+          ],
+          "supportingExcerpt": "Following intravenous administration",
+          "excerptSourceId": "digoxin-us-20260708"
+        }
+      },
+      "teaching": {
+        "title": "Distribuzione ed eliminazione sono due fasi",
+        "sourceIds": [
+          "digoxin-us-20260708"
+        ],
+        "body": "La digossina si distribuisce nei tessuti prima della lenta eliminazione. La fase distributiva di 6–8 ore non è la sua emivita di eliminazione. La funzione renale aiuta a spiegare l’accumulo e il prolungamento dell’emivita nell’anuria."
+      },
+      "reviewStatus": "source-checked",
+      "checkedAt": "2026-10-22",
+      "title": "Compresse di digossina; i dati da studi EV sono segnalati separatamente"
+    },
+    {
+      "id": "levetiracetam-oral-immediate",
+      "moleculeId": "CHEMBL1286",
+      "name": "Levetiracetam",
+      "applicableMoleculeIds": [
+        "CHEMBL1286"
+      ],
+      "formulation": "Compresse rivestite a rilascio immediato",
+      "route": "Orale",
+      "population": "Adulti; non trasferire questi valori a età pediatrica o insufficienza renale",
+      "sourceIds": [
+        "levetiracetam-us-20260810"
+      ],
+      "metrics": {
+        "halfLife": {
+          "summary": "7 ± 1 h (adulti)",
+          "detail": "La funzione renale condiziona l’eliminazione. Il ±1 è mantenuto come riportato, non convertito in intervallo osservato.",
+          "substance": "Levetiracetam",
+          "measurementType": "emivita plasmatica",
+          "sourceIds": [
+            "levetiracetam-us-20260810"
+          ],
+          "reviewStatus": "source-checked",
+          "values": [
+            {
+              "value": 7,
+              "reportedPlusMinus": 1,
+              "unit": "h",
+              "statistic": "Tipo della dispersione non precisato nella label"
+            }
+          ],
+          "supportingExcerpt": "7 ± 1 hour",
+          "excerptSourceId": "levetiracetam-us-20260810"
+        },
+        "bioavailability": {
+          "summary": "100% (orale)",
+          "detail": "Compresse; la label riporta bioequivalenza con la soluzione orale. Non è la formulazione a rilascio prolungato.",
+          "substance": "Levetiracetam",
+          "measurementType": "biodisponibilità orale",
+          "sourceIds": [
+            "levetiracetam-us-20260810"
+          ],
+          "reviewStatus": "source-checked",
+          "values": [
+            {
+              "value": 100,
+              "unit": "%",
+              "formulation": "Compresse orali a rilascio immediato"
+            }
+          ],
+          "supportingExcerpt": "100%",
+          "excerptSourceId": "levetiracetam-us-20260810"
+        },
+        "proteinBinding": {
+          "summary": "<10%",
+          "detail": "Sia levetiracetam sia il principale metabolita.",
+          "substance": "Levetiracetam / ucb L057",
+          "measurementType": "legame alle proteine plasmatiche",
+          "sourceIds": [
+            "levetiracetam-us-20260810"
+          ],
+          "reviewStatus": "source-checked",
+          "values": [
+            {
+              "value": 10,
+              "relation": "<",
+              "unit": "%"
+            }
+          ],
+          "supportingExcerpt": "less than 10%",
+          "excerptSourceId": "levetiracetam-us-20260810"
+        },
+        "metabolism": {
+          "summary": "Idrolisi dell’acetamide, indipendente dai CYP",
+          "detail": "La via principale genera ucb L057 e interessa il 24% della dose.",
+          "substance": "Levetiracetam",
+          "measurementType": "via metabolica e frazione della dose",
+          "sourceIds": [
+            "levetiracetam-us-20260810"
+          ],
+          "reviewStatus": "source-checked",
+          "values": [
+            {
+              "value": 24,
+              "unit": "%",
+              "denominator": "dose",
+              "substance": "ucb L057"
+            }
+          ],
+          "supportingExcerpt": "not dependent on any liver cytochrome P450 isoenzymes",
+          "excerptSourceId": "levetiracetam-us-20260810"
+        },
+        "metabolites": {
+          "summary": "ucb L057: inattivo nei modelli animali",
+          "detail": "Metabolita carbossilico principale; l’attività è riferita ai modelli di crisi descritti.",
+          "substance": "ucb L057",
+          "measurementType": "attività nei modelli animali di crisi",
+          "sourceIds": [
+            "levetiracetam-us-20260810"
+          ],
+          "reviewStatus": "source-checked",
+          "supportingExcerpt": "inactive in animal seizure models",
+          "excerptSourceId": "levetiracetam-us-20260810"
+        },
+        "excretion": {
+          "summary": "66% della dose immodificata nelle urine",
+          "detail": "Filtrazione glomerulare e riassorbimento tubulare parziale.",
+          "substance": "Levetiracetam immodificato",
+          "measurementType": "frazione della dose escreta per via renale",
+          "sourceIds": [
+            "levetiracetam-us-20260810"
+          ],
+          "reviewStatus": "source-checked",
+          "values": [
+            {
+              "value": 66,
+              "unit": "%",
+              "denominator": "dose",
+              "matrix": "urine"
+            }
+          ],
+          "supportingExcerpt": "66%",
+          "excerptSourceId": "levetiracetam-us-20260810"
+        }
+      },
+      "teaching": {
+        "title": "Assorbito bene, eliminato soprattutto dal rene",
+        "sourceIds": [
+          "levetiracetam-us-20260810"
+        ],
+        "body": "La biodisponibilità elevata descrive l’ingresso in circolo; l’escrezione immodificata descrive l’uscita. Il limitato coinvolgimento dei CYP non annulla il ruolo del rene: una clearance renale ridotta può aumentare l’esposizione."
+      },
+      "reviewStatus": "source-checked",
+      "checkedAt": "2026-10-22",
+      "title": "Compresse rivestite a rilascio immediato"
+    }
+  ],
+  "sources": [
+    {
+      "id": "metoprolol-succinate-er-us",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=a46cbf09-20e3-4f0d-ab41-221f60fde068",
+      "section": "12.3 Pharmacokinetics",
+      "sourceVersion": "2",
+      "effectiveDate": "20260916",
+      "checkedAt": "2026-10-22",
+      "setId": "a46cbf09-20e3-4f0d-ab41-221f60fde068",
+      "splId": "5b9b126e-1b24-6163-e063-6294a90aef50",
+      "localFile": "data/verified/labels/CHEMBL13.json",
+      "product": "METOPROLOL SUCCINATE",
+      "manufacturer": "REMEDYREPACK INC.",
+      "route": "Orale",
+      "jurisdiction": "USA",
+      "language": "en",
+      "reviewStatus": "source-checked"
+    },
+    {
+      "id": "ramipril-capsules-us",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=45707435-4fc8-457e-9ff2-02d7be9b4a6e",
+      "section": "12.3 Pharmacokinetics",
+      "sourceVersion": "4",
+      "effectiveDate": "20260904",
+      "checkedAt": "2026-10-22",
+      "setId": "45707435-4fc8-457e-9ff2-02d7be9b4a6e",
+      "splId": "5aa8efd9-6e26-311d-e063-6394a90afe25",
+      "localFile": "data/verified/labels/CHEMBL1168.json",
+      "product": "RAMIPRIL",
+      "manufacturer": "BluePoint Laboratories",
+      "route": "Orale",
+      "jurisdiction": "USA",
+      "language": "en",
+      "reviewStatus": "source-checked"
+    },
+    {
+      "id": "metoprolol-tartrate-ir-us",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=0ccb9d3c-3f9a-486d-9b27-dc6f3ef6f4ed",
+      "section": "12.3 Pharmacokinetics",
+      "sourceVersion": "Revised 7/2026; Updated July 10, 2026",
+      "effectiveDate": "20260710",
+      "checkedAt": "2026-10-22",
+      "setId": "0ccb9d3c-3f9a-486d-9b27-dc6f3ef6f4ed",
+      "localFile": null,
+      "product": "METOPROLOL TARTRATE tablet, film coated",
+      "manufacturer": "Cardinal Health 107, LLC",
+      "route": "Orale",
+      "jurisdiction": "USA",
+      "language": "en",
+      "snapshotNote": "Fonte primaria consultata online in questa revisione; non era nella label della famiglia precedentemente importata.",
+      "reviewStatus": "source-checked"
+    },
+    {
+      "id": "clopidogrel-us-20260929",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=bb3b5e96-e629-4db5-8ad5-40c17c6dae18",
+      "section": "12.3 Pharmacokinetics",
+      "effectiveDate": "2026-09-29",
+      "version": "8",
+      "setId": "bb3b5e96-e629-4db5-8ad5-40c17c6dae18",
+      "product": "Clopidogrel",
+      "localFile": "data/verified/labels/CHEMBL1771.json",
+      "checkedAt": "2026-10-22",
+      "jurisdiction": "USA",
+      "language": "en",
+      "reviewStatus": "source-checked",
+      "verification": "Prodotto, via, data e dati PK controllati sulla pagina DailyMed corrente; corrispondenza con la versione importata.",
+      "productData": {
+        "generic": [
+          "CLOPIDOGREL BISULFATE"
+        ],
+        "brand": [
+          "Clopidogrel"
+        ],
+        "substance": [
+          "CLOPIDOGREL BISULFATE"
+        ],
+        "manufacturer": [
+          "Westminster Pharmaceuticals, LLC"
+        ],
+        "route": [
+          "ORAL"
+        ],
+        "applications": [
+          "ANDA204165"
+        ]
+      },
+      "manufacturer": "Westminster Pharmaceuticals, LLC",
+      "sourceVersion": "8"
+    },
+    {
+      "id": "amlodipine-us-20260901",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=6efc0ef6-0424-44fc-a9ea-eb30c3b83239",
+      "section": "12.3 Pharmacokinetics",
+      "effectiveDate": "2026-09-01",
+      "version": "6",
+      "setId": "6efc0ef6-0424-44fc-a9ea-eb30c3b83239",
+      "product": "Amlodipine Besylate",
+      "localFile": "data/verified/labels/CHEMBL1491.json",
+      "checkedAt": "2026-10-22",
+      "jurisdiction": "USA",
+      "language": "en",
+      "reviewStatus": "source-checked",
+      "verification": "Prodotto, via, data e dati PK controllati sulla pagina DailyMed corrente; corrispondenza con la versione importata.",
+      "productData": {
+        "generic": [
+          "AMLODIPINE BESYLATE"
+        ],
+        "brand": [
+          "Amlodipine Besylate"
+        ],
+        "substance": [
+          "AMLODIPINE BESYLATE"
+        ],
+        "manufacturer": [
+          "NCS HealthCare of KY, LLC dba Vangard Labs"
+        ],
+        "route": [
+          "ORAL"
+        ],
+        "applications": [
+          "ANDA078925"
+        ]
+      },
+      "manufacturer": "NCS HealthCare of KY, LLC dba Vangard Labs",
+      "sourceVersion": "6"
+    },
+    {
+      "id": "digoxin-us-20260708",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=5886e233-b2da-4acb-be05-9bf40fb8e7f4",
+      "section": "12.3 Pharmacokinetics",
+      "effectiveDate": "2026-07-08",
+      "version": "7",
+      "setId": "5886e233-b2da-4acb-be05-9bf40fb8e7f4",
+      "product": "Digoxin",
+      "localFile": "data/verified/labels/CHEMBL1751.json",
+      "checkedAt": "2026-10-22",
+      "jurisdiction": "USA",
+      "language": "en",
+      "reviewStatus": "source-checked",
+      "verification": "Prodotto, via, data e dati PK controllati sulla pagina DailyMed corrente; corrispondenza con la versione importata.",
+      "productData": {
+        "generic": [
+          "DIGOXIN"
+        ],
+        "brand": [
+          "Digoxin"
+        ],
+        "substance": [
+          "DIGOXIN"
+        ],
+        "manufacturer": [
+          "NCS HealthCare of KY, LLC dba Vangard Labs"
+        ],
+        "route": [
+          "ORAL"
+        ],
+        "applications": [
+          "ANDA077002"
+        ]
+      },
+      "manufacturer": "NCS HealthCare of KY, LLC dba Vangard Labs",
+      "sourceVersion": "7"
+    },
+    {
+      "id": "levetiracetam-us-20260810",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=e1b14939-7262-40dc-a334-2b3b72c88d47",
+      "section": "12.3 Pharmacokinetics",
+      "effectiveDate": "2026-08-10",
+      "version": "24",
+      "setId": "e1b14939-7262-40dc-a334-2b3b72c88d47",
+      "product": "Levetiracetam",
+      "localFile": "data/verified/labels/CHEMBL1286.json",
+      "checkedAt": "2026-10-22",
+      "jurisdiction": "USA",
+      "language": "en",
+      "reviewStatus": "source-checked",
+      "verification": "Prodotto, via, data e dati PK controllati sulla pagina DailyMed corrente; corrispondenza con la versione importata.",
+      "productData": {
+        "generic": [
+          "LEVETIRACETAM"
+        ],
+        "brand": [
+          "Levetiracetam"
+        ],
+        "substance": [
+          "LEVETIRACETAM"
+        ],
+        "manufacturer": [
+          "Cardinal Health 107, LLC"
+        ],
+        "route": [
+          "ORAL"
+        ],
+        "applications": [
+          "ANDA076919"
+        ]
+      },
+      "manufacturer": "Cardinal Health 107, LLC",
+      "sourceVersion": "24"
+    },
+    {
+      "id": "clopidogrel-ema-it-20261022",
+      "url": "https://www.ema.europa.eu/it/documents/product-information/plavix-epar-product-information_it.pdf",
+      "section": "5.2 Proprietà farmacocinetiche — Distribuzione; Eliminazione (pp. 21–22 del PDF)",
+      "effectiveDate": null,
+      "version": "Documento EMA corrente consultato il 22/10/2026; il campo 10 del PDF contiene il segnaposto «GG mese AAAA».",
+      "setId": null,
+      "product": "Plavix 75 mg / Plavix 300 mg",
+      "localFile": null,
+      "checkedAt": "2026-10-22",
+      "jurisdiction": "UE",
+      "language": "it",
+      "reviewStatus": "source-checked",
+      "productData": {
+        "generic": [
+          "clopidogrel idrogenosolfato"
+        ],
+        "brand": [
+          "Plavix 75 mg",
+          "Plavix 300 mg"
+        ],
+        "route": [
+          "ORAL"
+        ],
+        "form": "Compresse rivestite con film"
+      },
+      "sourceVersion": "Documento EMA corrente consultato il 22/10/2026; il campo 10 del PDF contiene il segnaposto «GG mese AAAA»."
+    }
+  ]
+}
