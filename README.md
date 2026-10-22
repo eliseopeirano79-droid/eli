@@ -12,6 +12,8 @@ Primo lotto di **7 profili di prodotto per 6 molecole**, con **42 metriche strut
 
 Aggiunte **25 denominazioni italiane documentate**, mantenendo gli identificatori e i nomi internazionali; la ricerca privilegia il nome esatto italiano o inglese. Brevi spiegazioni originali collegano i dati PK senza trasformarli in istruzioni di dose.
 
+Corretto anche l'aggiornamento offline: una nuova versione ricarica i file dalla rete prima di attivarsi, evitando di ricopiare dati vecchi dalla cache HTTP nel nuovo archivio dell'app. La regressione include il passaggio fra due versioni con cache già presente.
+
 **Stile Isoelettrica come vincolo permanente:** palette salvia/petrolio tramite le variabili esistenti, temi chiaro/scuro, cinque sezioni principali, sei sezioni espandibili nella scheda, pillola verde su blu scuro uniforme e firma «App made by Eliseo Peirano · 2026».
 
 Metodo, esempi, limiti e verifiche riproducibili: [docs/REVIEW-0.12.md](docs/REVIEW-0.12.md). Questa è una revisione circoscritta: il catalogo non diventa una raccolta di monografie tutte complete. Le dieci suite locali sono passate dopo le correzioni; controllati anche i due temi nell’interfaccia. La matrice browser automatizzata e la distribuzione sono verificate separatamente tramite la PR della release.

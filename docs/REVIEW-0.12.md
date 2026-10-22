@@ -35,6 +35,14 @@ Usare le variabili cromatiche salvia/petrolio esistenti e mantenere entrambi i t
 
 ## Verifiche riproducibili e stato
 
+### Aggiornamenti con una cache già presente
+
+La verifica sul sito ha riprodotto un problema distinto dai dati: durante l'installazione di un nuovo service worker, `cache.addAll(FILES)` poteva riutilizzare risposte ancora fresche nella cache HTTP e copiarle nella nuova versione offline. Il server aveva già il nuovo testo, mentre il browser continuava a mostrare quello precedente dopo l'avviso «Ricarica».
+
+L'installazione ora usa richieste con `cache: 'reload'` per tutte le risorse della versione e attiva il nuovo worker solo dopo il completamento del lotto. Il comportamento di questa modalità è documentato in [Request.cache, MDN](https://developer.mozilla.org/en-US/docs/Web/API/Request/cache). La prova di regressione usa due revisioni di una fixture locale con cache HTTP calda: controlla prima il difetto dell'installazione precedente e poi il caricamento del nuovo JavaScript e dei nuovi dati con l'installazione corretta. Il normale controllo offline resta separato.
+
+### Suite e controllo dell'interfaccia
+
 Dal checkout del repository:
 
 ```sh

@@ -2,9 +2,11 @@
    Separate SVG sanitizer tests use a labeled synthetic fixture, never a pharmaceutical claim. */
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
 const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
+const {verifyWorkerUpgrade}=require('./worker-upgrade-audit.cjs');
 (async()=>{
  const out='/tmp/elix-audit';fs.mkdirSync(out,{recursive:true});
  const browser=await chromium.launch({headless:true});
+ const workerUpgrade=await verifyWorkerUpgrade(browser);
  const context=await browser.newContext({viewport:{width:1440,height:1000},reducedMotion:'reduce',serviceWorkers:'block'});
  const page=await context.newPage(),errors=[],requests=[];
  page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>requests.push(r.url()));
@@ -182,7 +184,7 @@ const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
  await offlinePage.evaluate(()=>navigator.serviceWorker.ready);await offlineContext.setOffline(true);
  await offlinePage.reload();await offlinePage.waitForSelector('.topnav-link');assert.equal(await offlinePage.locator('.topnav-link').count(),5);
  await offlinePage.waitForSelector('#elix-offline');await offlineContext.close();
- const report={passed:true,matrixChecks:matrix.length,viewports:[1440,768,390,320],themes:['light','dark'],routes:routes.length,lazyLoading:true,safetyRestored:true,answerShuffle:true,sessionResume:true,svgTest,offline:true,reviewedPK,errors,matrix};
+ const report={passed:true,matrixChecks:matrix.length,viewports:[1440,768,390,320],themes:['light','dark'],routes:routes.length,lazyLoading:true,safetyRestored:true,answerShuffle:true,sessionResume:true,svgTest,offline:true,reviewedPK,workerUpgrade,errors,matrix};
  fs.writeFileSync(path.join(out,'audit-report.json'),JSON.stringify(report,null,2));console.log('SYSTEMATIC_BROWSER_PASS',JSON.stringify({...report,matrix:undefined,reviewedPK:{...reviewedPK,matrix:undefined,exclusions:undefined}}));
  await browser.close();
 })().catch(e=>{console.error(e);process.exit(1)});
