@@ -1,10 +1,14 @@
-# ELIX — Farmacologia & Principi Attivi · Alpha 0.11
+# ELIX — Farmacologia & Principi Attivi · Alpha 0.12
 
 **App made by Eliseo Peirano · 2026**
 
 Sito: https://eliseopeirano79-droid.github.io/PHARMA/ (l'URL GitHub resta invariato; ELIX è il nuovo nome dell'app).
 
 Estensione del progetto recuperato da `PHARMA-Alpha03-pronta-per-Dock-e-GitHub-Pages.zip`. I laboratori, il simulatore ADME, i casi e il quiz originali restano disponibili. ISOELETTRICA e la copia separata ELIX non sono coinvolte in questa pubblicazione.
+
+## Alpha 0.12 — nomenclatura e PK leggibili
+
+2.783 nomi italiani collegati all’identità originale. Riepiloghi di emivita, biodisponibilità e legame proteico recuperati dai documenti: 311 campi in 154 prodotti importati, più 14 valori da 7 fonti primarie integrative. Valori sempre legati a prodotto, via, popolazione e versione; non si mescolano formulazioni. Vedi `docs/PRESENTATION-0.12.md` per criteri, fonti e limiti.
 
 ## Alpha 0.11 — screening dell'intera app
 

@@ -1,0 +1,258 @@
+{
+  "version": "0.12",
+  "scope": "Sintesi PK aggiuntive da fonti primarie, selezionate come prodotto alternativo intero, mai fusione di formulazioni.",
+  "products": {
+    "CHEMBL635": {
+      "family": "CHEMBL635",
+      "file": "supplement/rayos",
+      "product": {
+        "generic": [
+          "RAYOS · prednisone, compresse a rilascio ritardato"
+        ],
+        "route": [
+          "ORALE"
+        ]
+      },
+      "source": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=281ab967-7565-4bef-9c0c-a646589c671e",
+      "jurisdiction": "USA",
+      "effectiveDate": "2024-03",
+      "retrieved": "2026-10-22",
+      "reviewed": "2026-10-22",
+      "fields": {
+        "halfLife": {
+          "value": "2–3 h",
+          "note": "Emivita terminale di prednisone e prednisolone dopo RAYOS. Non è la durata dell’effetto biologico corticosteroideo.",
+          "quote": "was 2-3 hours",
+          "kind": "editorial-primary-source",
+          "section": "Farmacocinetica del prodotto"
+        }
+      },
+      "clinicalPharmacologyPresent": true,
+      "supplementary": true,
+      "context": "Fonte PK integrativa del prodotto indicato, distinta dalla label importata e dal RCP italiano. Non trasferire i valori ad altre vie o formulazioni."
+    },
+    "CHEMBL131": {
+      "family": "CHEMBL131",
+      "file": "supplement/orapred",
+      "product": {
+        "generic": [
+          "ORAPRED ODT · prednisolone sodio fosfato, compresse orodispersibili"
+        ],
+        "route": [
+          "ORALE"
+        ]
+      },
+      "source": "https://dailymed.nlm.nih.gov/dailymed/lookup.cfm?setid=1e379543-c4cf-4e72-953b-db15b7f0c2a1&version=12",
+      "jurisdiction": "USA",
+      "effectiveDate": "versione 12",
+      "retrieved": "2026-10-22",
+      "reviewed": "2026-10-22",
+      "fields": {
+        "halfLife": {
+          "value": "2,6 ± 0,27 h",
+          "note": "Emivita plasmatica media ± DS del prednisolone nella fonte ORAPRED ODT.",
+          "quote": "half-life of 2.6 (± 0.27) hours",
+          "kind": "editorial-primary-source",
+          "section": "Farmacocinetica del prodotto"
+        },
+        "binding": {
+          "value": "70–90%",
+          "note": "Legame alle proteine plasmatiche del prednisolone.",
+          "quote": "Prednisolone is 70-90% protein-bound",
+          "kind": "editorial-primary-source",
+          "section": "Farmacocinetica del prodotto"
+        }
+      },
+      "clinicalPharmacologyPresent": true,
+      "supplementary": true,
+      "context": "Fonte PK integrativa del prodotto indicato, distinta dalla label importata e dal RCP italiano. Non trasferire i valori ad altre vie o formulazioni."
+    },
+    "CHEMBL384467": {
+      "family": "CHEMBL384467",
+      "file": "supplement/dexamethasone-oral",
+      "product": {
+        "generic": [
+          "Desametasone · compresse solubili 10 mg (Aspire Pharma)"
+        ],
+        "route": [
+          "ORALE"
+        ]
+      },
+      "source": "https://www.medicines.org.uk/emc/product/13196/smpc",
+      "jurisdiction": "Regno Unito",
+      "effectiveDate": "2022-02-25",
+      "retrieved": "2026-10-22",
+      "reviewed": "2026-10-22",
+      "fields": {
+        "halfLife": {
+          "value": "3,6 ± 0,9 h",
+          "note": "Emivita plasmatica; l’emivita biologica 36–54 h descrive un parametro diverso.",
+          "quote": "mean plasma half-life is 3.6 ± 0.9 h",
+          "kind": "editorial-primary-source",
+          "section": "Farmacocinetica del prodotto"
+        },
+        "binding": {
+          "value": "≈77%",
+          "note": "Legame alle proteine plasmatiche, soprattutto albumina.",
+          "quote": "bound (to about 77%)",
+          "kind": "editorial-primary-source",
+          "section": "Farmacocinetica del prodotto"
+        }
+      },
+      "clinicalPharmacologyPresent": true,
+      "supplementary": true,
+      "context": "Fonte PK integrativa del prodotto indicato, distinta dalla label importata e dal RCP italiano. Non trasferire i valori ad altre vie o formulazioni."
+    },
+    "CHEMBL20": {
+      "family": "CHEMBL20",
+      "file": "supplement/acetazolamide-oral",
+      "product": {
+        "generic": [
+          "Acetazolamide · Mercury Pharma, compresse 250 mg"
+        ],
+        "route": [
+          "ORALE"
+        ]
+      },
+      "source": "https://www.medicines.org.uk/emc/product/2785/smpc",
+      "jurisdiction": "Regno Unito",
+      "effectiveDate": "2024-10",
+      "retrieved": "2026-10-22",
+      "reviewed": "2026-10-22",
+      "fields": {
+        "halfLife": {
+          "value": "≈4 h",
+          "note": "Emivita plasmatica nella fonte del prodotto orale. Non è un valore per ogni possibile formulazione.",
+          "quote": "plasma half-life of about 4 hours",
+          "kind": "editorial-primary-source",
+          "section": "Farmacocinetica del prodotto"
+        }
+      },
+      "clinicalPharmacologyPresent": true,
+      "supplementary": true,
+      "context": "Fonte PK integrativa del prodotto indicato, distinta dalla label importata e dal RCP italiano. Non trasferire i valori ad altre vie o formulazioni."
+    },
+    "CHEMBL629": {
+      "family": "CHEMBL629",
+      "file": "supplement/amitriptyline-oral",
+      "product": {
+        "generic": [
+          "Amitriptilina · compresse rivestite 25 mg (Brown & Burk)"
+        ],
+        "route": [
+          "ORALE"
+        ]
+      },
+      "source": "https://www.medicines.org.uk/emc/product/10850/smpc",
+      "jurisdiction": "Regno Unito",
+      "effectiveDate": "consultata 22/10/2026",
+      "retrieved": "2026-10-22",
+      "reviewed": "2026-10-22",
+      "fields": {
+        "halfLife": {
+          "value": "≈25 h",
+          "note": "Amitriptilina orale: media 24,65 h, intervallo osservato 16,49–40,36 h; non emivita della nortriptilina.",
+          "quote": "about 25 hours (24.65±6.31 hours",
+          "kind": "editorial-primary-source",
+          "section": "Farmacocinetica del prodotto"
+        },
+        "bioavailability": {
+          "value": "≈53%",
+          "note": "Biodisponibilità orale assoluta media delle compresse 10/25 mg riportata nella fonte.",
+          "quote": "mean absolute oral bioavailability is 53%",
+          "kind": "editorial-primary-source",
+          "section": "Farmacocinetica del prodotto"
+        },
+        "binding": {
+          "value": "≈95%",
+          "note": "Legame alle proteine plasmatiche.",
+          "quote": "plasma protein binding is about 95%",
+          "kind": "editorial-primary-source",
+          "section": "Farmacocinetica del prodotto"
+        }
+      },
+      "clinicalPharmacologyPresent": true,
+      "supplementary": true,
+      "context": "Fonte PK integrativa del prodotto indicato, distinta dalla label importata e dal RCP italiano. Non trasferire i valori ad altre vie o formulazioni."
+    },
+    "CHEMBL54": {
+      "family": "CHEMBL54",
+      "file": "supplement/haldol-oral",
+      "product": {
+        "generic": [
+          "HALDOL · aloperidolo, soluzione orale 2 mg/mL"
+        ],
+        "route": [
+          "ORALE"
+        ]
+      },
+      "source": "https://www.medicines.org.uk/emc/product/15252/smpc",
+      "jurisdiction": "Regno Unito",
+      "effectiveDate": "consultata 22/10/2026",
+      "retrieved": "2026-10-22",
+      "reviewed": "2026-10-22",
+      "fields": {
+        "halfLife": {
+          "value": "≈24 h",
+          "note": "Emivita terminale orale: media 24 h; intervallo delle medie 15–37 h. Non riguarda formulazioni depot.",
+          "quote": "on average 24 hours",
+          "kind": "editorial-primary-source",
+          "section": "Farmacocinetica del prodotto"
+        },
+        "bioavailability": {
+          "value": "60–70%",
+          "note": "Biodisponibilità media di compresse o soluzione orale riportata nello SmPC.",
+          "quote": "oral solution is 60 to 70%",
+          "kind": "editorial-primary-source",
+          "section": "Farmacocinetica del prodotto"
+        },
+        "binding": {
+          "value": "≈88–92%",
+          "note": "Legame plasmatico negli adulti, variabilità interindividuale elevata.",
+          "quote": "approximately 88 to 92%",
+          "kind": "editorial-primary-source",
+          "section": "Farmacocinetica del prodotto"
+        }
+      },
+      "clinicalPharmacologyPresent": true,
+      "supplementary": true,
+      "context": "Fonte PK integrativa del prodotto indicato, distinta dalla label importata e dal RCP italiano. Non trasferire i valori ad altre vie o formulazioni."
+    },
+    "CHEMBL435": {
+      "family": "CHEMBL435",
+      "file": "supplement/hctz-capsules",
+      "product": {
+        "generic": [
+          "Idroclorotiazide · capsule orali 12,5 mg"
+        ],
+        "route": [
+          "ORALE"
+        ]
+      },
+      "source": "https://dailymed.nlm.nih.gov/dailymed/lookup.cfm?setid=a3eb7294-f913-434b-896c-da028bfebc73",
+      "jurisdiction": "USA",
+      "effectiveDate": "2024-08-01",
+      "retrieved": "2026-10-22",
+      "reviewed": "2026-10-22",
+      "fields": {
+        "halfLife": {
+          "value": "6–15 h",
+          "note": "Emivita di eliminazione plasmatica; può prolungarsi in malattia renale.",
+          "quote": "reported to be 6 to 15 hours",
+          "kind": "editorial-primary-source",
+          "section": "Farmacocinetica del prodotto"
+        },
+        "binding": {
+          "value": "≈40–68%",
+          "note": "Legame alle proteine sieriche. La percentuale assorbita 65–75% non viene etichettata qui come F assoluta.",
+          "quote": "approximately 40% to 68%",
+          "kind": "editorial-primary-source",
+          "section": "Farmacocinetica del prodotto"
+        }
+      },
+      "clinicalPharmacologyPresent": true,
+      "supplementary": true,
+      "context": "Fonte PK integrativa del prodotto indicato, distinta dalla label importata e dal RCP italiano. Non trasferire i valori ad altre vie o formulazioni."
+    }
+  }
+}

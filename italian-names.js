@@ -223,15 +223,23 @@ export const ITALIAN_DRUG_NAMES = Object.freeze({
   "ZOLPIDEM TARTRATE": "Zolpidem tartrato",
   "ZOPICLONE": "Zopiclone"
 });
+const sourceNames=new Map();
 export const normalizeDrugName = value => String(value??'').trim().normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase();
 export const internationalDrugName = molecule => String(molecule?.name ?? '');
-export function italianDrugName(molecule, exactEditorialName='') {
-  const key = normalizeDrugName(molecule?.name);
-  if (exactEditorialName && exactEditorialName.trim()) return exactEditorialName.trim();
-  const direct = ITALIAN_DRUG_NAMES[key];
-  if (direct) return direct;
-  return internationalDrugName(molecule); // evitare false traduzioni clinicamente rilevanti
+export function registerItalianNames(records={}) {
+ sourceNames.clear();
+ for(const [id,item] of Object.entries(records)) {
+  if(/^CHEMBL\d+$/.test(id)&&typeof item?.name==='string'&&item.name.length>0&&item.name.length<250&&typeof item.original==='string')sourceNames.set(id,{...item});
+ }
 }
-export function hasReviewedItalianName(molecule, exactEditorialName='') {
-  return Boolean(ITALIAN_DRUG_NAMES[normalizeDrugName(molecule?.name)] || exactEditorialName?.trim());
+export function italianNameProvenance(molecule){
+ const item=sourceNames.get(molecule?.id);
+ return item&&normalizeDrugName(item.original)===normalizeDrugName(molecule?.name)?item:null;
+}
+export function italianDrugName(molecule,exactEditorialName=''){
+ if(exactEditorialName&&exactEditorialName.trim())return exactEditorialName.trim();
+ return ITALIAN_DRUG_NAMES[normalizeDrugName(molecule?.name)]||italianNameProvenance(molecule)?.name||internationalDrugName(molecule);
+}
+export function hasReviewedItalianName(molecule,exactEditorialName=''){
+ return Boolean(ITALIAN_DRUG_NAMES[normalizeDrugName(molecule?.name)]||exactEditorialName?.trim()||italianNameProvenance(molecule));
 }

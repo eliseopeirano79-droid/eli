@@ -1,0 +1,13 @@
+/* Source-bound quantities, always beside their product context. */
+.ep-product-context{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:14px 16px;border:1px solid var(--line);background:var(--panel2);border-radius:12px;margin:12px 0 7px;min-width:0}
+.ep-product-context>div{min-width:0;flex:1}.ep-product-context span{font-size:10px;color:var(--accent);font-weight:750;display:block;letter-spacing:.02em}
+.ep-product-context strong{display:block;font-size:12px;line-height:1.5;margin:5px 0;overflow-wrap:anywhere}.ep-product-context small{display:block;font-size:10px;line-height:1.4;color:var(--muted)}
+.ep-product-context>a{font-size:11px;color:var(--accent);font-weight:750;white-space:nowrap}.ep-context-note{font-size:10px!important;line-height:1.65;color:var(--muted);margin:7px 0 15px}
+.ep-summary .ev-fact{text-align:left}.ep-summary .ev-fact small{font-size:10px;line-height:1.55}.ep-summary .ev-fact strong{overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+.ep-pk-fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:17px 0}.ep-pk-field{min-width:0;padding:17px;border:1px solid var(--line);border-radius:13px;background:var(--panel2)}
+.ep-pk-field h3{font-size:12px!important;line-height:1.55;margin:0 0 9px}.ep-pk-value{font-size:24px;color:var(--accent);letter-spacing:-.03em;display:block;line-height:1.25;overflow-wrap:anywhere}
+.ep-pk-field>p{font-size:12px!important;line-height:1.7}.ep-pk-field details{margin:15px 0 0;padding-top:13px;border-top:1px solid var(--line)}.ep-pk-field summary{font-size:11px;color:var(--accent);cursor:pointer;line-height:1.5;font-weight:720}
+.ep-pk-field blockquote{margin:12px 0;padding:0;font-size:11px;line-height:1.7;max-height:320px;overflow:auto;overflow-wrap:anywhere;color:var(--muted)}
+.ep-source-select{font-size:11px;color:var(--muted);display:flex;flex-direction:column;gap:8px;margin:15px 0}.ep-source-select select{min-width:0;width:100%;border:1px solid var(--line);background:var(--panel2);padding:12px;border-radius:11px;color:var(--text);font-size:12px}
+@media(max-width:900px){.ep-pk-fields{grid-template-columns:1fr}.ep-product-context{align-items:start}.ep-product-context>a{white-space:normal}}
+@media(max-width:450px){.ep-product-context{flex-direction:column;gap:8px}.ep-summary .ev-fact strong{font-size:17px}}
