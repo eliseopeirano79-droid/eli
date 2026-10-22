@@ -1,5 +1,14 @@
 /* Covers all twelve additions; external image availability is not asserted. */
 const assert=require('node:assert/strict'),fs=require('node:fs');
+// Node and Chromium can ship different ICU grouping rules. Compare the count,
+// not the thousands separator, while still requiring the visible record label.
+const recordCount=text=>{
+ const match=String(text).match(/^([\d.\s\u00a0\u202f]+)\s+record\b/);
+ assert.ok(match,'Missing visible record count: '+text);
+ return Number(match[1].replace(/\D/g,''));
+};
+for(const text of ['4172 record','4.172 record · 1–36','4 172 record'])assert.equal(recordCount(text),4172);
+assert.throws(()=>recordCount('Nessun risultato'));
 (async()=>{
  const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
  const browser=await chromium.launch({headless:true,...(process.env.CHROMIUM_PATH?{executablePath:process.env.CHROMIUM_PATH}:{})});
@@ -44,7 +53,7 @@ const assert=require('node:assert/strict'),fs=require('node:fs');
   await page.setViewportSize({width:1440,height:1000});await page.locator('[data-catalog-audit]').scrollIntoViewIfNeeded();await page.screenshot({path:out+'/catalog-coverage-dark.png'});
   await page.goto(base+'#/atlas');await page.waitForSelector('#ev-search');await page.locator('.ev-advanced>summary').click();
   for(const [kind,total] of [['editorial',53],['needs-editorial',4172],['source-to-review',123],['needs-pk',151]]){
-   await page.locator('#vd-data-kind').selectOption(kind);assert.match(await page.locator('.ev-results-head').innerText(),new RegExp(total.toLocaleString('it-IT')+' record'));
+   await page.locator('#vd-data-kind').selectOption(kind);assert.equal(recordCount(await page.locator('.ev-results-head').innerText()),total,kind);
   }
   await page.locator('#vd-data-kind').selectOption('editorial');await page.locator('#ev-search').fill('paracetamolo');assert.equal(await page.locator('.ev-molecule-card').count(),1);
   await page.locator('.ev-molecule-card').click();await page.waitForSelector('[data-pk-context="essential-paracetamolo"]');
