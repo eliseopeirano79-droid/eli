@@ -101,14 +101,29 @@ function openStructure(button){
  dialog.addEventListener('close',()=>{dialog.remove();button.isConnected&&button.focus({preventScroll:true});},{once:true});
  dialog.showModal();close.focus();
 }
+// Notices share a stack so offline and update messages cannot cover one another.
+// Keep the host outside #app: route/theme renders must not displace the notice.
+function notificationStack(){
+ let stack=document.getElementById('elix-notifications');
+ if(!stack){stack=document.createElement('div');stack.id='elix-notifications';stack.className='elix-notifications';document.body.append(stack);}
+ return stack;
+}
+function showUpdateBanner(){
+ if(document.querySelector('.elix-update-banner'))return;
+ const bar=document.createElement('div');bar.className='elix-update-banner';
+ bar.setAttribute('role','status');bar.setAttribute('aria-live','polite');bar.setAttribute('aria-atomic','true');
+ const text=document.createElement('span');text.className='elix-update-message';text.textContent='È pronta una nuova versione di ELIX.';
+ const button=document.createElement('button');button.type='button';button.textContent='Ricarica';button.onclick=()=>location.reload();
+ bar.append(text,button);notificationStack().append(bar);
+}
 export function installUsability(){
  if(typeof document==='undefined')return;
  installStructureObserver();
  if('serviceWorker' in navigator){
   const hadController=Boolean(navigator.serviceWorker.controller);let shown=false;
-  navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!hadController||shown)return;shown=true;const bar=document.createElement('div');bar.className='elix-update-banner';bar.setAttribute('role','status');const text=document.createElement('span');text.textContent='È pronta una nuova versione di ELIX.';const button=document.createElement('button');button.textContent='Ricarica';button.onclick=()=>location.reload();bar.append(text,button);document.body.append(bar);});
+  navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!hadController||shown)return;shown=true;showUpdateBanner();});
  }
  document.addEventListener('click',e=>{const b=e.target.closest?.('[data-structure-zoom]');if(b){e.preventDefault();openStructure(b);}});
- const update=()=>{let banner=document.getElementById('elix-offline');if(!navigator.onLine){if(!banner){banner=document.createElement('div');banner.id='elix-offline';banner.role='status';banner.textContent='Sei offline. Sono disponibili i contenuti già salvati; nuove fonti e modelli 3D richiedono la rete.';document.body.prepend(banner);}}else banner?.remove();};
+ const update=()=>{let banner=document.getElementById('elix-offline');if(!navigator.onLine){if(!banner){banner=document.createElement('div');banner.id='elix-offline';banner.role='status';banner.textContent='Sei offline. Sono disponibili i contenuti già salvati; nuove fonti e modelli 3D richiedono la rete.';notificationStack().prepend(banner);}}else banner?.remove();};
  window.addEventListener('offline',update);window.addEventListener('online',update);update();
 }
