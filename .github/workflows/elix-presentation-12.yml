@@ -1,0 +1,69 @@
+name: ELIX names and PK presentation
+on:
+  push:
+    branches: [feature/elix-12-italian-names-pk-summary]
+    paths:
+      - .github/workflows/elix-presentation-12.yml
+      - scripts/apply_presentation_12.py
+      - scripts/.presentation-payload-*
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: elix-presentation-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Apply checked presentation delta and build projections
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "${GITHUB_REF_NAME}" = 'feature/elix-12-italian-names-pk-summary'
+          mkdir -p /tmp/elix-presentation
+          python3 scripts/apply_presentation_12.py
+          python3 scripts/build_presentation.py | tee /tmp/elix-presentation/build.log
+          git diff --check
+          for file in *.js; do node --check "$file"; done
+          npm test | tee /tmp/elix-presentation/unit.log
+      - name: Install Chromium regression tools
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm install --prefix /tmp/elix-presentation-deps --no-save playwright@1.56.1
+          node /tmp/elix-presentation-deps/node_modules/playwright/cli.js install --with-deps chromium
+      - name: Product summary and browser regression
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m http.server 8765 > /tmp/elix-presentation/http.log 2>&1 &
+          PLAYWRIGHT_MODULE=/tmp/elix-presentation-deps/node_modules/playwright node scripts/browser-presentation.cjs | tee /tmp/elix-presentation/browser.log
+          PLAYWRIGHT_MODULE=/tmp/elix-presentation-deps/node_modules/playwright node scripts/browser-systematic-audit.cjs | tee /tmp/elix-presentation/regression.log
+      - name: Commit only the verified implementation to feature branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          git rm scripts/apply_presentation_12.py scripts/.presentation-payload-00 scripts/.presentation-payload-01 scripts/.presentation-payload-02 scripts/.presentation-payload-03 scripts/.presentation-payload-04 scripts/.presentation-payload-05
+          git add italian-names.js evidence-atlas.js elix-presentation.js elix-presentation.css index.html sw.js app.js package.json README.md scripts/build_presentation.py scripts/validate-presentation.mjs scripts/browser-presentation.cjs data/presentation docs/PRESENTATION-0.12.md
+          git diff --cached --check
+          test -z "$(git diff --cached --name-only -- .github)"
+          git config user.name 'ELIX Source Verification'
+          git config user.email 'elix-source@users.noreply.github.com'
+          git commit -m 'fix(elix): Italian display names and actual product-specific pharmacokinetic summaries'
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+          git rev-parse HEAD > /tmp/elix-presentation/commit.txt
+          git archive --format=zip HEAD > /tmp/elix-presentation/source.zip
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: elix-12-presentation
+          path: /tmp/elix-presentation
+          if-no-files-found: error
