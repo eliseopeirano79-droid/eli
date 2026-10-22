@@ -26,7 +26,7 @@ function renderSources(dataset,metric,profile){
  return ids.map(id=>{
   const source=profileSource(dataset,id);
   if(!source)return '';
-  return `<div class="ev-pk-source">${link(source.url,source.product||source.title||'Documento ufficiale')}<small>${esc(source.jurisdiction||'USA')} · ${esc(source.section)} · ${source.effectiveDate?'versione '+esc(date(source.effectiveDate)):esc(source.sourceVersion||'data di revisione non dichiarata')+' · consultato il '+esc(date(source.checkedAt))}</small>${metric.supportingExcerpt&&(!metric.excerptSourceId||metric.excerptSourceId===id)?`<blockquote lang="${source.language==='it'?'it':'en'}">${esc(metric.supportingExcerpt)}</blockquote>`:''}</div>`;
+  return `<div class="ev-pk-source">${link(source.url,source.product||source.title||'Documento ufficiale')}<small>${esc(source.jurisdiction||'USA')} · ${esc(source.section)} · ${source.effectiveDate?'versione '+esc(date(source.effectiveDate)):esc(source.sourceVersion||'data di revisione non dichiarata')+' · consultato il '+esc(date(source.checkedAt))}</small>${source.reviewBasis==='imported-snapshot'?`<p class="ev-note">${esc(source.sourceVersion)}</p>`:''}${metric.supportingExcerpt&&(!metric.excerptSourceId||metric.excerptSourceId===id)?`<blockquote lang="${source.language==='it'?'it':'en'}">${esc(metric.supportingExcerpt)}</blockquote>`:''}</div>`;
  }).join('');
 }
 

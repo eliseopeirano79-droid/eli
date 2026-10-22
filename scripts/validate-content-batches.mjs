@@ -76,7 +76,7 @@ for(const [i,d] of BATCH_DRUGS.entries()){
  assert.doesNotMatch(html,/Documento di prodotto non collegato alla sintesi selezionata/);
  assert.doesNotMatch(html,/undefined|\[object Object\]/);
 }
-assert.match(atlas.route('atlas'),/41 sintesi originali/);
-assert.match(atlas.route('coverage'),/>11<\/strong>/);assert.match(atlas.route('coverage'),/>66<\/strong>/);
+assert.match(atlas.route('atlas'),/53 sintesi originali/);
+assert.match(atlas.route('coverage'),/>23<\/strong>/);assert.match(atlas.route('coverage'),/>138<\/strong>/);
 assert.match(atlas.route('compare','Gabapentinoidi'),/Pregabalin/);assert.match(atlas.route('compare','Gabapentinoidi'),/Gabapentin/);
 console.log('CONTENT_BATCH_PASS',JSON.stringify({newEditorial:4,newProfiles:4,newFields:fields,sources:8,totalEditorial:41,totalProfiles:11,totalFields:66,oldDataPreserved:true,exactIdentities:true,bilingualSearch:true,productLinks:true}));

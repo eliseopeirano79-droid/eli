@@ -6,6 +6,14 @@ Sito: https://eliseopeirano79-droid.github.io/PHARMA/ (l'URL GitHub resta invari
 
 Estensione del progetto recuperato da `PHARMA-Alpha03-pronta-per-Dock-e-GitHub-Pages.zip`. I laboratori, il simulatore ADME, i casi e il quiz originali restano disponibili. ISOELETTRICA e la copia separata ELIX non sono coinvolte in questa pubblicazione.
 
+## Alpha 0.12.4 — intero catalogo e dodici nuove sintesi
+
+Ricognizione ripetibile di tutte le **4.225 identità**, con distinzione tra parent, forme correlate, sintesi proprie, documenti disponibili e PK contestuale. In Farmaci compaiono quattro filtri di copertura; la pagina Fonti e copertura mostra le lacune per area ATC. Non è una revisione clinica completa di ogni identità né una verifica di reperibilità italiana.
+
+Dodici nuove sintesi: **metformina, omeprazolo, pantoprazolo, ibuprofene, paracetamolo, amoxicillina, ceftriaxone, metronidazolo, fluconazolo, aciclovir, cetirizina e allopurinolo**. Meccanismi, impieghi, rischi, interazioni e spiegazioni originali; 72 campi PK contestuali, dei quali 36 con valori numerici. Totali: 53 sintesi, 23 profili PK, 138 campi; 123 fonti importate restano senza sintesi propria. Nessun duplicato chimico o dato trasferito automaticamente ai sali.
+
+Le dodici label sono snapshot già importati: versione del record, data editoriale, sezione e hash restano distinti. Una fonte UK integra qualitativamente aciclovir. Lo stile Isoelettrica e le cinque sezioni restano invariati. Metodo, limiti e verifiche: [docs/REVIEW-CATALOG-2026-10-22.md](docs/REVIEW-CATALOG-2026-10-22.md). `npm run audit:catalog` genera anche il rapporto completo, una riga per ogni identità.
+
 ## Alpha 0.12 — nomi italiani e farmacocinetica contestuale
 
 Primo lotto di **7 profili di prodotto per 6 molecole**, con **42 metriche strutturate**, associazioni esplicite a **10 identità chimiche** e **8 fonti primarie** controllate il 22 ottobre 2026. Emivita, biodisponibilità, legame proteico, metabolismo, metaboliti ed escrezione sono ora leggibili con contesto e riferimenti. Metoprololo tartrato a rilascio immediato e succinato a rilascio prolungato hanno profili distinti; le schede dei sali non ereditano automaticamente farmacocinetica o posologia del parent.

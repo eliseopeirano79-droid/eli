@@ -79,18 +79,20 @@ export const BATCH_DRUGS=[
 ];
 
 // Atomic validation precedes mutation, including on retry. Collisions are errors, not silent overwrites.
-export function appendContentBatches(editorial,pk){
- const additions=[[editorial.drugs,BATCH_DRUGS,'id'],[pk.sources,BATCH_SOURCES,'id'],[pk.profiles,BATCH_PROFILES,'id']];
+export function appendContentBatches(editorial,pk,batch={drugs:BATCH_DRUGS,sources:BATCH_SOURCES,profiles:BATCH_PROFILES}){
+ const additions=[[editorial.drugs,batch.drugs,'id'],[pk.sources,batch.sources,'id'],[pk.profiles,batch.profiles,'id']];
  for(const [existing,incoming,key] of additions){
-  if(!Array.isArray(existing))throw new TypeError('ELIX: dataset incompleto');
+  if(!Array.isArray(existing)||!Array.isArray(incoming))throw new TypeError('ELIX: dataset incompleto');
   const seen=new Set(existing.map(item=>item[key]));
   for(const item of incoming){if(seen.has(item[key]))throw new Error('ELIX: identità duplicata '+item[key]);seen.add(item[key]);}
  }
+ const chemicalIds=new Set(editorial.drugs.map(d=>d.chembl));
+ for(const d of batch.drugs){if(chemicalIds.has(d.chembl))throw new Error('ELIX: identità chimica duplicata '+d.chembl);chemicalIds.add(d.chembl);}
  for(const [existing,incoming] of additions)existing.push(...structuredClone(incoming));
 }
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-export function renderBatchPharmacology(drug){
+export function renderBatchPharmacology(drug,sources=BATCH_SOURCES){
  if(!drug?.references?.length)return '';
- const refs=drug.references.map(ref=>{const s=reference(ref.id);if(!s)return '';return `<p><strong>${esc(ref.supports)}</strong><br><a class="ev-link" href="${esc(s.url)}" target="_blank" rel="noopener noreferrer">${esc(s.product)} ↗</a><br><small>${esc(s.jurisdiction)} · ${esc(s.section)} · ${esc(s.sourceVersion)}</small></p>`;}).join('');
- return `<section class="ev-panel" data-batch-pharmacology="${esc(drug.id)}"><h2>${esc(drug.learning.title)}</h2><p>${esc(drug.learning.body)}</p><details class="ev-more"><summary>Fonti della sintesi e limiti</summary>${refs}<p class="ev-note">Consultazione ${CHECKED}. Sintesi selettiva: non comprende tutte le controindicazioni, le interazioni o le popolazioni speciali. Il documento originale resta necessario; USA e Regno Unito non equivalgono a un RCP italiano.</p></details></section>`;
+ const refs=drug.references.map(ref=>{const s=sources.find(s=>s.id===ref.id);if(!s)return '';return `<p><strong>${esc(ref.supports)}</strong><br><a class="ev-link" href="${esc(s.url)}" target="_blank" rel="noopener noreferrer">${esc(s.product)} ↗</a><br><small>${esc(s.jurisdiction)} · ${esc(s.section)} · ${esc(s.sourceVersion)}</small></p>`;}).join('');
+ return `<section class="ev-panel" data-batch-pharmacology="${esc(drug.id)}"><h2>${esc(drug.learning.title)}</h2><p>${esc(drug.learning.body)}</p>${drug.interactions?`<h3>Interazioni da comprendere</h3><p>${esc(drug.interactions)}</p>`:""}<details class="ev-more"><summary>Fonti della sintesi e limiti</summary>${refs}<p class="ev-note">Controllo editoriale ${CHECKED}. Sintesi selettiva: non comprende tutte le controindicazioni, le interazioni o le popolazioni speciali. Il documento originale resta necessario; USA e Regno Unito non equivalgono a un RCP italiano.</p></details></section>`;
 }
