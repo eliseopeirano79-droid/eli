@@ -73,7 +73,7 @@ function expectedUI(revision){
 }
 
 async function runUpgradeScenario(browser,workerSource,scenario,expectedRevision){
- let revision=1,context;
+ let revision=1,context,page,phase='server-start';
  const requests=[],pageErrors=[],responses=[];
  const cacheName=n=>'elix-upgrade-fixture-'+scenario+'-revision-'+n;
  const workers={1:fixtureWorker(workerSource,cacheName(1)),2:fixtureWorker(workerSource,cacheName(2))};
@@ -94,7 +94,7 @@ async function runUpgradeScenario(browser,workerSource,scenario,expectedRevision
   }else{
    response.writeHead(404,{'Cache-Control':'no-store'});response.end();return;
   }
-  requests.push({path:pathname,revision});
+  requests.push({path:pathname,revision,phase});
   response.writeHead(200,{'Content-Type':type,'Cache-Control':cacheControl,'Content-Length':Buffer.byteLength(body)});
   response.end(body);
  });
@@ -106,13 +106,14 @@ async function runUpgradeScenario(browser,workerSource,scenario,expectedRevision
   });
   const origin='http://127.0.0.1:'+server.address().port;
   context=await browser.newContext({serviceWorkers:'allow'});
-  const page=await context.newPage();
+  page=await context.newPage();
   page.on('pageerror',error=>pageErrors.push(error.message));
   page.on('response',response=>{
    const url=new URL(response.url());
    if(url.origin===origin&&ASSET_PATHS.includes(url.pathname))responses.push({path:url.pathname,fromServiceWorker:response.fromServiceWorker()});
   });
   // No page.route/context.route, CDP cache override, or automatic SW registration.
+  phase='warm-http-cache';
   await page.goto(origin+'/');
   assert.deepEqual(await readRevisionUI(page),expectedUI(1),scenario+': initial revision');
   assert.equal(await page.evaluate(()=>navigator.serviceWorker.controller),null,scenario+': cache must be warmed before any worker controls the page');
@@ -136,33 +137,59 @@ async function runUpgradeScenario(browser,workerSource,scenario,expectedRevision
   assert.deepEqual(assetCounts(),warmCounts,scenario+': repeated requests did not use a warm HTTP cache');
   assert.equal(await page.evaluate(()=>navigator.serviceWorker.controller),null,scenario+': warm-cache proof must not be a CacheStorage hit');
 
+  phase='initial-worker-activation';
   await page.evaluate(async()=>{
    await navigator.serviceWorker.register('./sw.js',{scope:'./',updateViaCache:'none'});
   });
-  await page.waitForFunction(()=>!!navigator.serviceWorker.controller,null,{timeout:TIMEOUT});
+  await page.waitForFunction(()=>navigator.serviceWorker.controller?.state==='activated',null,{timeout:TIMEOUT});
   assert.ok((await page.evaluate(()=>caches.keys())).includes(cacheName(1)),scenario+': revision 1 was not installed');
   assert.deepEqual(await readRevisionUI(page),expectedUI(1));
 
   revision=2;
+  phase='worker-upgrade';
   const upgradeRequestStart=requests.length;
   const controllerChange=await page.evaluate(timeout=>new Promise((resolve,reject)=>{
    const previous=navigator.serviceWorker.controller;
-   let timer;
-   const cleanup=()=>{clearTimeout(timer);navigator.serviceWorker.removeEventListener('controllerchange',onChange);};
+   const started=performance.now(),lifecycle=[];
+   window.__workerUpgradeLifecycle=lifecycle;
+   const record=(event,worker)=>lifecycle.push({event,elapsedMs:Math.round(performance.now()-started),state:worker?.state||null,isController:worker===navigator.serviceWorker.controller});
+   let timer,nextController,stateAtControllerChange;
+   const cleanup=()=>{
+    clearTimeout(timer);
+    navigator.serviceWorker.removeEventListener('controllerchange',onChange);
+    nextController?.removeEventListener('statechange',onStateChange);
+   };
    const fail=error=>{cleanup();reject(error);};
+   const onStateChange=()=>{
+    record('new-controller-state',nextController);
+    if(navigator.serviceWorker.controller!==nextController)return fail(new Error('The captured revision 2 worker is no longer the controller'));
+    if(nextController.state==='redundant')return fail(new Error('The revision 2 worker became redundant before activation completed'));
+    if(nextController.state!=='activated')return;
+    cleanup();resolve({changed:true,stateAtControllerChange,state:nextController.state,previousState:previous.state,lifecycle});
+   };
    const onChange=()=>{
     const controller=navigator.serviceWorker.controller;
+    record('controllerchange',controller);
     if(!controller||controller===previous)return;
-    cleanup();resolve({changed:true,state:controller.state});
+    if(nextController&&controller!==nextController)return fail(new Error('Controller changed again during the revision 2 upgrade'));
+    nextController=controller;
+    stateAtControllerChange=controller.state;
+    // controllerchange precedes activate's waitUntil completion. Wait for this
+    // exact worker to be activated before inspecting its cache cleanup.
+    nextController.addEventListener('statechange',onStateChange);
+    onStateChange();
    };
+   record('before-update',previous);
+   if(previous?.state!=='activated')return fail(new Error('Revision 1 controller is not fully activated'));
    navigator.serviceWorker.addEventListener('controllerchange',onChange);
-   timer=setTimeout(()=>fail(new Error('Timed out waiting for revision 2 controllerchange')),timeout);
+   timer=setTimeout(()=>fail(new Error('Timed out waiting for revision 2 controllerchange and activated state')),timeout);
    navigator.serviceWorker.getRegistration().then(registration=>{
-    if(!registration?.active)throw new Error('Revision 1 registration is not active');
+    if(registration?.active!==previous)throw new Error('Revision 1 registration does not match the captured controller');
     return registration.update();
    }).catch(fail);
   }),TIMEOUT);
   assert.equal(controllerChange.changed,true,scenario+': worker did not take control after update()');
+  phase='activated-cache-assertions';
   const installedCacheNames=await page.evaluate(()=>caches.keys());
   assert.ok(installedCacheNames.includes(cacheName(2)),scenario+': revision 2 cache is missing');
   assert.ok(!installedCacheNames.includes(cacheName(1)),scenario+': previous worker cache survived activation');
@@ -173,6 +200,7 @@ async function runUpgradeScenario(browser,workerSource,scenario,expectedRevision
   }else assert.deepEqual(upgradeAssets,[],scenario+': the old installer did not reproduce stale HTTP-cache reuse');
 
   const beforeReloadCounts=assetCounts(),reloadResponseStart=responses.length;
+  phase='reload';
   await page.reload();
   const observed=await readRevisionUI(page);
   assert.deepEqual(observed,expectedUI(expectedRevision),scenario+': UI after worker update and reload');
@@ -190,6 +218,17 @@ async function runUpgradeScenario(browser,workerSource,scenario,expectedRevision
   assert.deepEqual(pageErrors,[],scenario+': runtime JavaScript failures');
   // Returned only after the cache, controller, real UI, and provenance checks pass.
   return {scenario,expectedRevision,observed,httpCacheWarmBeforeRegistration:true,warmAssetRequests:warmCounts,controllerChange,installedCache:cacheName(2),previousCacheRemoved:true,upgradeAssetRequests:upgradeAssets,reloadServedByWorker:true,cachedJSONRevision:cachedJSON.revision};
+ }catch(error){
+  let browserState;
+  try{
+   browserState=page?await page.evaluate(async()=>{
+    const registration=await navigator.serviceWorker.getRegistration();
+    const describe=worker=>worker?{state:worker.state,scriptURL:worker.scriptURL}:null;
+    return {controller:describe(navigator.serviceWorker.controller),active:describe(registration?.active),waiting:describe(registration?.waiting),installing:describe(registration?.installing),activeIsController:registration?.active===navigator.serviceWorker.controller,cacheNames:await caches.keys(),lifecycle:window.__workerUpgradeLifecycle||[]};
+   }):{unavailable:'Page not created'};
+  }catch(diagnosticError){browserState={unavailable:diagnosticError.message};}
+  console.error('WORKER_UPGRADE_FAILURE',JSON.stringify({scenario,phase,serverRevision:revision,error:error.message,browserState,requests,responses,pageErrors}));
+  throw error;
  }finally{
   try{if(context)await context.close();}
   finally{
