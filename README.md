@@ -6,6 +6,12 @@ Sito: https://eliseopeirano79-droid.github.io/PHARMA/ (l'URL GitHub resta invari
 
 Estensione del progetto recuperato da `PHARMA-Alpha03-pronta-per-Dock-e-GitHub-Pages.zip`. I laboratori, il simulatore ADME, i casi e il quiz originali restano disponibili. ISOELETTRICA e la copia separata ELIX non sono coinvolte in questa pubblicazione.
 
+## Ampliamento del 23 ottobre 2026 — dieci schede della lettera A
+
+Dieci nuove sintesi originali e dieci profili PK contestuali: abacavir, acebutololo, acetilcisteina, adenosina, alfuzosina, acido alendronico, amitriptilina, anastrozolo, aprepitant e aripiprazolo. Totali: **63 sintesi, 33 profili di prodotto e 198 campi PK**. Nessun nuovo duplicato di catalogo. I dati mantengono formulazione, via, sostanza, provenienza e limiti.
+
+Stile Isoelettrica e correzione della barra preservati; data editoriale per scheda e cache `elix-alpha-0.12.6`. Metodo, fonti e verifiche: [revisione del gruppo A](docs/REVIEW-ALPHABET-A-2026-10-23.md). Stato della distribuzione attestato nella PR, non dai soli conteggi.
+
 ## Alpha 0.12.4 — intero catalogo e dodici nuove sintesi
 
 Ricognizione ripetibile di tutte le **4.225 identità**, con distinzione tra parent, forme correlate, sintesi proprie, documenti disponibili e PK contestuale. In Farmaci compaiono quattro filtri di copertura; la pagina Fonti e copertura mostra le lacune per area ATC. Non è una revisione clinica completa di ogni identità né una verifica di reperibilità italiana.

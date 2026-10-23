@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {ALPHABET_A_BATCH} from '../elix-alphabet-a.js';
 import fs from 'node:fs';
 import {fileURLToPath} from 'node:url';
 import {BATCH_DRUGS,BATCH_PROFILES,BATCH_SOURCES,appendContentBatches,renderBatchPharmacology} from '../elix-content-batches.js';
@@ -76,7 +77,7 @@ for(const [i,d] of BATCH_DRUGS.entries()){
  assert.doesNotMatch(html,/Documento di prodotto non collegato alla sintesi selezionata/);
  assert.doesNotMatch(html,/undefined|\[object Object\]/);
 }
-assert.match(atlas.route('atlas'),/53 sintesi originali/);
-assert.match(atlas.route('coverage'),/>23<\/strong>/);assert.match(atlas.route('coverage'),/>138<\/strong>/);
+assert.ok(atlas.route('atlas').includes((53+ALPHABET_A_BATCH.drugs.length)+' sintesi originali'));
+assert.ok(atlas.route('coverage').includes('>'+(23+ALPHABET_A_BATCH.profiles.length)+'</strong>'));assert.ok(atlas.route('coverage').includes('>'+(138+ALPHABET_A_BATCH.profiles.length*6)+'</strong>'));
 assert.match(atlas.route('compare','Gabapentinoidi'),/Pregabalin/);assert.match(atlas.route('compare','Gabapentinoidi'),/Gabapentin/);
 console.log('CONTENT_BATCH_PASS',JSON.stringify({newEditorial:4,newProfiles:4,newFields:fields,sources:8,totalEditorial:41,totalProfiles:11,totalFields:66,oldDataPreserved:true,exactIdentities:true,bilingualSearch:true,productLinks:true}));

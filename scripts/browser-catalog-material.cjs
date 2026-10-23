@@ -13,6 +13,8 @@ assert.throws(()=>recordCount('Nessun risultato'));
  const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
  const browser=await chromium.launch({headless:true,...(process.env.CHROMIUM_PATH?{executablePath:process.env.CHROMIUM_PATH}:{})});
  const {ESSENTIAL_BATCH:batch}=await import('../elix-essential-batch.js');
+ const {ALPHABET_A_BATCH:added}=await import('../elix-alphabet-a.js');
+ const n=added.drugs.length,p=added.profiles.length;
  const base=process.env.ELIX_BASE_URL||'http://127.0.0.1:8765/';
  const out='/tmp/elix-audit';fs.mkdirSync(out,{recursive:true});
  const context=await browser.newContext({serviceWorkers:'block',reducedMotion:'reduce'}),page=await context.newPage(),errors=[],matrix=[];
@@ -48,11 +50,11 @@ assert.throws(()=>recordCount('Nessun risultato'));
   }
   await page.goto(base+'#/coverage');await page.waitForSelector('[data-catalog-audit]');
   assert.match(await page.locator('[data-catalog-audit]').innerText(),/4.225/);
-  assert.match(await page.locator('[data-catalog-audit]').innerText(),/123/);
+  assert.ok((await page.locator('[data-catalog-audit]').innerText()).includes(String(123-n)));
   await page.locator('[data-catalog-audit] summary').click();assert.equal(await page.locator('[data-catalog-audit] tbody tr').count(),15);
   await page.setViewportSize({width:1440,height:1000});await page.locator('[data-catalog-audit]').scrollIntoViewIfNeeded();await page.screenshot({path:out+'/catalog-coverage-dark.png'});
   await page.goto(base+'#/atlas');await page.waitForSelector('#ev-search');await page.locator('.ev-advanced>summary').click();
-  for(const [kind,total] of [['editorial',53],['needs-editorial',4172],['source-to-review',123],['needs-pk',151]]){
+  for(const [kind,total] of [['editorial',53+n],['needs-editorial',4172-n],['source-to-review',123-n],['needs-pk',151-p]]){
    await page.locator('#vd-data-kind').selectOption(kind);assert.equal(recordCount(await page.locator('.ev-results-head').innerText()),total,kind);
   }
   await page.locator('#vd-data-kind').selectOption('editorial');await page.locator('#ev-search').fill('paracetamolo');assert.equal(await page.locator('.ev-molecule-card').count(),1);

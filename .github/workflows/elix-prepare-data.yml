@@ -1,99 +1,53 @@
-name: ELIX alphabet A integration checks
+name: ELIX verified release checks
 on:
   push:
-    branches: [feat/alphabet-a-2026-10-23]
-    paths: [.github/workflows/elix-prepare-data.yml, scripts/.alphabet-a-source-1.b64, scripts/.alphabet-a-source-2.b64]
+    branches: [feature/elix-08-verified-data]
+    paths: [.github/workflows/elix-prepare-data.yml]
   workflow_dispatch:
 permissions:
   contents: write
 concurrency:
-  group: elix-alphabet-a-integration-${{ github.ref }}
+  group: elix-verified-release-${{ github.ref }}
   cancel-in-progress: false
-defaults:
-  run:
-    shell: bash
 jobs:
   prepare:
-    if: github.ref == 'refs/heads/feat/alphabet-a-2026-10-23'
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.sha }}
-          fetch-depth: 0
+          ref: ${{ github.ref_name }}
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Reproduce the locally validated source tree
+      - name: Integrate and validate acquired source data
         run: |
-          set -euo pipefail
-          mkdir -p /tmp/elix-audit
-          git merge-base --is-ancestor c4a40bf7e0dcacebf209daa16dbcf9564eb12dcb HEAD
-          python3 - <<'PY'
-          import base64,hashlib,json,lzma
-          from pathlib import Path
-          parts=[Path('scripts/.alphabet-a-source-'+str(i)+'.b64') for i in [1,2]]
-          binary=base64.b64decode(''.join(p.read_text().strip() for p in parts),validate=True)
-          assert hashlib.sha256(binary).hexdigest()=='a8b2a7df813a830d8b5f99074deb0ba586af1bf7fc6efe6acc9f4020944c543c'
-          files=json.loads(lzma.decompress(binary).decode('utf-8'))
-          allowed={'elix-alphabet-a.js','scripts/prepare-alphabet-a.py','scripts/validate-alphabet-a.mjs','scripts/browser-alphabet-a.cjs','docs/REVIEW-ALPHABET-A-2026-10-23.md'}
-          assert set(files)==allowed
-          for name,content in files.items():
-              path=Path(name)
-              assert not path.exists(),name
-              path.parent.mkdir(parents=True,exist_ok=True)
-              path.write_text(content,encoding='utf-8')
-          for p in parts:p.unlink()
-          PY
-          python3 scripts/prepare-alphabet-a.py
-          git show c4a40bf7e0dcacebf209daa16dbcf9564eb12dcb:.github/workflows/elix-prepare-data.yml > .github/workflows/elix-prepare-data.yml
-          git add -A
-          TREE=$(git write-tree)
-          test "$TREE" = 74843ccdd3a9980a6ee28c3bd0eac15e07a5170a
-          printf '%s\n' "$TREE" > /tmp/elix-audit/tree.txt
-          git archive --format=zip "$TREE" > /tmp/elix-audit/source.zip
-          git diff --cached --check
-          node --check elix-alphabet-a.js
+          test -f data/verified/index.json
+          node --check elix-verified.js
+          node --check scripts/prepare_verified_release.mjs
+          node scripts/prepare_verified_release.mjs
           node --check evidence-atlas.js
-          node --check scripts/browser-alphabet-a.cjs
-      - name: Validate all data and existing features
+          npm test
+      - name: Install browser test dependency
         run: |
-          set -euo pipefail
-          npm test | tee /tmp/elix-audit/unit-tests.log
-      - name: Browser regression including old and new content
+          npm install --prefix /tmp/elix-browser --no-save playwright@1.56.1
+          node /tmp/elix-browser/node_modules/playwright/cli.js install --with-deps chromium
+      - name: Browser regression desktop and mobile
         run: |
-          set -euo pipefail
-          npm install --prefix /tmp/elix-audit-deps --no-save playwright@1.56.1
-          node /tmp/elix-audit-deps/node_modules/playwright/cli.js install --with-deps chromium
-          python3 -m http.server 8765 > /tmp/elix-audit/http.log 2>&1 &
-          export PLAYWRIGHT_MODULE=/tmp/elix-audit-deps/node_modules/playwright
-          node scripts/browser-systematic-audit.cjs
-          node scripts/browser-content-batch.cjs
-          node scripts/browser-catalog-material.cjs
-          node scripts/browser-update-banner.cjs
-          node scripts/browser-alphabet-a.cjs
-          python3 - <<'PY'
-          import json
-          from pathlib import Path
-          for name in ['audit-report.json','content-batch-report.json','catalog-browser-report.json','update-banner-report.json','alphabet-a-browser.json']:
-              assert json.loads((Path('/tmp/elix-audit')/name).read_text())['passed'] is True,name
-          PY
+          python3 -m http.server 8765 > /tmp/elix-http.log 2>&1 &
+          PLAYWRIGHT_MODULE=/tmp/elix-browser/node_modules/playwright node scripts/browser-verified.cjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: elix-alphabet-a-integration
-          path: /tmp/elix-audit
-          if-no-files-found: error
-      - name: Save tested changes to this feature branch only
+          name: elix-verified-browser
+          path: /tmp/elix-shots
+          if-no-files-found: ignore
+      - name: Publish tested code changes to the same branch
         run: |
-          set -euo pipefail
-          test "$GITHUB_REF_NAME" = feat/alphabet-a-2026-10-23
-          git fetch origin "$GITHUB_REF_NAME"
-          test "$(git rev-parse FETCH_HEAD)" = "$GITHUB_SHA"
-          test "$(git write-tree)" = 74843ccdd3a9980a6ee28c3bd0eac15e07a5170a
-          git diff --quiet
           git config user.name 'ELIX Release Checks'
           git config user.email 'elix-checks@users.noreply.github.com'
-          git commit -m 'feat: ten product-scoped alphabet A summaries and 60 PK fields'
-          git push origin "HEAD:refs/heads/$GITHUB_REF_NAME"
+          git add evidence-atlas.js index.html sw.js app.js package.json README.md
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'feat: integrate tested real-source pharmacology data and responsive panels'
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"

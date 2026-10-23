@@ -42,6 +42,8 @@ jobs:
           python3 -c 'import json; assert json.load(open("/tmp/elix-audit/catalog-browser-report.json"))["passed"] is True'
           PLAYWRIGHT_MODULE=/tmp/elix-audit-deps/node_modules/playwright node scripts/browser-update-banner.cjs
           python3 -c 'import json; assert json.load(open("/tmp/elix-audit/update-banner-report.json"))["passed"] is True'
+          PLAYWRIGHT_MODULE=/tmp/elix-audit-deps/node_modules/playwright node scripts/browser-alphabet-a.cjs
+          python3 -c 'import json; assert json.load(open("/tmp/elix-audit/alphabet-a-browser.json"))["passed"] is True'
       - uses: actions/upload-artifact@v4
         if: always()
         with:

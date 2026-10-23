@@ -4,6 +4,7 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import {fileURLToPath} from 'node:url';
 import {appendContentBatches,renderBatchPharmacology} from '../elix-content-batches.js';
+import {ALPHABET_A_BATCH} from '../elix-alphabet-a.js';
 import {ESSENTIAL_BATCH} from '../elix-essential-batch.js';
 import {buildCatalogCoverage,coverageMatches,renderCoverageAudit} from '../elix-coverage-audit.js';
 import {PK_FIELDS,reviewedProfiles,renderReviewedPK} from '../elix-pk-reviewed.js';
@@ -114,6 +115,10 @@ assert.match(profile('CHEMBL1467').metrics.metabolites.summary,/ossipurinolo/i);
 assert.match(profile('CHEMBL1000').metrics.halfLife.detail,/studi/i);
 assert.match(renderCoverageAudit(report),/non revisione clinica completa/);
 const withoutIndex=buildCatalogCoverage({catalog,editorial,pk,index:null});assert.equal(withoutIndex.sourceIndexAvailable,false);
+// Add current batches only after the frozen essential-batch regression above.
+const liveEditorial=structuredClone(editorial),livePK=structuredClone(pk);
+appendContentBatches(liveEditorial,livePK,ALPHABET_A_BATCH);
+const liveReport=buildCatalogCoverage({catalog,editorial:liveEditorial,pk:livePK,index});
 // Actual renderer: all catalog identities, all new six-section pages, bilingual exact lookup and filters.
 const hooks={};globalThis.document={addEventListener(n,fn){(hooks[n]??=[]).push(fn)},getElementById(){return null},querySelector(){return null},querySelectorAll(){return []}};
 globalThis.location={hash:'#/coverage'};
@@ -127,12 +132,12 @@ for(const d of ESSENTIAL_BATCH.drugs){
  const html=atlas.route('molecule',d.chembl);assert.equal((html.match(/data-pk-metric=/g)||[]).length,6);assert.ok(html.includes('data-batch-pharmacology="'+d.id+'"'));
  assert.doesNotMatch(html,/undefined|NaN|\[object Object\]/);assert.ok(!html.includes('#/quiz/'+d.id));
 }
-for(const [kind,total] of [['editorial',53],['needs-editorial',4172],['source-to-review',123],['needs-pk',151]]){
+for(const [kind,total] of [['editorial',liveReport.counts.editorial],['needs-editorial',liveReport.counts.records-liveReport.counts.editorial],['source-to-review',liveReport.counts.labelWithoutEditorial],['needs-pk',liveReport.counts.labelWithoutPK]]){
  for(const fn of hooks.change||[])fn({target:{id:'vd-data-kind',value:kind}});
  assert.ok(atlas.route('atlas').includes(total.toLocaleString('it-IT')+' record'),kind);
 }
 const out=process.env.ELIX_AUDIT_OUTPUT||'/tmp/elix-audit';fs.mkdirSync(out,{recursive:true});
 const summary={checkedAt:ESSENTIAL_BATCH.checkedAt,baselineCommit:'30b7ce5f45e2eaa7e6bc7726e5cc66b42538e305',scope:report.scope,before:baseline.counts,after:report.counts,addedDrugs:ESSENTIAL_BATCH.drugs.map(d=>({id:d.chembl,name:d.name})),newFields:fields,numericFields,statusCounts,sourceFilesInspected:sourceFiles,sourceSectionsInspected:sectionCount,shortSourceSections:shortSections,shortSectionNote:'Filtro strutturale (<80 caratteri): possibili titoli o estratti brevi, non diagnosi di errore o incompletezza clinica.',allRoutesChecked:report.rows.length,areas:report.areas,passed:true};
 fs.writeFileSync(path.join(out,'catalog-material-report.json'),JSON.stringify(summary,null,2));
-fs.writeFileSync(path.join(out,'catalog-coverage-all.json'),JSON.stringify({checkedAt:ESSENTIAL_BATCH.checkedAt,...report},null,2));
+fs.writeFileSync(path.join(out,'catalog-coverage-all.json'),JSON.stringify({checkedAt:ALPHABET_A_BATCH.checkedAt,...liveReport},null,2));
 console.log('CATALOG_MATERIAL_PASS',JSON.stringify({before:baseline.counts,after:report.counts,newFields:fields,numericFields,statusCounts,sourceFiles,sectionCount,allRoutes:4225}));

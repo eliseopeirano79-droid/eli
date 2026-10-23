@@ -1,3 +1,4 @@
+import {ALPHABET_A_BATCH} from './elix-alphabet-a.js';
 import {ESSENTIAL_BATCH} from './elix-essential-batch.js';
 import {buildCatalogCoverage,coverageMatches,renderCoverageAudit} from './elix-coverage-audit.js';
 import {appendContentBatches,renderBatchPharmacology} from './elix-content-batches.js';
@@ -42,6 +43,7 @@ export function createEvidenceAtlas({refresh,legacyDrugs}){
    const verifiedIndex=await loadVerifiedIndex(refresh);
    appendContentBatches(ed,pkReviewed);
    appendContentBatches(ed,pkReviewed,ESSENTIAL_BATCH);
+   appendContentBatches(ed,pkReviewed,ALPHABET_A_BATCH);
    db={catalog,registry,ed,labelIndex,news,pkReviewed,verifiedIndex};
    db.coverage=buildCatalogCoverage({catalog,editorial:ed,pk:pkReviewed,index:verifiedIndex});
    db.coverageById=new Map(db.coverage.rows.map(row=>[row.id,row]));
