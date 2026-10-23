@@ -1,4 +1,4 @@
-import {ELI_CLINICAL_BATCH} from './eli-clinical-batch.js';
+import {ELI_CLINICAL_BATCH,supplementProductIdentities} from './eli-clinical-batch.js';
 import {ALPHABET_A_BATCH} from './elix-alphabet-a.js';
 import {ESSENTIAL_BATCH} from './elix-essential-batch.js';
 import {buildCatalogCoverage,coverageMatches,renderCoverageAudit} from './elix-coverage-audit.js';
@@ -46,6 +46,7 @@ export function createEvidenceAtlas({refresh,legacyDrugs}){
    appendContentBatches(ed,pkReviewed,ESSENTIAL_BATCH);
    appendContentBatches(ed,pkReviewed,ALPHABET_A_BATCH);
    appendContentBatches(ed,pkReviewed,ELI_CLINICAL_BATCH);
+   catalog.molecules=supplementProductIdentities(catalog).molecules;
    db={catalog,registry,ed,labelIndex,news,pkReviewed,verifiedIndex};
    db.coverage=buildCatalogCoverage({catalog,editorial:ed,pk:pkReviewed,index:verifiedIndex});
    db.coverageById=new Map(db.coverage.rows.map(row=>[row.id,row]));
@@ -68,7 +69,7 @@ export function createEvidenceAtlas({refresh,legacyDrugs}){
  function loadingPage(){return `${nav()}${card(error?'Catalogo non disponibile':'Caricamento del catalogo',`<p role="status">${esc(error||'Sto aprendo molecole, fonti e registri ufficiali…')}</p>${error?'<button class="btn" data-ev="retry">Riprova</button>':''}`)}`;}
  function chemistry(m,mini=false){
  const heparin=m.id==="CHEMBL4650299"||/^HEPARIN( |$)/.test(m.name);
- const source=heparin?"https://dailymed.nlm.nih.gov/dailymed/lookup.cfm?setid=a120bdfd-21e1-4024-82a7-13cfeed290c1":`https://www.ebi.ac.uk/chembl/explore/compound/${m.id}`;
+ const source=m.identitySource?.url||(heparin?"https://dailymed.nlm.nih.gov/dailymed/lookup.cfm?setid=a120bdfd-21e1-4024-82a7-13cfeed290c1":`https://www.ebi.ac.uk/chembl/explore/compound/${m.id}`);
  const image=heparin?"./assets/heparin-subunits.jpg":m.smiles?`https://www.ebi.ac.uk/chembl/api/data/image/${m.id}.svg`:null;
  const note=heparin?"Eparina: miscela di catene. Le subunità sono rappresentative, non una molecola unica.":
    m.name.includes("ENOXAPARIN")?"Miscela di catene a massa diversa: nessuna formula unica della preparazione.":
@@ -77,7 +78,7 @@ export function createEvidenceAtlas({refresh,legacyDrugs}){
  const content=image?
  `<div class="ev-chem-stage ev-chem-stage-source"><img src="${esc(image)}" data-ev-image="${esc(m.id)}" alt="${heparin?"Frammenti rappresentativi dell'eparina":`Rappresentazione 2D di ${esc(name(m))}`}" loading="lazy" referrerpolicy="no-referrer"/><span class="ev-chem-source-badge">${heparin?"Frammento illustrativo":"Struttura 2D · ChEMBL"}</span></div>`:
  `<div class="ev-chem-stage ev-chem-stage-concept">${schematicStructure(m,mini)}</div>`;
- return `<figure class="ev-chem ${mini?"mini":""} ${image?"has-depiction":"has-concept"}">${content}${mini?'':'<button type="button" class="ev-zoom-button" data-structure-zoom aria-haspopup="dialog">Ingrandisci struttura ↗</button>'}<figcaption>${m.formula?`<span class="ev-formula">${formula(m.formula)}</span>`:mini?'<span class="ev-formula-missing">Formula non univoca</span>':'<strong>Formula unica non disponibile</strong>'}${mini?'':`<p>${esc(note)}</p>${m.mass?`<p>Massa del record: ${esc(m.mass)} g/mol</p>`:""}${external(source,heparin?"Documento DailyMed":"Identità e struttura · ChEMBL")}<small>${esc(m.id)}${m.inchiKey?" · "+esc(m.inchiKey):""}</small>`}</figcaption></figure>`;
+ return `<figure class="ev-chem ${mini?"mini":""} ${image?"has-depiction":"has-concept"}">${content}${mini?'':'<button type="button" class="ev-zoom-button" data-structure-zoom aria-haspopup="dialog">Ingrandisci struttura ↗</button>'}<figcaption>${m.formula?`<span class="ev-formula">${formula(m.formula)}</span>`:mini?'<span class="ev-formula-missing">Formula non univoca</span>':'<strong>Formula unica non disponibile</strong>'}${mini?'':`<p>${esc(note)}</p>${m.mass?`<p>Massa ${m.identitySource?'dalla fonte di prodotto':'del record'}: ${esc(m.mass)} g/mol</p>`:""}${external(source,m.identitySource?"Formula e massa · fonte DailyMed":heparin?"Documento DailyMed":"Identità e struttura · ChEMBL")}<small>${esc(m.id)}${m.inchiKey?" · "+esc(m.inchiKey):""}</small>`}</figcaption></figure>`;
 }
  function status(m,c){
   const r=registry(m),rows=r[c]||[];
@@ -267,5 +268,5 @@ export function createEvidenceAtlas({refresh,legacyDrugs}){
   return 0;
  }
  load();
- return {route, homeSnapshot(){return db?{counts:db.coverage.counts,news:db.news}:{error};}, search(query){if(!db||!query.trim())return [];const q=normalize(query);return searchable.filter(x=>x.text.includes(q)).sort((a,b)=>searchScore(b.m,q)-searchScore(a.m,q)||name(a.m).localeCompare(name(b.m),'it')).slice(0,12).map(({m})=>({type:'Molecola',name:name(m),sub:m.atc.join(' · ')||m.type,link:'#/molecule/'+m.id,ic:'pill'}));}};
+ return {route, homeSnapshot(){return db?{counts:db.coverage.counts,news:db.news,sourceIndexAvailable:db.coverage.sourceIndexAvailable}:{error};}, search(query){if(!db||!query.trim())return [];const q=normalize(query);return searchable.filter(x=>x.text.includes(q)).sort((a,b)=>searchScore(b.m,q)-searchScore(a.m,q)||name(a.m).localeCompare(name(b.m),'it')).slice(0,12).map(({m})=>({type:'Molecola',name:name(m),sub:m.atc.join(' · ')||m.type,link:'#/molecule/'+m.id,ic:'pill'}));}};
 }

@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import crypto from 'node:crypto';
-import {ELI_CLINICAL_BATCH as batch} from '../eli-clinical-batch.js';
+import {ELI_CLINICAL_BATCH as batch,supplementProductIdentities} from '../eli-clinical-batch.js';
 import {ALPHABET_A_BATCH} from '../elix-alphabet-a.js';
 import {ESSENTIAL_BATCH} from '../elix-essential-batch.js';
 import {appendContentBatches} from '../elix-content-batches.js';
@@ -34,9 +34,17 @@ assert.match(profile('fentanyl').metrics.halfLife.detail,/cerotto/);assert.match
 assert.match(profile('lidocaina').metrics.halfLife.detail,/non misura/);assert.match(profile('atropina').metrics.halfLife.summary,/iosciamina/);
 assert.match(profile('ketamina').metrics.halfLife.detail,/non un valore universale/);assert.match(profile('semaglutide').formulation,/sottocutanea/);
 assert.match(batch.drugs.find(d=>d.id==='tirzepatide').clinical,/Zepbound/);assert.match(batch.drugs.find(d=>d.id==='diazepam').clinical,/Non.*orale/);
+const supplemented=supplementProductIdentities(catalog);
+for(const d of batch.drugs.filter(d=>d.identity)){
+ const m=supplemented.molecules.find(m=>m.id===d.chembl),original=catalog.molecules.find(m=>m.id===d.chembl),source=batch.sources.find(s=>s.id===d.identity.sourceId),doc=read(source.localFile);
+ assert.equal(original.formula,null);assert.equal(original.mass,null);assert.equal(m.formula,d.identity.formula);assert.equal(m.mass,d.identity.mass);
+ assert.ok(doc.sections.description.join(' ').includes(d.identity.formulaAnchor));assert.ok(doc.sections.description.join(' ').includes(d.identity.massAnchor));
+}
+assert.equal(supplemented.molecules.find(m=>m.name==='HEPARIN').formula,null,'Mixtures must not gain a unique formula');
 const home=renderEliHome({counts:report.counts,news:read('data/news.json')});
 for(const path of ['cinema/ADRB2','news','pk','dose','evidence','cases','compare','coverage'])assert.ok(home.includes('#/'+path));
 assert.doesNotMatch(home,/undefined|NaN|\[object Object\]/);
+assert.ok(renderEliHome({counts:report.counts,sourceIndexAvailable:false}).includes('n.d.'),'A failed source index is not zero missing sources');
 const loading=renderEliHome(null);assert.ok(!loading.includes('>0<'),'Unknown coverage is not zero');
 const corrupted=structuredClone({counts:report.counts,news:read('data/news.json')});corrupted.news.items[0].title='<script>alert(1)</script>';assert.ok(!renderEliHome(corrupted).includes('<script>'));
 const sw=fs.readFileSync(new URL('../sw.js',import.meta.url),'utf8');for(const file of ['eli-home.js','eli-home.css','eli-clinical-batch.js'])assert.ok(sw.includes(file));

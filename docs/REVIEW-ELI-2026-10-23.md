@@ -12,6 +12,8 @@ Il cinema aggiornava l’intero contenitore dell’app a ogni passaggio. Ora con
 
 Dieci sintesi e dieci profili di prodotto: diazepam, lorazepam, midazolam, fentanyl, ketamina, lidocaina, atropina, adrenalina, semaglutide, tirzepatide. Fonte: dieci snapshot SPL/openFDA già importati; formulazioni e versioni sono dichiarate in `eli-clinical-batch.js`. Hash SHA-256 dei documenti conservati. Nessuna affermazione di consultazione dell’ultima revisione regolatoria o revisione clinica indipendente.
 
+Integrate inoltre formula e massa di semaglutide e tirzepatide dalle sezioni Descrizione delle rispettive label, con provenienza esplicita. Il file ChEMBL originale resta immutato; nessuna formula viene attribuita alle miscele.
+
 60 campi PK: 27 con dati numerici, 54 con ancoraggi testuali verificabili, 5 non riportati nel paragrafo selezionato e uno definito dalla via. Non si attribuiscono dati della via orale a prodotti nasali/iniettabili, dati EV alla quantità applicata sulla cute, o dati del parent ai sali. Il legame del fentanyl riporta esplicitamente la **frazione libera**; il parametro del cerotto descrive il calo del 50% dopo rimozione. L’emivita dell’atropina oculare specifica la specie misurata, l-iosciamina. Le fasi della ketamina mantengono la terminologia e i limiti della label.
 
 Totali: 4.225 identità (2.945 parent e 1.280 forme correlate), 73 sintesi proprie, 43 profili di prodotto per 46 identità esatte, 258 campi PK, 172 documenti importati. Restano 103 documenti senza sintesi propria e 131 senza profilo PK contestuale. Questi conteggi descrivono la copertura strutturale; non attestano completezza del sapere farmacologico o validità clinica dell’atlante.

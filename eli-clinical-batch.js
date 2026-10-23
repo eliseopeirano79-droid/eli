@@ -238,7 +238,15 @@ export const ELI_CLINICAL_BATCH = {
           "id": "eli-clinical-semaglutide",
           "supports": "Meccanismo, impieghi, rischi, interazioni e dati della formulazione; nessuna estensione automatica ad altri prodotti."
         }
-      ]
+      ],
+      "identity": {
+        "formula": "C187H291N45O59",
+        "mass": 4113.58,
+        "sourceId": "eli-clinical-semaglutide",
+        "sourceSection": "description",
+        "formulaAnchor": "C 187 H 291 N 45 O 59",
+        "massAnchor": "4113.58"
+      }
     },
     {
       "id": "tirzepatide",
@@ -264,7 +272,15 @@ export const ELI_CLINICAL_BATCH = {
           "id": "eli-clinical-tirzepatide",
           "supports": "Meccanismo, impieghi, rischi, interazioni e dati della formulazione; nessuna estensione automatica ad altri prodotti."
         }
-      ]
+      ],
+      "identity": {
+        "formula": "C225H348N48O68",
+        "mass": 4813.53,
+        "sourceId": "eli-clinical-tirzepatide",
+        "sourceSection": "description",
+        "formulaAnchor": "C 225 H 348 N 48 O 68",
+        "massAnchor": "4813.53"
+      }
     }
   ],
   "profiles": [
@@ -1661,3 +1677,12 @@ export const ELI_CLINICAL_BATCH = {
     }
   ]
 };
+// Apply exact-identity supplements in memory; never alter the ChEMBL source file or inherit to salts.
+export function supplementProductIdentities(catalog){
+ const supplements=new Map(ELI_CLINICAL_BATCH.drugs.filter(d=>d.identity).map(d=>[d.chembl,d.identity]));
+ return {...catalog,molecules:catalog.molecules.map(m=>{
+  const x=supplements.get(m.id);if(!x||m.formula||m.mass)return m;
+  const source=ELI_CLINICAL_BATCH.sources.find(s=>s.id===x.sourceId);
+  return {...m,formula:x.formula,mass:x.mass,identitySource:source};
+ })};
+}
