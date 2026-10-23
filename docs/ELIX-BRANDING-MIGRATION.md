@@ -2,7 +2,11 @@
 
 Il nome pubblico è **ELIX**, con sottotitolo **Farmacologia & Principi Attivi**. Il repository precedentemente chiamato PHARMA risolveva già a `eliseopeirano79-droid/eli`; al controllo iniziale `/eli/` rispondeva 200 e `/PHARMA/` e `/ELIX/` rispondevano 404.
 
-## Grafica e contenuti
+## Correzione grafica integrata
+
+Il ritaglio fotografico è sostituito da tipografia nativa dell’app e pillola SVG trasparente, condivisa tra header, menu, home e splash. Il colore segue il tema attivo e lo splash usa esattamente lo sfondo dell’app. Le icone installabili e l’anteprima social sono generate dallo stesso segno vettoriale. L’immagine iniziale resta soltanto come riferimento archiviato.
+
+## Grafica e contenuti della prima migrazione
 
 - Riferimento recuperato dalla copia di progetto `work/ELIX/assets/elix-logo.png`, conservato senza modifiche in `assets/elix-reference.png`. SHA-256: `476b3193923d8f6cb362edef39cb0d2e9cca5d72d128bf577b0c8583a1f221f2`.
 - Header e menu mostrano la scritta dell'immagine attraverso una finestra CSS; splash e anteprime social usano lo stesso riferimento. La pillola vettoriale verde già ricavata dal riferimento resta il simbolo e produce le icone 192/512 e la variante maskable con margine di sicurezza. I vecchi asset del monogramma E sono sostituiti anche ai loro percorsi storici.

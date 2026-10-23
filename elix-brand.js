@@ -1,0 +1,3 @@
+// One native, transparent mark shared by the header, drawer and home.
+export const ELIX_PILL = "<svg class=\"elix-pill\" viewBox=\"0 0 64 64\" aria-hidden=\"true\" focusable=\"false\"><g transform=\"rotate(45 32 32)\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"18\" y=\"5\" width=\"28\" height=\"54\" rx=\"14\"/><path d=\"M18 32h28M25 19a7 7 0 0 1 7-7M25 42v3a7 7 0 0 0 7 7\"/></g></svg>";
+export const ELIX_BRAND = `<span class="brand-mark">${ELIX_PILL}</span><span class="brand-copy"><span class="brand-name">ELIX</span><span class="brand-sub">Farmacologia &amp; Principi Attivi</span></span>`;

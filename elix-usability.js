@@ -112,7 +112,7 @@ function showUpdateBanner(){
  if(document.querySelector('.elix-update-banner'))return;
  const bar=document.createElement('div');bar.className='elix-update-banner';
  bar.setAttribute('role','status');bar.setAttribute('aria-live','polite');bar.setAttribute('aria-atomic','true');
- const text=document.createElement('span');text.className='elix-update-message';text.textContent='È pronta una nuova versione di eli.';
+ const text=document.createElement('span');text.className='elix-update-message';text.textContent='È pronta una nuova versione di ELIX.';
  const button=document.createElement('button');button.type='button';button.textContent='Ricarica';button.onclick=()=>location.reload();
  bar.append(text,button);notificationStack().append(bar);
 }

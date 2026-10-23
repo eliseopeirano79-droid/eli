@@ -32,16 +32,16 @@ const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
    assert.match(await page.locator('.header-brand').innerText(),/ELIX\s+Farmacologia & Principi Attivi/);
    assert.doesNotMatch(await page.locator('body').innerText(),/\beli\b/i);
    assert.match(await page.title(),/ELIX/);
-   await page.locator('.header-brand img').evaluateAll(imgs=>Promise.all(imgs.map(i=>i.decode())));
-   const dimensions=await page.evaluate(()=>({width:innerWidth,scroll:document.documentElement.scrollWidth,logos:[...document.querySelectorAll('.header-brand img')].map(x=>({loaded:x.complete&&x.naturalWidth>0,width:x.getBoundingClientRect().width})),sub:(()=>{let e=document.querySelector('.header-brand .brand-sub'),r=e.getBoundingClientRect();return {left:r.left,right:r.right}})()}));
-   assert.ok(dimensions.scroll<=width+2,JSON.stringify(dimensions));assert.ok(dimensions.logos.every(x=>x.loaded&&x.width>0));assert.ok(dimensions.sub.right<=width);
+   assert.equal(await page.locator('.header-brand img').count(),0,'Brand uses native text and vector, never a raster crop');
+   const dimensions=await page.evaluate(()=>({width:innerWidth,scroll:document.documentElement.scrollWidth,logos:[...document.querySelectorAll('.header-brand .elix-pill')].map(x=>({loaded:!x.querySelector('image'),width:x.getBoundingClientRect().width})),brandBackground:getComputedStyle(document.querySelector('.header-brand .brand-mark')).backgroundColor,markColor:getComputedStyle(document.querySelector('.header-brand .brand-mark')).color,accent:getComputedStyle(document.querySelector('.eli-button')).backgroundColor,sub:(()=>{let e=document.querySelector('.header-brand .brand-sub'),r=e.getBoundingClientRect();return {left:r.left,right:r.right}})()}));
+   assert.ok(dimensions.scroll<=width+2,JSON.stringify(dimensions));assert.equal(dimensions.logos.length,1);assert.ok(dimensions.logos.every(x=>x.loaded&&x.width>0));assert.equal(dimensions.brandBackground,'rgba(0, 0, 0, 0)');assert.equal(dimensions.markColor,dimensions.accent);assert.ok(dimensions.sub.right<=width);
    assert.deepEqual(await page.locator('.eli-coverage dd').allTextContents(),['4.225','81','51','95']);
    await page.screenshot({path:out+`/ELIX-${width}-${theme}.png`,fullPage:true});
    for(const route of ['atlas','receptors','textbook','quiz','pk','cinema/ADRB2']){await page.goto(base+'#/'+route);await page.waitForSelector('.content h1');assert.doesNotMatch(await page.locator('body').innerText(),/\beli\b/i);assert.match(await page.title(),/ELIX/);}
    matrix.push({width,theme});
   }
   // Hold bootstrap to inspect the actual startup screen.
-  await page.route('**/elix-entry.js',r=>r.abort());await page.goto(base);await page.waitForSelector('.boot img');await page.locator('.boot img').evaluate(i=>i.decode());await page.screenshot({path:out+'/ELIX-splash.png'});await ctx.close();
+  await page.route('**/elix-entry.js',r=>r.abort());await page.goto(base);await page.waitForSelector('.elix-boot-brand .elix-pill');assert.equal(await page.locator('.boot img').count(),0);for(const theme of ['dark','light']){await page.evaluate(t=>{localStorage.setItem('pharma-theme',JSON.stringify(t));},theme);await page.reload();assert.equal(await page.locator('body').getAttribute('data-theme'),theme);assert.equal(await page.locator('.boot').evaluate(x=>getComputedStyle(x).backgroundColor),await page.locator('body').evaluate(x=>getComputedStyle(x).backgroundColor));await page.screenshot({path:out+'/ELIX-splash-'+theme+'.png'});}await ctx.close();
   const context=await browser.newContext(),tab=await context.newPage();tab.on('pageerror',e=>errors.push(e.message));
   await tab.goto(origin+'/ELIX/');await tab.waitForSelector('.eli-coverage dd');await tab.waitForFunction(()=>!!navigator.serviceWorker.controller);
   const storage={'pharma-theme':'"light"','pharma-favs':'["verapamil"]','pharma-quiz-completed':'3','pharma-cases-done':'["asma-beta"]','elix-academy-progress':'{"sessions":2,"answered":10,"correct":8,"wrong":{}}'};
@@ -60,5 +60,5 @@ const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
   await context.close();assert.deepEqual(errors,[]);
   const report={passed:true,base,matrix,upgradeFromPreviousRelease:upgrade,sourceImageSHA256:require('node:crypto').createHash('sha256').update(fs.readFileSync(path.join(root,'assets/elix-reference.png'))).digest('hex'),routes:6,redirects:['PHARMA','eli'],queryAndHashPreserved:true,storagePreserved:true,failedTargetFallback:true,offlineCanonical:true,offlineLegacy:true,unrelatedCachePreserved:true,errors};
   fs.writeFileSync(out+'/report.json',JSON.stringify(report,null,2));console.log(JSON.stringify(report));
- }finally{await browser.close();await new Promise(r=>server.close(r));}
+ }finally{await browser.close();await new Promise(r=>{server.close(r);server.closeAllConnections();});}
 })().catch(e=>{console.error(e);process.exitCode=1});
