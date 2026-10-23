@@ -12,6 +12,14 @@ Dieci nuove sintesi originali e dieci profili PK contestuali: abacavir, acebutol
 
 Stile Isoelettrica e correzione della barra preservati; data editoriale per scheda e cache `elix-alpha-0.12.6`. Metodo, fonti e verifiche: [revisione del gruppo A](docs/REVIEW-ALPHABET-A-2026-10-23.md). Stato della distribuzione attestato nella PR, non dai soli conteggi.
 
+## Prosecuzione A–C — 23 ottobre 2026
+
+Otto nuove sintesi: **azatioprina, baclofene, budesonide, bupropione, buspirone, carbamazepina, claritromicina e clonidina**. Meccanismo, impieghi del prodotto, rischi, interazioni, spiegazioni originali e 48 campi PK con formulazione e fonte. Totali: **71 sintesi, 41 contesti PK, 246 campi**; il catalogo non diventa una raccolta di monografie complete. Le 11 lacune quantitative del nuovo lotto sono esplicite.
+
+Qualificata la via della budesonide nebulizzata: il metadato originale ORAL resta immutabile, ma la scheda e il pannello della fonte chiariscono l'inalazione. Le distinzioni radioattività/parent, F relativa/assoluta, dose assorbita/somministrata e autoinduzione sono protette da regressioni. Stile Isoelettrica e barra di aggiornamento invariati. Cache `elix-alpha-0.12.7`.
+
+Il nuovo registro dei lotti evita contatori correnti dispersi nei test senza rimuovere le regressioni storiche. Metodo, fonti, limiti e verifiche: [docs/REVIEW-ABC-CONTINUATION-2026-10-23.md](docs/REVIEW-ABC-CONTINUATION-2026-10-23.md). Audit browser e pubblicazione sono verificati nella PR, non attestati da questo testo.
+
 ## Alpha 0.12.4 — intero catalogo e dodici nuove sintesi
 
 Ricognizione ripetibile di tutte le **4.225 identità**, con distinzione tra parent, forme correlate, sintesi proprie, documenti disponibili e PK contestuale. In Farmaci compaiono quattro filtri di copertura; la pagina Fonti e copertura mostra le lacune per area ATC. Non è una revisione clinica completa di ogni identità né una verifica di reperibilità italiana.

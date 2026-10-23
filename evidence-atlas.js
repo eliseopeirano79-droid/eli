@@ -1,7 +1,6 @@
-import {ALPHABET_A_BATCH} from './elix-alphabet-a.js';
-import {ESSENTIAL_BATCH} from './elix-essential-batch.js';
+import {appendAllContentBatches} from './elix-batch-registry.js';
 import {buildCatalogCoverage,coverageMatches,renderCoverageAudit} from './elix-coverage-audit.js';
-import {appendContentBatches,renderBatchPharmacology} from './elix-content-batches.js';
+import {renderBatchPharmacology} from './elix-content-batches.js';
 import {loadVerifiedIndex,verifiedRecord,verifiedBadges,verifiedOverview,renderVerifiedData,renderVerifiedByArea,renderReviewedProductSource,verifiedMarketSummary,verifiedPublicPrice,hasVerifiedData} from './elix-verified.js';
 import {reviewedProfiles,reviewedProfile,profileSource,profileContext,isMissingPK,renderPKContext,renderReviewedPK} from './elix-pk-reviewed.js';
 import {italianDrugName, hasReviewedItalianName, internationalDrugName} from './italian-names.js';
@@ -41,9 +40,7 @@ export function createEvidenceAtlas({refresh,legacyDrugs}){
   try{
    const [catalog,registry,ed,labelIndex,news,pkReviewed]=await Promise.all([...['catalog','registry','editorial','labels-index','news'].map(n=>json(`data/${n}.json`)),json('data/pk-reviewed.json').catch(e=>{pkWarning='Sintesi PK revisionate non caricate. Restano consultabili il catalogo e i documenti già disponibili.';console.warn('ELIX reviewed PK unavailable',e);return {profiles:[],sources:[]};})]);
    const verifiedIndex=await loadVerifiedIndex(refresh);
-   appendContentBatches(ed,pkReviewed);
-   appendContentBatches(ed,pkReviewed,ESSENTIAL_BATCH);
-   appendContentBatches(ed,pkReviewed,ALPHABET_A_BATCH);
+   appendAllContentBatches(ed,pkReviewed);
    db={catalog,registry,ed,labelIndex,news,pkReviewed,verifiedIndex};
    db.coverage=buildCatalogCoverage({catalog,editorial:ed,pk:pkReviewed,index:verifiedIndex});
    db.coverageById=new Map(db.coverage.rows.map(row=>[row.id,row]));

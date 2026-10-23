@@ -27,7 +27,7 @@ async function verifyContentBatch(browser,base='http://127.0.0.1:8765/'){
  }
  await page.goto(base+'#/compare/Gabapentinoidi');await page.waitForSelector('.ev-table');
  assert.match(await page.locator('.ev-table').innerText(),/Pregabalin/);assert.match(await page.locator('.ev-table').innerText(),/Gabapentin/);
- await page.goto(base+'#/coverage');await page.waitForSelector('.ev-metrics');assert.ok((await page.locator('.ev-metrics').first().innerText()).includes(String(138+6*(await import('../elix-alphabet-a.js')).ALPHABET_A_BATCH.profiles.length)));
+ await page.goto(base+'#/coverage');await page.waitForSelector('.ev-metrics');assert.ok((await page.locator('.ev-metrics').first().innerText()).includes(String((await require('./current-coverage.cjs')()).counts.pkFields)));
  assert.deepEqual(errors,[]);await context.close();
  // Verify embedded additions survive a real offline reload, not a mock fetch.
  const offline=await browser.newContext(),offlinePage=await offline.newPage();

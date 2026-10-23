@@ -34,7 +34,8 @@ const assert=require('node:assert/strict'),fs=require('node:fs');
    matrix.push({drug:drug.id,width,theme,fields:6,sourceLinks:true,overflow:false});await page.locator('[data-ev="collapse-all"]').click();
   }
   await page.goto(base+'#/atlas');await page.waitForSelector('#ev-search');await page.locator('.ev-advanced>summary').click();
-  for(const [kind,total] of [['editorial',63],['needs-editorial',4162],['source-to-review',113],['needs-pk',141]]){
+  const live=(await require('./current-coverage.cjs')()).counts;
+  for(const [kind,total] of [['editorial',live.editorial],['needs-editorial',live.records-live.editorial],['source-to-review',live.labelWithoutEditorial],['needs-pk',live.labelWithoutPK]]){
    await page.locator('#vd-data-kind').selectOption(kind);const text=await page.locator('.ev-results-head').innerText();assert.equal(Number(text.match(/^([\d.\s\u00a0\u202f]+)\s+record/)[1].replace(/\D/g,'')),total);
   }
   await page.locator('#vd-data-kind').selectOption('editorial');

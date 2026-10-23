@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "node scripts/dev-server.mjs",
-    "test": "node scripts/validate-data.mjs && node scripts/validate-elix.mjs && node scripts/validate-it-localization.mjs && node scripts/validate-science.mjs && node scripts/validate-verified.mjs && node scripts/validate-pharma09.mjs && node scripts/validate-sheets.mjs && node scripts/validate-audit.mjs && node scripts/validate-reviewed-names.mjs && node scripts/validate-reviewed-pk.mjs && node scripts/validate-content-batches.mjs && node scripts/validate-catalog-material.mjs && node scripts/validate-alphabet-a.mjs",
+    "test": "node scripts/validate-data.mjs && node scripts/validate-elix.mjs && node scripts/validate-it-localization.mjs && node scripts/validate-science.mjs && node scripts/validate-verified.mjs && node scripts/validate-pharma09.mjs && node scripts/validate-sheets.mjs && node scripts/validate-audit.mjs && node scripts/validate-reviewed-names.mjs && node scripts/validate-reviewed-pk.mjs && node scripts/validate-content-batches.mjs && node scripts/validate-catalog-material.mjs && node scripts/validate-alphabet-a.mjs && node scripts/validate-abc-continuation.mjs",
     "audit:catalog": "node scripts/validate-catalog-material.mjs"
   }
 }
