@@ -1,7 +1,7 @@
 {
-  "name": "eli — Farmacologia & Principi Attivi",
-  "short_name": "eli",
-  "description": "eli: Farmacologia & Principi Attivi. Enciclopedia didattica di farmaci, recettori, teoria, studi e quiz.",
+  "name": "ELIX — Farmacologia & Principi Attivi",
+  "short_name": "ELIX",
+  "description": "ELIX: Farmacologia & Principi Attivi. Enciclopedia didattica di farmaci, recettori, teoria, studi e quiz.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
@@ -16,10 +16,23 @@
       "purpose": "any"
     },
     {
+      "src": "./assets/elix-pill-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./assets/elix-pill-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
       "src": "./assets/elix-pill-original.svg",
       "sizes": "any",
       "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "purpose": "any"
     }
-  ]
+  ],
+  "id": "./"
 }

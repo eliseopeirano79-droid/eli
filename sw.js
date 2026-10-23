@@ -1,15 +1,17 @@
-/* PHARMA • servizio offline e aggiornamenti delle versioni pubblicate */
-const CACHE = 'elix-alpha-0.13.4';
+/* ELIX • servizio offline e aggiornamenti delle versioni pubblicate */
+// Scoped caches let old links coexist without deleting another app or path.
+const CACHE_PREFIX = 'elix@'+new URL(self.registration.scope).pathname+'::';
+const CACHE = CACHE_PREFIX+'0.13.5';
 const RUNTIME=CACHE+'-runtime';
 const MAX_RUNTIME=120;
-const FILES = ['./eli-home.js','./eli-home.css','./eli-clinical-batch.js','./', './index.html', './styles.css', './app.js', './evidence-atlas.js', './elix-content-batches.js', './elix-essential-batch.js','./elix-alphabet-a.js','./elix-abc-continuation.js','./elix-batch-registry.js', './elix-coverage-audit.js', './evidence-atlas.css', './elix-studio.js', './elix-content.js', './elix-expanded-chapters.js', './elix-expanded-questions.js', './elix-deep-drugs.js', './elix-rich-reader.js', './elix-research.js', './elix-targets.js', './elix-extra-cases.js', './italian-names.js', './elix-studio.css', './elix-deep.css', './elix-verified.js', './elix-verified.css', './elix-pharma-labs.js', './elix-pk-reviewed.js', './elix-pk-reviewed.css', './data/pk-reviewed.json', './elix-structure-visuals.js', './elix-clean-sheets.css', './elix-usability.js', './elix-audit.css', './elix-pharma-labs.css', './elix-09-content.js', './data/verified/index.json', './receptors.js', './elix-focus.css', './data/catalog.json', './data/registry.json', './data/editorial.json', './data/labels-index.json', './data/news.json', './assets/heparin-subunits.jpg', './manifest.webmanifest', './assets/elix-pill-original.svg', './assets/elix-pill-192.png'];
+const FILES = ['./elix-entry.js','./elix-migration.js','./elix-brand.css','./assets/elix-reference.png','./assets/elix-pill-512.png','./assets/elix-pill-maskable-512.png','./eli-home.js','./eli-home.css','./eli-clinical-batch.js','./', './index.html', './styles.css', './app.js', './evidence-atlas.js', './elix-content-batches.js', './elix-essential-batch.js','./elix-alphabet-a.js','./elix-abc-continuation.js','./elix-batch-registry.js', './elix-coverage-audit.js', './evidence-atlas.css', './elix-studio.js', './elix-content.js', './elix-expanded-chapters.js', './elix-expanded-questions.js', './elix-deep-drugs.js', './elix-rich-reader.js', './elix-research.js', './elix-targets.js', './elix-extra-cases.js', './italian-names.js', './elix-studio.css', './elix-deep.css', './elix-verified.js', './elix-verified.css', './elix-pharma-labs.js', './elix-pk-reviewed.js', './elix-pk-reviewed.css', './data/pk-reviewed.json', './elix-structure-visuals.js', './elix-clean-sheets.css', './elix-usability.js', './elix-audit.css', './elix-pharma-labs.css', './elix-09-content.js', './data/verified/index.json', './receptors.js', './elix-focus.css', './data/catalog.json', './data/registry.json', './data/editorial.json', './data/labels-index.json', './data/news.json', './assets/heparin-subunits.jpg', './manifest.webmanifest', './assets/elix-pill-original.svg', './assets/elix-pill-192.png'];
 self.addEventListener('install', event => {
   // Fetch the whole release from the network before claiming clients. A warm HTTP
   // cache can otherwise copy assets from the previous release into this snapshot.
   event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(FILES.map(file=>new Request(file,{cache:'reload'})))).then(()=>self.skipWaiting()));
 });
 self.addEventListener('activate', event => {
-  event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>/^(?:pharma|elix)-/.test(k)&&k!==CACHE&&k!==RUNTIME).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));
+  event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith(CACHE_PREFIX)&&k!==CACHE&&k!==RUNTIME).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));
 });
 async function networkWithTimeout(request){
  const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),4500);

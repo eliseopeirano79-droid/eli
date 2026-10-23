@@ -1,4 +1,4 @@
-/* eli Textbook expansion: original chapters; not copied from proprietary textbooks.
+/* ELIX Textbook expansion: original chapters; not copied from proprietary textbooks.
    All sections educational; clinical recommendations require current official guidelines. */
 export const EXPANDED_CHAPTERS=[
   {
@@ -21,7 +21,7 @@ export const EXPANDED_CHAPTERS=[
       },
       {
         "title": "Dopo l'immissione in commercio",
-        "text": "Farmacovigilanza, studi osservazionali e aggiornamenti delle linee guida possono modificare la comprensione del profilo beneficio-rischio. Un'etichetta FDA non sostituisce il RCP AIFA: cambiano giurisdizione, prodotti e data di validità. eli deve conservare tutte queste versioni come fatti distinti."
+        "text": "Farmacovigilanza, studi osservazionali e aggiornamenti delle linee guida possono modificare la comprensione del profilo beneficio-rischio. Un'etichetta FDA non sostituisce il RCP AIFA: cambiano giurisdizione, prodotti e data di validità. ELIX deve conservare tutte queste versioni come fatti distinti."
       }
     ],
     "drugs": [],

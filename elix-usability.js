@@ -1,4 +1,4 @@
-/* eli audit: preserve reading context, view real structural drawings safely, and expose failure states.
+/* ELIX audit: preserve reading context, view real structural drawings safely, and expose failure states.
    Drawings are source depictions. Auto-fit changes only the viewport, never chemical coordinates. */
 let lastRoute=null;
 export function preserveReading(render){
@@ -16,7 +16,7 @@ export function preserveReading(render){
  if(focus){const el=[...next.querySelectorAll('button,input,select,summary,a')].find(x=>focusKey(x)===focus);el?.focus?.({preventScroll:true});if(caret&&el?.setSelectionRange){try{el.setSelectionRange(...caret);}catch{}}}
  if(scroll!==null)globalThis.window?.scrollTo?.({top:scroll,behavior:'instant'});
  const heading=next.querySelector('h1')?.innerText?.replace(/\s+/g,' ').trim()||next.querySelector('h1')?.textContent?.trim();
- if(heading){document.title=heading+' · eli';const crumb=document.querySelector('.crumb strong');if(crumb)crumb.textContent=heading;}
+ if(heading){document.title=heading+' · ELIX';const crumb=document.querySelector('.crumb strong');if(crumb)crumb.textContent=heading;}
 }
 function detailKey(el){
  if(el.dataset.evSection)return el.dataset.evSection;

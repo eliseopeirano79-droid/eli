@@ -1,4 +1,4 @@
-/* Original educational explanations for the 37 curated eli active ingredients. */
+/* Original educational explanations for the 37 curated ELIX active ingredients. */
 export const DEEP_DRUGS = Object.freeze({
   "bisoprololo": {
     "mechanism": "Il blocco β1 riduce la risposta cardiaca alle catecolamine e la liberazione di renina; la minore stimolazione Gs/cAMP spiega parte del rallentamento della frequenza. La β1-selettività è relativa, non una garanzia di assenza di effetti bronchiali.",

@@ -39,7 +39,7 @@ export function createEvidenceAtlas({refresh,legacyDrugs}){
  async function load(){
   if(loading)return;loading=true;error='';pkWarning='';
   try{
-   const [catalog,registry,ed,labelIndex,news,pkReviewed]=await Promise.all([...['catalog','registry','editorial','labels-index','news'].map(n=>json(`data/${n}.json`)),json('data/pk-reviewed.json').catch(e=>{pkWarning='Sintesi PK revisionate non caricate. Restano consultabili il catalogo e i documenti già disponibili.';console.warn('eli reviewed PK unavailable',e);return {profiles:[],sources:[]};})]);
+   const [catalog,registry,ed,labelIndex,news,pkReviewed]=await Promise.all([...['catalog','registry','editorial','labels-index','news'].map(n=>json(`data/${n}.json`)),json('data/pk-reviewed.json').catch(e=>{pkWarning='Sintesi PK revisionate non caricate. Restano consultabili il catalogo e i documenti già disponibili.';console.warn('ELIX reviewed PK unavailable',e);return {profiles:[],sources:[]};})]);
    const verifiedIndex=await loadVerifiedIndex(refresh);
    appendAllContentBatches(ed,pkReviewed);
    catalog.molecules=supplementProductIdentities(catalog).molecules;
@@ -145,7 +145,7 @@ export function createEvidenceAtlas({refresh,legacyDrugs}){
 }
  function drugPosology(m,d,l){
  const r=registry(m);
- return card("Come leggere la dose e il RCP",`<div class="ev-dosing-note"><strong>La posologia non è un valore unico per principio attivo.</strong><p>Dipende dall'indicazione, dalla formulazione, dalle comorbilità e da altri fattori. eli non propone una dose personale: per ciascun medicinale si deve consultare l'RCP aggiornato.</p>${r.IT?.length?"<p>Gli RCP italiani dei prodotti abbinati sono consultabili nella sezione «Medicinali, confezioni e prezzi».</p>":"<p>RCP italiano non collegato univocamente nello snapshot corrente. Questo non dimostra assenza di autorizzazione.</p>"}${l?`<p>È inoltre disponibile la label USA selezionata: ${external(l.url,"Sezioni posologiche e avvertenze DailyMed")}.</p>`:""}<div class="ev-source-actions"><a href="#/textbook/posologia-per-indicazione">Leggi come si interpreta la dose per patologia →</a></div></div>`);
+ return card("Come leggere la dose e il RCP",`<div class="ev-dosing-note"><strong>La posologia non è un valore unico per principio attivo.</strong><p>Dipende dall'indicazione, dalla formulazione, dalle comorbilità e da altri fattori. ELIX non propone una dose personale: per ciascun medicinale si deve consultare l'RCP aggiornato.</p>${r.IT?.length?"<p>Gli RCP italiani dei prodotti abbinati sono consultabili nella sezione «Medicinali, confezioni e prezzi».</p>":"<p>RCP italiano non collegato univocamente nello snapshot corrente. Questo non dimostra assenza di autorizzazione.</p>"}${l?`<p>È inoltre disponibile la label USA selezionata: ${external(l.url,"Sezioni posologiche e avvertenze DailyMed")}.</p>`:""}<div class="ev-source-actions"><a href="#/textbook/posologia-per-indicazione">Leggi come si interpreta la dose per patologia →</a></div></div>`);
 }
  function drugEvidence(m,news){
  const related=news||[],trialHTML=renderTrialEvidence(info(m)?.id);

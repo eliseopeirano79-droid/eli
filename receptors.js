@@ -1,5 +1,5 @@
 import {ADDITIONAL_TARGETS} from './elix-targets.js';
-/* eli 0.7 · extended target atlas. PDB structures are assigned only when experimentally sourced. */
+/* ELIX 0.7 · extended target atlas. PDB structures are assigned only when experimentally sourced. */
 const RECEPTORS=[
   {
     "id": "ADRB2",
@@ -130,7 +130,7 @@ export function createReceptorAtlas({drugs,refresh}){
 }
 
   function index(){
-    return `<div class="rx-wrap"><header class="rx-heading"><span class="eyebrow">eli · Strutture e fisiologia</span><h1>Recettori e bersagli</h1><p>Un'unica scheda per struttura atomica 3D, fisiologia, segnalazione e farmaci che interagiscono con il bersaglio.</p></header>
+    return `<div class="rx-wrap"><header class="rx-heading"><span class="eyebrow">ELIX · Strutture e fisiologia</span><h1>Recettori e bersagli</h1><p>Un'unica scheda per struttura atomica 3D, fisiologia, segnalazione e farmaci che interagiscono con il bersaglio.</p></header>
       <p class="rx-summary"><strong>${RECEPTORS.length} modelli PDB · ${Object.keys(ADDITIONAL_TARGETS).length} altri bersagli approfonditi</strong><span>Primo nucleo editoriale. Il catalogo dei recettori non è ancora esaustivo.</span></p>
       <label class="rx-search">Cerca per nome, gene o via di segnalazione<input id="rx-search" type="search" value="${esc(state.query)}" placeholder="β₂, ADRB1, Gq, muscolatura…" autocomplete="off"></label>
       <div class="rx-results" id="rx-results">${listHTML()}</div>

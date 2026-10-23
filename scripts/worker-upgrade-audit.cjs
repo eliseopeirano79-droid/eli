@@ -15,7 +15,7 @@ const TIMEOUT=20000;
 function fixtureWorker(source,cacheName){
  let cacheDeclarations=0,fileDeclarations=0;
  const adapted=source
-  .replace(/^const CACHE\s*=\s*(['"])[^'"\r\n]+\1\s*;/m,()=>{cacheDeclarations++;return 'const CACHE = '+JSON.stringify(cacheName)+';';})
+  .replace(/^const CACHE\s*=\s*[^\r\n]+;/m,()=>{cacheDeclarations++;return 'const CACHE = '+JSON.stringify(cacheName)+';';})
   .replace(/^const FILES\s*=\s*\[[\s\S]*?\];/m,()=>{fileDeclarations++;return 'const FILES = '+JSON.stringify(FILES)+';';});
  assert.equal(cacheDeclarations,1,'Fixture could not replace the actual worker CACHE declaration');
  assert.equal(fileDeclarations,1,'Fixture could not replace the actual worker FILES declaration');
@@ -75,7 +75,7 @@ function expectedUI(revision){
 async function runUpgradeScenario(browser,workerSource,scenario,expectedRevision){
  let revision=1,context,page,phase='server-start';
  const requests=[],pageErrors=[],responses=[];
- const cacheName=n=>'elix-upgrade-fixture-'+scenario+'-revision-'+n;
+ const cacheName=n=>'elix@/::upgrade-fixture-'+scenario+'-revision-'+n;
  const workers={1:fixtureWorker(workerSource,cacheName(1)),2:fixtureWorker(workerSource,cacheName(2))};
  const server=http.createServer((request,response)=>{
   const pathname=new URL(request.url,'http://fixture.invalid').pathname;

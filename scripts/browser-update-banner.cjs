@@ -19,8 +19,8 @@ const server=http.createServer((req,res)=>{
  let body=fs.readFileSync(file);
  if(relative==='sw.js'){
   const original=body.toString();
-  assert.equal([...original.matchAll(/^const CACHE\s*=\s*(['"])[^'"\r\n]+\1\s*;/gm)].length,1);
-  body=Buffer.from(original.replace(/^const CACHE\s*=\s*(['"])[^'"\r\n]+\1\s*;/m,`const CACHE = 'elix-banner-fixture-${revision}';`));
+  assert.equal([...original.matchAll(/^const CACHE\s*=\s*[^\r\n]+;/gm)].length,1);
+  body=Buffer.from(original.replace(/^const CACHE\s*=\s*[^\r\n]+;/m,`const CACHE = CACHE_PREFIX+'banner-fixture-${revision}';`));
  }
  res.writeHead(200,{'Content-Type':types[path.extname(file)]||'application/octet-stream','Cache-Control':relative==='sw.js'?'no-store':'public, max-age=3600','Content-Length':body.length});res.end(body);
 });

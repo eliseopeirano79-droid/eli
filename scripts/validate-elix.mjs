@@ -89,11 +89,11 @@ assert.ok(local.has("elix-academy-progress"),"Progresso academy non salvato");
 for(const name of ["index.html","manifest.webmanifest","elix-content.js","elix-studio.js","elix-studio.css","assets/elix-pill-original.svg","assets/elix-pill-192.png","receptors.js","elix-focus.css"]){
  assert.ok(existsSync(path.join(root,name)),"Asset mancante: "+name);
 }
-assert.match(read("index.html"),/eli — Farmacologia & Principi Attivi/);
+assert.match(read("index.html"),/ELIX — Farmacologia & Principi Attivi/);
 assert.match(read("app.js"),/createElixStudio/);
 assert.match(read("sw.js"),/elix-pill-192\.png/);
 const manifest=JSON.parse(read("manifest.webmanifest"));
-assert.equal(manifest.short_name,"eli");
+assert.equal(manifest.short_name,"ELIX");
 console.log("eli: PASS · 18 volumi · "+ELIX_CHAPTERS.length+" capitoli · "+ELIX_QUESTIONS.length+" quiz · 5 route + interazioni + asset");
 
 const rxAtlas=createReceptorAtlas({

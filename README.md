@@ -1,8 +1,10 @@
-# eli — Farmacologia & Principi Attivi · Alpha 0.13
+# ELIX — Farmacologia & Principi Attivi · Alpha 0.13
 
 **App made by Eliseo Peirano · 2026**
 
-Sito: https://eliseopeirano79-droid.github.io/eli/ — nome dell’app: **eli**.
+Sito: https://eliseopeirano79-droid.github.io/ELIX/ — nome dell’app: **ELIX**.
+
+Branding e migrazione: [rapporto ELIX](docs/ELIX-BRANDING-MIGRATION.md). I percorsi precedenti conservano una copia funzionante e passano a ELIX solo quando la destinazione risponde.
 
 Estensione del progetto recuperato da `PHARMA-Alpha03-pronta-per-Dock-e-GitHub-Pages.zip`. I laboratori, il simulatore ADME, i casi e il quiz originali restano disponibili. ISOELETTRICA e la copia separata ELIX non sono coinvolte in questa pubblicazione.
 

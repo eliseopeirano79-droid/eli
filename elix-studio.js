@@ -1,7 +1,7 @@
 import { ELIX_VOLUMES, ELIX_CHAPTERS, ELIX_QUESTIONS } from "./elix-content.js";
 import {GUIDELINES_09} from "./elix-09-content.js";
 
-/* eli Alpha 0.5: didactic UI, no medical dosing or real patient prediction. */
+/* ELIX Alpha 0.5: didactic UI, no medical dosing or real patient prediction. */
 export function createElixStudio({refresh}) {
   const esc = value => String(value ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
   const load = (key, fallback) => {try {return JSON.parse(localStorage.getItem(key)) ?? fallback;} catch {return fallback;}};
@@ -105,7 +105,7 @@ export function createElixStudio({refresh}) {
 
   function textbook(id) {
     const chapter = ELIX_CHAPTERS.find(c=>c.id===id);
-    if(id&&!chapter)return heading("eli TEXTBOOK","Capitolo non trovato","Il collegamento non corrisponde a un capitolo disponibile.")+"<a href='#/textbook'>Torna alla teoria →</a>";
+    if(id&&!chapter)return heading("ELIX TEXTBOOK","Capitolo non trovato","Il collegamento non corrisponde a un capitolo disponibile.")+"<a href='#/textbook'>Torna alla teoria →</a>";
     const volumes = ELIX_VOLUMES.filter(v=>state.volume==="all"||String(v.id)===state.volume);
     const chapterList = volumes.map(v=>{
       const query=state.bookQuery.trim().normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
@@ -113,7 +113,7 @@ export function createElixStudio({refresh}) {
       if(query&&!list.length)return "";
       return "<article class='ex-volume'><div class='ex-volume-meta'>VOLUME "+String(v.id).padStart(2,"0")+"</div><h3>"+esc(v.title)+"</h3><p>"+(list.length?list.length+" capitoli originali disponibili":"Indice programmato; stesura ancora da avviare")+"</p>"+list.map(c=>"<a href='#/textbook/"+esc(c.id)+"' class='ex-chapter-link'>"+esc(c.title)+" <span aria-hidden='true'>↗</span></a>").join("")+"</article>";
     }).join("");
-    const intro=heading("eli TEXTBOOK","La Bibbia dei Farmaci","Biblioteca originale strutturata in 18 volumi: testo, recettori, molecole, studi, casi e quiz collegati.",
+    const intro=heading("ELIX TEXTBOOK","La Bibbia dei Farmaci","Biblioteca originale strutturata in 18 volumi: testo, recettori, molecole, studi, casi e quiz collegati.",
       badge(ELIX_CHAPTERS.length+" capitoli disponibili","accent"));
     if(chapter) {
       const bibliography=(chapter.sources||[]).map(id=>GUIDELINES_09.find(g=>g.id===id)).filter(Boolean);
@@ -151,7 +151,7 @@ export function createElixStudio({refresh}) {
       "</div>"+meter("Risposta Emax simulata",v.effect,"good")+meter("Indice teorico di danno",v.safety,"warn");
   }
   function dose() {
-    return tabs()+heading("eli DOSE EXPLORER","La dose cambia tutto. Il contesto anche.","Manipola concentrazione e capacità di eliminazione in un esperimento matematico. Nessun numero rappresenta la posologia o il rischio reale di un medicinale.",badge("Modello non clinico","warn"))+
+    return tabs()+heading("ELIX DOSE EXPLORER","La dose cambia tutto. Il contesto anche.","Manipola concentrazione e capacità di eliminazione in un esperimento matematico. Nessun numero rappresenta la posologia o il rischio reale di un medicinale.",badge("Modello non clinico","warn"))+
       "<div class='ex-two'><section class='ex-card'><h2>Imposta lo scenario</h2><div class='ex-control'><label for='ex-dose'>Dose relativa <output id='ex-dose-label'>"+state.dose+"/100</output></label><input id='ex-dose' type='range' min='0' max='100' step='1' value='"+state.dose+"'><div class='ex-range-help'><span>0</span><span>100 · scala arbitraria</span></div></div>"+
       "<div class='ex-control'><label for='ex-clearance'>Capacità di eliminazione</label><select id='ex-clearance'><option value='standard' "+(state.elimination==="standard"?"selected":"")+">Eliminazione di riferimento (teorica)</option><option value='reduced' "+(state.elimination==="reduced"?"selected":"")+">Eliminazione ridotta (scenario fittizio)</option></select></div>"+
       "<div class='ex-alert'>Questo non è uno strumento per stabilire a chi somministrare più o meno farmaco. Il fattore di esposizione è arbitrario: per dosi effettive occorrono RCP e modelli specifici, indicazione, funzione d'organo e dati di validazione.</div></section>"+
@@ -177,7 +177,7 @@ export function createElixStudio({refresh}) {
       "<div><span>"+(m.harm?"NNH":"NNT")+"</span><strong>"+(m.nnt??m.nnh??"n.d.")+"</strong><small>"+(m.benefit?"Per un evento evitato":m.harm?"Per un danno aggiuntivo":"Nessuna differenza assoluta")+" · stesso follow-up</small></div></div>";
   }
   function evidence() {
-    return tabs()+heading("eli EVIDENCE LAB","NNT, NNH e numeri che contano.","Inserisci due rischi di uno stesso endpoint, nella stessa popolazione e nel medesimo orizzonte temporale.",badge("Calcolo aritmetico, non metanalisi"))+
+    return tabs()+heading("ELIX EVIDENCE LAB","NNT, NNH e numeri che contano.","Inserisci due rischi di uno stesso endpoint, nella stessa popolazione e nel medesimo orizzonte temporale.",badge("Calcolo aritmetico, non metanalisi"))+
     "<div class='ex-two'><section class='ex-card'><h2>Rischi osservati in uno studio ipotetico</h2>"+
     "<div class='ex-control'><label for='ex-control'>Eventi nel gruppo controllo (%)</label><input type='number' inputmode='decimal' id='ex-control' min='0' max='100' step='0.1' value='"+state.trialControl+"'></div>"+
     "<div class='ex-control'><label for='ex-treated'>Eventi nel gruppo trattato (%)</label><input type='number' inputmode='decimal' id='ex-treated' min='0' max='100' step='0.1' value='"+state.trialTreatment+"'></div>"+
@@ -237,7 +237,7 @@ export function createElixStudio({refresh}) {
       "<div class='ex-intra-label'>CITOPLASMA</div><div class='ex-protein-g'><span>"+esc(model.protein)+"</span></div>"+
       "<div class='ex-signal'><strong>"+esc(model.messenger)+"</strong></div>"+
       "<div class='ex-tissue'><strong>"+esc(model.result)+"</strong></div></div>";
-    return "<a href='#/receptors/"+esc(state.cinemaTarget)+"' class='rx-back'>← Scheda recettore</a>"+tabs()+heading("eli MOLECULAR CINEMA","Dentro una cellula.","Dalla diffusione del ligando alla risposta del tessuto: una sequenza didattica tridimensionale stilizzata, con accesso alle strutture sperimentali quando identificate.",badge("Animazione illustrativa","warn"))+
+    return "<a href='#/receptors/"+esc(state.cinemaTarget)+"' class='rx-back'>← Scheda recettore</a>"+tabs()+heading("ELIX MOLECULAR CINEMA","Dentro una cellula.","Dalla diffusione del ligando alla risposta del tessuto: una sequenza didattica tridimensionale stilizzata, con accesso alle strutture sperimentali quando identificate.",badge("Animazione illustrativa","warn"))+
       "<div class='ex-cinema-layout'><div class='ex-cinema-main'><section class='ex-card ex-visual-card'><div class='ex-visual-head'><div><span class='ex-kicker'>"+esc(model.organ)+"</span><h2>"+esc(model.name)+"</h2></div>"+"<span class='ex-badge accent ex-cinema-count'>"+(step+1)+" / "+stages.length+"</span>"+"</div><div class='ex-cinema-modes' role='group' aria-label='Modalità del cinema'><button type='button' data-elix='cinema-mode' data-mode='cell' "+(state.cinemaMode==="cell"?"aria-pressed='true'":"aria-pressed='false'")+">Cellula illustrata</button><button type='button' data-elix='cinema-mode' data-mode='3d' "+(state.cinemaMode==="3d"?"aria-pressed='true'":"aria-pressed='false'")+">Recettore 3D sperimentale</button></div>"+(state.cinemaMode==="cell"?stageView:"<iframe class='ex-cinema-atom-viewer' loading='lazy' src='https://molstar.org/viewer/?pdb="+encodeURIComponent(model.pdb)+"&amp;hide-controls=1' title='Struttura molecolare 3D "+esc(model.name)+"' allowfullscreen></iframe>")+
       "<div class='ex-cinema-controls'><button data-elix='cinema-back' "+(step===0?"disabled":"")+" aria-label='Passaggio precedente'>←</button><button class='ex-btn primary' data-elix='cinema-play' aria-pressed='"+state.cinemaPlaying+"' "+(state.cinemaMode==="3d"?"disabled aria-label='Disponibile nella vista cellulare'":"")+">"+(state.cinemaPlaying?"Pausa":"▶ Play")+"</button><button data-elix='cinema-next' "+(step===stages.length-1?"disabled":"")+" aria-label='Passaggio successivo'>→</button><button data-elix='cinema-reset' aria-label='Ricomincia'>↻</button><label>Velocità <select id='ex-speed'><option value='0.5' "+(state.cinemaSpeed===0.5?"selected":"")+">0,5×</option><option value='1' "+(state.cinemaSpeed===1?"selected":"")+">1×</option><option value='2' "+(state.cinemaSpeed===2?"selected":"")+">2×</option></select></label></div></section>"+
       "<section class='ex-card ex-cinema-narrative' aria-live='polite' aria-atomic='true'><h2>Passaggio "+(step+1)+" — "+esc(stage.name)+"</h2><p class='ex-large'>"+esc(stage.zone)+"</p><p class='ex-cinema-explanation'>"+esc(cinemaExplanations[step])+"</p></section></div>"+
@@ -270,7 +270,7 @@ export function createElixStudio({refresh}) {
   }
   function quiz() {
     const total=filteredQuestions().length,session=state.quiz;
-    const intro=tabs()+heading("eli ACADEMY","Impara. Ragiona. Dimostra.","Quiz originali per teoria, casi clinici, molecola, classe e difficoltà. Le domande vengono mescolate senza ripetersi nella sessione.",badge(ELIX_QUESTIONS.length+" domande originali","accent"))+
+    const intro=tabs()+heading("ELIX ACADEMY","Impara. Ragiona. Dimostra.","Quiz originali per teoria, casi clinici, molecola, classe e difficoltà. Le domande vengono mescolate senza ripetersi nella sessione.",badge(ELIX_QUESTIONS.length+" domande originali","accent"))+
       "<details class='ex-card ex-filter-card' "+(!session?"open":"")+"><summary>Configura il tuo allenamento</summary><p class='ex-muted'>Vuoi esercitarti sulle decisioni? <a href='#/cases' class='rx-primary'>Apri i casi clinici interattivi →</a></p>"+quizFilters()+"<div class='ex-filter-footer'><span class='ex-muted'>"+total+" quesiti compatibili con i filtri</span><button class='ex-btn primary' data-elix='quiz-start' "+(total===0?"disabled":"")+">Inizia nuovo mazzo →</button>"+(Object.keys(state.progress.wrong||{}).some(id=>filteredQuestions().some(q=>q.id===id))?"<button class='ex-btn' data-elix='quiz-errors'>Ripassa errori precedenti</button>":"")+"</div></details>";
     if(!session) return intro+"<div class='ex-stats ex-overview'><div><span>Risposte complessive</span><strong>"+state.progress.answered+"</strong></div><div><span>Corrette</span><strong>"+state.progress.correct+"</strong></div><div><span>Sessioni concluse</span><strong>"+state.progress.sessions+"</strong></div></div><div class='ex-next-card'><strong>Una risposta, una spiegazione.</strong><p>Ogni quiz collega il quesito al principio farmacologico, non solo alla soluzione. Le statistiche sono conservate localmente nel tuo browser.</p></div>";
     const count=session.deck.length;
@@ -290,7 +290,7 @@ export function createElixStudio({refresh}) {
     if(p==="textbook")return textbook(id);
     if(p==="dose")return dose();
     if(p==="evidence")return evidence();
-    if(p==="cinema"){if(id&&!cinemaModels[id])return heading("eli","Scenario non disponibile","Questo bersaglio non ha ancora una sequenza animata verificata.")+"<a href='#/receptors'>Torna ai recettori →</a>";if(id&&cinemaModels[id]&&id!==state.cinemaTarget){stopCinema();state.cinemaTarget=id;state.cinemaStep=0;state.cinemaMode="cell";}return cinema();}
+    if(p==="cinema"){if(id&&!cinemaModels[id])return heading("ELIX","Scenario non disponibile","Questo bersaglio non ha ancora una sequenza animata verificata.")+"<a href='#/receptors'>Torna ai recettori →</a>";if(id&&cinemaModels[id]&&id!==state.cinemaTarget){stopCinema();state.cinemaTarget=id;state.cinemaStep=0;state.cinemaMode="cell";}return cinema();}
     if(p==="quiz"){if(id&&state.lastQuizFilterId!==id){state.lastQuizFilterId=id;state.group="all";state.kind="all";state.maxDifficulty="all";state.drug=ELIX_QUESTIONS.some(q=>q.drug===id)?id:"all";state.quiz=null;persistQuiz();}return quiz();}
     return null;
   }

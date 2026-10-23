@@ -1,4 +1,4 @@
-/* eli: category-level three-dimensional illustrations, not atomistic coordinates. */
+/* ELIX: category-level three-dimensional illustrations, not atomistic coordinates. */
 
 function svgEsc(value){return String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
 
