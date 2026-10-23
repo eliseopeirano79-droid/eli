@@ -21,4 +21,4 @@ createServer(async(req,res)=>{
   res.writeHead(200,{'Content-Type':(types[path.extname(file)]||'application/octet-stream')+'; charset=utf-8','Cache-Control':'no-store'});
   res.end(req.method==='HEAD'?undefined:data);
  }catch{res.writeHead(404,{'Content-Type':'text/plain; charset=utf-8'});res.end('File non trovato');}
-}).listen(port,host,()=>console.log(`ELIX preview: http://${host}:${port}`));
+}).listen(port,host,()=>console.log(`eli preview: http://${host}:${port}`));

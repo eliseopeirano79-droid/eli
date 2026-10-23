@@ -1,7 +1,7 @@
 import {EXPANDED_CHAPTERS} from './elix-expanded-chapters.js';
 import {EXPANDED_QUESTIONS} from './elix-expanded-questions.js';
 import {CHAPTERS_09} from './elix-09-content.js';
-/* ELIX · Contenuti didattici originali Alpha 0.5. Revisione specialistica ancora da completare. */
+/* eli · Contenuti didattici originali Alpha 0.5. Revisione specialistica ancora da completare. */
 
 export const ELIX_VOLUMES = [
   {
@@ -135,7 +135,7 @@ const BASE_CHAPTERS = [
       },
       {
         "title": "Perché uno slider non basta per prescrivere",
-        "text": "Un modello Emax adimensionale può aiutare a comprendere saturazione, variabilità e aumento dell'esposizione. Non produce una posologia clinica. In ELIX le quantità arbitrarie devono essere sempre separate dai dosaggi del RCP e dalle stime realmente ottenute da studi."
+        "text": "Un modello Emax adimensionale può aiutare a comprendere saturazione, variabilità e aumento dell'esposizione. Non produce una posologia clinica. In eli le quantità arbitrarie devono essere sempre separate dai dosaggi del RCP e dalle stime realmente ottenute da studi."
       }
     ]
   },

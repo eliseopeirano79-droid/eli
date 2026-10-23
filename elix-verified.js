@@ -1,5 +1,5 @@
 import {renderPK09,renderIndications09,renderAssay09,indicationState09,assayState09,exponentState09,currentValue09} from './elix-pharma-labs.js';
-/* ELIX: source records, not generated pharmacological values. No patient-specific recommendations. */
+/* eli: source records, not generated pharmacological values. No patient-specific recommendations. */
 const h = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const eur = value => value === null || value === undefined ? 'Non disponibile' : Number(value).toLocaleString('it-IT',{style:'currency',currency:'EUR'});
 const number = value => Number(value).toLocaleString('it-IT',{maximumSignificantDigits:6});
@@ -21,7 +21,7 @@ export async function loadVerifiedIndex(refresh) {
   const response = await fetch(new URL('./data/verified/index.json',import.meta.url),{cache:'no-cache'});
   if (!response.ok) throw Error('HTTP '+response.status);
   index = await response.json();
- } catch (error) { console.warn('ELIX verified dataset unavailable',error); index = null; }
+ } catch (error) { console.warn('eli verified dataset unavailable',error); index = null; }
  return index;
 }
 export function verifiedRecord(molecule) {

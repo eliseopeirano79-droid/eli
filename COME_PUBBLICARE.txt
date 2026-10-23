@@ -4,7 +4,7 @@ PHARMA — Prima pubblicazione su GitHub Pages
 2) Carica nella radice del repository tutti i file e la cartella assets/ presenti in questo ZIP. Puoi anche usare il connettore GitHub di ChatGPT per caricarli dopo aver creato il repository.
 3) Nel repository: Settings → Pages → Build and deployment → Deploy from a branch → main → /(root) → Save.
 4) Verifica in Settings → Pages il link effettivo 'Visit site'. L’indirizzo standard, se non viene configurato un dominio personalizzato, sarà:
-   https://eliseopeirano79-droid.github.io/PHARMA/
+   https://eliseopeirano79-droid.github.io/eli/
    QUESTO INDIRIZZO NON È ANCORA STATO VERIFICATO COME PUBBLICATO.
 
 Dock su Mac (macOS Sonoma 14 o successivo):

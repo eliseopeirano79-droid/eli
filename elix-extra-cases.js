@@ -1,4 +1,4 @@
-/* ELIX: original synthetic vignettes; questions are deliberately narrow, not prescribing algorithms. */
+/* eli: original synthetic vignettes; questions are deliberately narrow, not prescribing algorithms. */
 export const EXTRA_CASES = [
   {
     "id": "digossina-ipokaliemia",

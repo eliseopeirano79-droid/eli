@@ -1,7 +1,7 @@
 {
-  "name": "ELIX — Farmacologia & Principi Attivi",
-  "short_name": "ELIX",
-  "description": "ELIX: Farmacologia & Principi Attivi. Enciclopedia didattica di farmaci, recettori, teoria, studi e quiz.",
+  "name": "eli — Farmacologia & Principi Attivi",
+  "short_name": "eli",
+  "description": "eli: Farmacologia & Principi Attivi. Enciclopedia didattica di farmaci, recettori, teoria, studi e quiz.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

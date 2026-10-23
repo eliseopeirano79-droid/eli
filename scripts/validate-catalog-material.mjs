@@ -1,3 +1,4 @@
+import {ELI_CLINICAL_BATCH} from '../eli-clinical-batch.js';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -118,6 +119,7 @@ const withoutIndex=buildCatalogCoverage({catalog,editorial,pk,index:null});asser
 // Add current batches only after the frozen essential-batch regression above.
 const liveEditorial=structuredClone(editorial),livePK=structuredClone(pk);
 appendContentBatches(liveEditorial,livePK,ALPHABET_A_BATCH);
+appendContentBatches(liveEditorial,livePK,ELI_CLINICAL_BATCH);
 const liveReport=buildCatalogCoverage({catalog,editorial:liveEditorial,pk:livePK,index});
 // Actual renderer: all catalog identities, all new six-section pages, bilingual exact lookup and filters.
 const hooks={};globalThis.document={addEventListener(n,fn){(hooks[n]??=[]).push(fn)},getElementById(){return null},querySelector(){return null},querySelectorAll(){return []}};

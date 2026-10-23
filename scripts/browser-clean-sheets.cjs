@@ -11,7 +11,7 @@ const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
  await page.route('**/*',route=>route.request().url().startsWith(base)?route.continue():route.abort());
  await page.goto(base+'#/atlas');
  await page.waitForSelector('.ev-molecule-card');
- assert.equal(await page.locator('.topnav-link').count(),5);
+ assert.equal(await page.locator('.topnav-link').count(),7);
  const tiles=page.locator('.ev-molecule-card');
  assert.ok(await tiles.count()>=30);
  const artwork=await tiles.first().locator('.ev-chem-stage').boundingBox();

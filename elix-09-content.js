@@ -1,4 +1,4 @@
-/* ELIX: capitoli originali + biblioteca di linee guida versionate, nessuna riproduzione di manuali protetti. */
+/* eli: capitoli originali + biblioteca di linee guida versionate, nessuna riproduzione di manuali protetti. */
 export const CHAPTERS_09=[
   {
     "id": "first-pass-avanzato",
@@ -56,7 +56,7 @@ export const CHAPTERS_09=[
       },
       {
         "title": "Metaboliti inattivi e prove",
-        "text": "L'individuazione di un metabolita nel plasma non dimostra automaticamente che abbia un'attività terapeutica. Per qualificarlo come attivo servono evidenze di legame o risposta farmacologica, concentrazione rilevante e, dove necessario, dati clinici. ELIX non classificherà un metabolita come attivo solo perché è descritto nella sezione metabolismo."
+        "text": "L'individuazione di un metabolita nel plasma non dimostra automaticamente che abbia un'attività terapeutica. Per qualificarlo come attivo servono evidenze di legame o risposta farmacologica, concentrazione rilevante e, dove necessario, dati clinici. eli non classificherà un metabolita come attivo solo perché è descritto nella sezione metabolismo."
       }
     ],
     "drugs": [
@@ -229,7 +229,7 @@ export const CHAPTERS_09=[
       },
       {
         "title": "Prodotto e giurisdizione",
-        "text": "Un medicinale può avere indicazioni o modalità di impiego differenti in Italia, nell'Unione europea e negli Stati Uniti. Una label FDA consultata da ELIX è utile per lo studio della farmacologia del prodotto, ma non è il RCP italiano e non autorizza a trasferire automaticamente dosi e popolazioni."
+        "text": "Un medicinale può avere indicazioni o modalità di impiego differenti in Italia, nell'Unione europea e negli Stati Uniti. Una label FDA consultata da eli è utile per lo studio della farmacologia del prodotto, ma non è il RCP italiano e non autorizza a trasferire automaticamente dosi e popolazioni."
       },
       {
         "title": "Titolazione, monitoraggio e controindicazioni",
@@ -237,7 +237,7 @@ export const CHAPTERS_09=[
       },
       {
         "title": "Lezioni dal metoprololo",
-        "text": "Il metoprololo succinato a rilascio prolungato ha sezioni posologiche distinte, negli USA, per ipertensione, angina e scompenso. La singola cifratura di milligrammi senza indicazione né forma farmaceutica sarebbe fuorviante. Nel navigatore di ELIX è possibile leggere separatamente le voci originali della label, mantenendo visibile prodotto, via e versione."
+        "text": "Il metoprololo succinato a rilascio prolungato ha sezioni posologiche distinte, negli USA, per ipertensione, angina e scompenso. La singola cifratura di milligrammi senza indicazione né forma farmaceutica sarebbe fuorviante. Nel navigatore di eli è possibile leggere separatamente le voci originali della label, mantenendo visibile prodotto, via e versione."
       }
     ],
     "drugs": [
@@ -413,11 +413,11 @@ export const CHAPTERS_09=[
       },
       {
         "title": "Linee guida: sintesi e grado di prova",
-        "text": "Una linea guida integra studi, certezza dell'evidenza, benefici, rischi e contesto assistenziale. Le raccomandazioni possono cambiare con gli aggiornamenti. In ELIX ogni collegamento deve mantenere ente, anno, area, status del documento e fonte ufficiale; una bozza in consultazione non ha lo stesso status della versione pubblicata."
+        "text": "Una linea guida integra studi, certezza dell'evidenza, benefici, rischi e contesto assistenziale. Le raccomandazioni possono cambiare con gli aggiornamenti. In eli ogni collegamento deve mantenere ente, anno, area, status del documento e fonte ufficiale; una bozza in consultazione non ha lo stesso status della versione pubblicata."
       },
       {
         "title": "Manuali di farmacologia",
-        "text": "Katzung e Goodman & Gilman aiutano a verificare la copertura degli argomenti: recettori, ADME, interazioni, farmacologia sistemica, sperimentazione e tossicologia. ELIX scrive un trattato originale con proprie spiegazioni e collegamenti, senza riprodurne capitoli o figure protette. I dati quantitativi vanno riconnessi alla fonte primaria, non alla citazione generica del manuale."
+        "text": "Katzung e Goodman & Gilman aiutano a verificare la copertura degli argomenti: recettori, ADME, interazioni, farmacologia sistemica, sperimentazione e tossicologia. eli scrive un trattato originale con proprie spiegazioni e collegamenti, senza riprodurne capitoli o figure protette. I dati quantitativi vanno riconnessi alla fonte primaria, non alla citazione generica del manuale."
       }
     ],
     "drugs": [],

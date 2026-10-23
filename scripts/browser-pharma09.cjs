@@ -10,7 +10,7 @@ const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
  await page.route('**/*',route=>route.request().url().startsWith(base)?route.continue():route.abort());
  await page.goto(base+'#/atlas');
  await page.waitForSelector('.vd-overview');
- assert.equal(await page.locator('.topnav-link').count(),5);
+ assert.equal(await page.locator('.topnav-link').count(),7);
  await page.goto(base+'#/textbook');
  await page.waitForSelector('.ex-volume-grid');
  assert.ok((await page.locator('.ex-chapter-link').count())>=54);

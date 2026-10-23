@@ -1,4 +1,4 @@
-/* ELIX Clinical Evidence · brief original summaries of verified primary publications.
+/* eli Clinical Evidence · brief original summaries of verified primary publications.
    Numerical results remain attached to study, population, endpoint and timeframe.
    Abstracted fields are not clinical prescribing guidance. */
 export const VERIFIED_TRIALS = Object.freeze([

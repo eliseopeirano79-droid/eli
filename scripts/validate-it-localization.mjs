@@ -31,7 +31,7 @@ const manifest=JSON.parse(readFileSync(new URL("../manifest.webmanifest",import.
 assert.match(originalIndex,/elix-pill-original\.svg/);
 assert.match(originalIndex,/apple-touch-icon[^>]*elix-pill-192\.png/);
 assert.doesNotMatch(originalIndex,/elix-logo-192|elix-logo\.svg/,"No previous logo in startup or touch icons");
-assert.equal(manifest.short_name,"ELIX");
+assert.equal(manifest.short_name,"eli");
 assert.ok(manifest.icons.every(i=>i.src.includes("elix-pill")),"Only chosen capsule image may be used");
 assert.match(sw,/italian-names\.js/,"New localization module must be cached for offline support");
 assert.match(css,/\.ev-card-alias/);
@@ -73,4 +73,4 @@ const listing=atlas.route("atlas");
 assert.match(listing,/ev-card-alias/);
 assert.match(listing,/ev-language-code/);
 assert.match(atlas.search("acenocumarolo").map(x=>x.name).join(","),/Acenocumarolo/);
-console.log("ELIX IT: PASS · original source identities, Italian headings, EN synonyms, bilingual search and flat capsule branding");
+console.log("eli IT: PASS · original source identities, Italian headings, EN synonyms, bilingual search and flat capsule branding");

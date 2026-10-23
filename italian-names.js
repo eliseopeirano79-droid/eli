@@ -1,4 +1,4 @@
-/* ELIX — livello terminologico italiano, indipendente dal catalogo ChEMBL originale.
+/* eli — livello terminologico italiano, indipendente dal catalogo ChEMBL originale.
    Mappature ESATTE, mai trasformazioni automatiche di sali, enantiomeri o biologici.
    Base: denominazioni italiane AIFA/Farmacopea e revisione editoriale del progetto.
    Fonti: https://www.aifa.gov.it/sites/default/files/bif0203_04.pdf

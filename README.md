@@ -1,10 +1,18 @@
-# ELIX — Farmacologia & Principi Attivi · Alpha 0.12
+# eli — Farmacologia & Principi Attivi · Alpha 0.13
 
 **App made by Eliseo Peirano · 2026**
 
-Sito: https://eliseopeirano79-droid.github.io/PHARMA/ (l'URL GitHub resta invariato; ELIX è il nuovo nome dell'app).
+Sito: https://eliseopeirano79-droid.github.io/eli/ — nome dell’app: **eli**.
 
 Estensione del progetto recuperato da `PHARMA-Alpha03-pronta-per-Dock-e-GitHub-Pages.zip`. I laboratori, il simulatore ADME, i casi e il quiz originali restano disponibili. ISOELETTRICA e la copia separata ELIX non sono coinvolte in questa pubblicazione.
+
+## Alpha 0.13 — cinema visibile, novità e dieci schede di prodotto
+
+Cinema e Novità sono sezioni principali, con anteprima cinematografica e notizie vere in home. ADME, Dose Explorer, Evidence Lab, casi e confronti hanno schede esplicite. Rimossa l’iniezione della home che cercava un elemento non più presente. Il cinema conserva scena e controlli tra i passaggi, permette pausa e avanzamento manuale, rispetta il movimento ridotto e si arresta quando la pagina diventa nascosta.
+
+Aggiunte sintesi per **diazepam, lorazepam, midazolam, fentanyl, ketamina, lidocaina, atropina, adrenalina, semaglutide e tirzepatide**, con 60 campi PK contestuali. Totali: **73 sintesi, 43 profili di prodotto, 258 campi**. Le 4.225 identità restano distinte dalle monografie: **103 documenti importati attendono ancora una sintesi e 131 un profilo PK**. Questi numeri non attestano completezza clinica. Fonti e date dei documenti USA restano esplicite; nessuna estensione automatica ad altre formulazioni o giurisdizioni.
+
+Verifica ripetibile: `npm test`; la procedura di audit include `scripts/browser-eli-release.cjs` per home, 10 contesti di prodotto, 5 sequenze cinematografiche e riapertura offline. Rapporto della release: [docs/REVIEW-ELI-2026-10-23.md](docs/REVIEW-ELI-2026-10-23.md).
 
 ## Ampliamento del 23 ottobre 2026 — dieci schede della lettera A
 

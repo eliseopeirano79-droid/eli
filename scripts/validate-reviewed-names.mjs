@@ -90,4 +90,4 @@ try {
   globalThis.document = nativeDocument;
   globalThis.location = nativeLocation;
 }
-console.log('ELIX nomi 0.12: PASS · 25 corrispondenze documentate, ricerca IT/EN, sinonimi USA e identità di sali/stereoisomeri preservati');
+console.log('eli nomi 0.12: PASS · 25 corrispondenze documentate, ricerca IT/EN, sinonimi USA e identità di sali/stereoisomeri preservati');

@@ -94,5 +94,5 @@ for(const asset of ["elix-deep.css","elix-expanded-chapters.js","elix-expanded-q
 }
 assert.match(read("index.html"),/elix-deep\.css/);
 const nav=read("app.js").split("\n").find(x=>x.startsWith("const nav="));
-assert.equal((nav.match(/\['(?:home|atlas|receptors|textbook|quiz)'/g)||[]).length,5,"Only five primary tabs");
-console.log("ELIX 0.7 scientific regression PASS: 54 chapters, 131 quiz, 37 deep drugs, 7 trials, 12 cases, 24 target profiles.");
+assert.equal((nav.match(/\['(?:home|atlas|receptors|cinema|news|textbook|quiz)'/g)||[]).length,7,"Seven visible primary tabs");
+console.log("eli 0.7 scientific regression PASS: 54 chapters, 131 quiz, 37 deep drugs, 7 trials, 12 cases, 24 target profiles.");

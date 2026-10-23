@@ -8,7 +8,7 @@ async function verifyContentBatch(browser,base='http://127.0.0.1:8765/'){
   await page.setViewportSize({width,height:1000});await page.goto(base+'#/molecule/'+id);
   await page.waitForSelector('details[data-ev-section="'+id+':adme"]');
   if(await page.locator('body').getAttribute('data-theme')!==theme)await page.locator('[data-act="theme"]').click();
-  assert.equal(await page.locator('.topnav-link').count(),5);
+  assert.equal(await page.locator('.topnav-link').count(),7);
   if(width===1440&&theme==='dark'&&id==='CHEMBL1059')await page.screenshot({path:'/tmp/elix-audit/neuro-pregabalin-dark.png'});
   assert.equal(await page.locator('details[data-ev-section]').count(),6);
   assert.equal(await page.locator('.ev-heading h1').innerText(),name);

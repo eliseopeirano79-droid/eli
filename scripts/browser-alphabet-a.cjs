@@ -13,7 +13,7 @@ const assert=require('node:assert/strict'),fs=require('node:fs');
    const profile=batch.profiles.find(p=>p.applicableMoleculeIds.includes(drug.chembl));
    await page.setViewportSize({width,height:1000});await page.goto(base+'#/molecule/'+drug.chembl);await page.waitForSelector('[data-pk-context="'+profile.id+'"]');
    if(await page.locator('body').getAttribute('data-theme')!==theme)await page.locator('[data-act="theme"]').click();
-   assert.equal(await page.locator('.topnav-link').count(),5);assert.equal(await page.locator('details[data-ev-section]').count(),6);
+   assert.equal(await page.locator('.topnav-link').count(),7);assert.equal(await page.locator('details[data-ev-section]').count(),6);
    assert.equal(await page.locator('.ev-heading h1').innerText(),drug.name);await page.locator('[data-ev="expand-all"]').click();
    await page.waitForSelector('[data-reviewed-pk="'+profile.id+'"]');assert.equal(await page.locator('[data-pk-metric]').count(),6);
    assert.equal(await page.locator('[data-batch-pharmacology="'+drug.id+'"]').count(),1);
@@ -34,7 +34,7 @@ const assert=require('node:assert/strict'),fs=require('node:fs');
    matrix.push({drug:drug.id,width,theme,fields:6,sourceLinks:true,overflow:false});await page.locator('[data-ev="collapse-all"]').click();
   }
   await page.goto(base+'#/atlas');await page.waitForSelector('#ev-search');await page.locator('.ev-advanced>summary').click();
-  for(const [kind,total] of [['editorial',63],['needs-editorial',4162],['source-to-review',113],['needs-pk',141]]){
+  for(const [kind,total] of [['editorial',73],['needs-editorial',4152],['source-to-review',103],['needs-pk',131]]){
    await page.locator('#vd-data-kind').selectOption(kind);const text=await page.locator('.ev-results-head').innerText();assert.equal(Number(text.match(/^([\d.\s\u00a0\u202f]+)\s+record/)[1].replace(/\D/g,'')),total);
   }
   await page.locator('#vd-data-kind').selectOption('editorial');

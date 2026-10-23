@@ -1,4 +1,4 @@
-/* ELIX Scientific Reader — reusable source-aware original pharmacology panels. */
+/* eli Scientific Reader — reusable source-aware original pharmacology panels. */
 import {DEEP_DRUGS} from './elix-deep-drugs.js';
 import {trialsForDrug,trialMetrics} from './elix-research.js';
 export function elixEsc(x){return String(x??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}

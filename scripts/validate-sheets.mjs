@@ -60,6 +60,6 @@ assert.match(stylesheet,/\.ev-topic\[open\]/);
 const sw=readPath('sw.js');
 for(const file of ['elix-clean-sheets.css','elix-structure-visuals.js'])assert.ok(sw.includes(file),'Offline cache missing '+file);
 const a=readPath('app.js');
-assert.equal((a.split('\n').find(x=>x.startsWith('const nav='))?.match(/\['(?:home|atlas|receptors|textbook|quiz)'/g)||[]).length,5);
+assert.equal((a.split('\n').find(x=>x.startsWith('const nav='))?.match(/\['(?:home|atlas|receptors|cinema|news|textbook|quiz)'/g)||[]).length,7);
 globalThis.fetch=originalFetch;
-console.log('ELIX 0.10 PASS: larger real 2D structures, honest 3D-like missing visuals, six progressive sections, expand/collapse retention, five main tabs.');
+console.log('eli 0.10 PASS: larger real 2D structures, honest 3D-like missing visuals, six progressive sections, expand/collapse retention, seven main tabs.');

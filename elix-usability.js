@@ -1,4 +1,4 @@
-/* ELIX audit: preserve reading context, view real structural drawings safely, and expose failure states.
+/* eli audit: preserve reading context, view real structural drawings safely, and expose failure states.
    Drawings are source depictions. Auto-fit changes only the viewport, never chemical coordinates. */
 let lastRoute=null;
 export function preserveReading(render){
@@ -16,7 +16,7 @@ export function preserveReading(render){
  if(focus){const el=[...next.querySelectorAll('button,input,select,summary,a')].find(x=>focusKey(x)===focus);el?.focus?.({preventScroll:true});if(caret&&el?.setSelectionRange){try{el.setSelectionRange(...caret);}catch{}}}
  if(scroll!==null)globalThis.window?.scrollTo?.({top:scroll,behavior:'instant'});
  const heading=next.querySelector('h1')?.innerText?.replace(/\s+/g,' ').trim()||next.querySelector('h1')?.textContent?.trim();
- if(heading){document.title=heading+' · ELIX';const crumb=document.querySelector('.crumb strong');if(crumb)crumb.textContent=heading;}
+ if(heading){document.title=heading+' · eli';const crumb=document.querySelector('.crumb strong');if(crumb)crumb.textContent=heading;}
 }
 function detailKey(el){
  if(el.dataset.evSection)return el.dataset.evSection;
@@ -112,7 +112,7 @@ function showUpdateBanner(){
  if(document.querySelector('.elix-update-banner'))return;
  const bar=document.createElement('div');bar.className='elix-update-banner';
  bar.setAttribute('role','status');bar.setAttribute('aria-live','polite');bar.setAttribute('aria-atomic','true');
- const text=document.createElement('span');text.className='elix-update-message';text.textContent='È pronta una nuova versione di ELIX.';
+ const text=document.createElement('span');text.className='elix-update-message';text.textContent='È pronta una nuova versione di eli.';
  const button=document.createElement('button');button.type='button';button.textContent='Ricarica';button.onclick=()=>location.reload();
  bar.append(text,button);notificationStack().append(bar);
 }

@@ -28,7 +28,7 @@ const {verifyWorkerUpgrade}=require('./worker-upgrade-audit.cjs');
    const size=await page.evaluate(()=>({page:document.documentElement.scrollWidth,viewport:innerWidth}));
    assert.ok(size.page<=size.viewport+2,'Overflow '+route+' '+width+' '+JSON.stringify(size));
    const navRects=await page.locator('.topnav-link').evaluateAll(es=>es.map(e=>{const r=e.getBoundingClientRect();return {left:r.left,right:r.right}}));
-   assert.equal(navRects.length,5);assert.ok(navRects.every(r=>r.left>=0&&r.right<=width+1),'Hidden top-level navigation '+width);
+   assert.equal(navRects.length,7);assert.ok(navRects.every(r=>r.left>=0&&r.right<=width+1),'Hidden top-level navigation '+width);
    matrix.push({route,width,theme,overflow:false});
    if(theme==='light'&&[1440,390].includes(width)&&['home','atlas','molecule/CHEMBL13','quiz','textbook'].includes(route))await page.screenshot({path:path.join(out,route.replaceAll('/','-')+'-'+width+'.png')});
   }
@@ -182,7 +182,7 @@ const {verifyWorkerUpgrade}=require('./worker-upgrade-audit.cjs');
  const offlineContext=await browser.newContext({viewport:{width:390,height:844}}),offlinePage=await offlineContext.newPage();
  await offlinePage.goto(base+'#/home');await offlinePage.waitForFunction(()=>!!navigator.serviceWorker.controller,null,{timeout:20000});
  await offlinePage.evaluate(()=>navigator.serviceWorker.ready);await offlineContext.setOffline(true);
- await offlinePage.reload();await offlinePage.waitForSelector('.topnav-link');assert.equal(await offlinePage.locator('.topnav-link').count(),5);
+ await offlinePage.reload();await offlinePage.waitForSelector('.topnav-link');assert.equal(await offlinePage.locator('.topnav-link').count(),7);
  await offlinePage.waitForSelector('#elix-offline');await offlineContext.close();
  const report={passed:true,matrixChecks:matrix.length,viewports:[1440,768,390,320],themes:['light','dark'],routes:routes.length,lazyLoading:true,safetyRestored:true,answerShuffle:true,sessionResume:true,svgTest,offline:true,reviewedPK,workerUpgrade,errors,matrix};
  fs.writeFileSync(path.join(out,'audit-report.json'),JSON.stringify(report,null,2));console.log('SYSTEMATIC_BROWSER_PASS',JSON.stringify({...report,matrix:undefined,reviewedPK:{...reviewedPK,matrix:undefined,exclusions:undefined}}));

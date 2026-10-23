@@ -1,4 +1,4 @@
-/* ELIX expanded question bank — original prompts, synthetic vignettes, evidence checks. */
+/* eli expanded question bank — original prompts, synthetic vignettes, evidence checks. */
 export const EXPANDED_QUESTIONS=[
   {
     "id": "e001",

@@ -82,12 +82,12 @@ export const BATCH_DRUGS=[
 export function appendContentBatches(editorial,pk,batch={drugs:BATCH_DRUGS,sources:BATCH_SOURCES,profiles:BATCH_PROFILES}){
  const additions=[[editorial.drugs,batch.drugs,'id'],[pk.sources,batch.sources,'id'],[pk.profiles,batch.profiles,'id']];
  for(const [existing,incoming,key] of additions){
-  if(!Array.isArray(existing)||!Array.isArray(incoming))throw new TypeError('ELIX: dataset incompleto');
+  if(!Array.isArray(existing)||!Array.isArray(incoming))throw new TypeError('eli: dataset incompleto');
   const seen=new Set(existing.map(item=>item[key]));
-  for(const item of incoming){if(seen.has(item[key]))throw new Error('ELIX: identità duplicata '+item[key]);seen.add(item[key]);}
+  for(const item of incoming){if(seen.has(item[key]))throw new Error('eli: identità duplicata '+item[key]);seen.add(item[key]);}
  }
  const chemicalIds=new Set(editorial.drugs.map(d=>d.chembl));
- for(const d of batch.drugs){if(chemicalIds.has(d.chembl))throw new Error('ELIX: identità chimica duplicata '+d.chembl);chemicalIds.add(d.chembl);}
+ for(const d of batch.drugs){if(chemicalIds.has(d.chembl))throw new Error('eli: identità chimica duplicata '+d.chembl);chemicalIds.add(d.chembl);}
  for(const [existing,incoming] of additions)existing.push(...structuredClone(incoming));
 }
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));

@@ -78,7 +78,7 @@ function valid(g,label,largeText=false){
      await page.setViewportSize({width,height:width<768?844:1000});
      if(await page.locator('body').getAttribute('data-theme')!==theme)await page.locator('[data-act="theme"]').click();
      const g=await geometry(page);valid(g,`${width}/${theme}/dpr${scale}`);
-     assert.equal(await page.locator('.topnav-link').count(),5);
+     assert.equal(await page.locator('.topnav-link').count(),7);
      matrix.push({width,theme,deviceScaleFactor:scale,...g});
      if(scale===1&&[320,390,1440].includes(width))await page.screenshot({path:path.join(out,`update-banner-${width}-${theme}.png`)});
     }

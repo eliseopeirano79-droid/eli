@@ -12,7 +12,7 @@ const {chromium}=require(process.env.PLAYWRIGHT_MODULE || 'playwright');
  await page.route('**/*',route=>route.request().url().startsWith('http://127.0.0.1:8765/')?route.continue():route.abort());
  await page.goto('http://127.0.0.1:8765/#/atlas');
  await page.waitForSelector('.vd-overview');
- assert.equal(await page.locator('.topnav-link').count(),5,'Five primary sections only');
+ assert.equal(await page.locator('.topnav-link').count(),7,'Seven visible main sections');
  await page.selectOption('#vd-data-kind','activity');
  assert.ok(await page.locator('.ev-molecule-card').count()>0);
  await page.selectOption('#vd-data-kind','market');
