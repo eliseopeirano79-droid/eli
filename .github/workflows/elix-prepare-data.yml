@@ -1,13 +1,15 @@
-name: ELIX verified release checks
+name: ELIX ABC integration checks
 on:
   push:
-    branches: [feature/elix-08-verified-data]
+    branches: [feat/abc-continuation-2026-10-23]
     paths: [.github/workflows/elix-prepare-data.yml]
-  workflow_dispatch:
 permissions:
   contents: write
+defaults:
+  run:
+    shell: bash
 concurrency:
-  group: elix-verified-release-${{ github.ref }}
+  group: elix-abc-integration-${{ github.ref }}
   cancel-in-progress: false
 jobs:
   prepare:
@@ -16,38 +18,93 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.ref_name }}
+          ref: ${{ github.sha }}
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Integrate and validate acquired source data
+      - name: Reproduce the exact locally tested tree
         run: |
-          test -f data/verified/index.json
-          node --check elix-verified.js
-          node --check scripts/prepare_verified_release.mjs
-          node scripts/prepare_verified_release.mjs
+          set -euo pipefail
+          test "$GITHUB_REF_NAME" = feat/abc-continuation-2026-10-23
+          mkdir -p /tmp/elix-audit
+          git merge-base --is-ancestor 32d5a9efa74824ea5159b77f4eaa36812e2016a5 HEAD
+          python3 - <<'PY'
+          import base64,hashlib,lzma
+          from pathlib import Path
+          parts=[Path('scripts/.abc-source-'+str(i)+'.b64') for i in range(1,5)]
+          binary=base64.b64decode(''.join(p.read_text().strip() for p in parts),validate=True)
+          assert hashlib.sha256(binary).hexdigest()=='061ef6cf81515be54189a453f8c20aeab8e798e985afdad04b9c51ca448350b9'
+          Path('/tmp/elix-abc.patch').write_bytes(lzma.decompress(binary))
+          for p in parts:p.unlink()
+          PY
+          git show 32d5a9efa74824ea5159b77f4eaa36812e2016a5:.github/workflows/elix-prepare-data.yml > .github/workflows/elix-prepare-data.yml
+          git apply --binary /tmp/elix-abc.patch
+          git add -A
+          TREE=$(git write-tree)
+          test "$TREE" = dfca63befea360aa3f14a41556af71df4e0e84e6
+          printf '%s\n' "$TREE" > /tmp/elix-audit/tree.txt
+          git archive --format=zip "$TREE" > /tmp/elix-audit/source.zip
+          git diff --cached --check
+          node --check elix-abc-continuation.js
+          node --check elix-batch-registry.js
           node --check evidence-atlas.js
-          npm test
-      - name: Install browser test dependency
+          node --check elix-verified.js
+          node --check scripts/browser-abc-continuation.cjs
+      - name: Validate all data and existing features
         run: |
-          npm install --prefix /tmp/elix-browser --no-save playwright@1.56.1
-          node /tmp/elix-browser/node_modules/playwright/cli.js install --with-deps chromium
-      - name: Browser regression desktop and mobile
+          set -euo pipefail
+          npm test | tee /tmp/elix-audit/unit-tests.log
+      - name: Browser regression including all content and notifications
         run: |
-          python3 -m http.server 8765 > /tmp/elix-http.log 2>&1 &
-          PLAYWRIGHT_MODULE=/tmp/elix-browser/node_modules/playwright node scripts/browser-verified.cjs
+          set -euo pipefail
+          npm install --prefix /tmp/elix-audit-deps --no-save playwright@1.56.1
+          node /tmp/elix-audit-deps/node_modules/playwright/cli.js install --with-deps chromium
+          python3 -m http.server 8765 > /tmp/elix-audit/http.log 2>&1 &
+          export PLAYWRIGHT_MODULE=/tmp/elix-audit-deps/node_modules/playwright
+          node scripts/browser-systematic-audit.cjs
+          node scripts/browser-content-batch.cjs
+          node scripts/browser-catalog-material.cjs
+          node scripts/browser-update-banner.cjs
+          node scripts/browser-alphabet-a.cjs
+          node scripts/browser-abc-continuation.cjs
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          for name in ['audit-report.json','content-batch-report.json','catalog-browser-report.json','update-banner-report.json','alphabet-a-browser.json','abc-continuation-browser.json']:
+              assert json.loads((Path('/tmp/elix-audit')/name).read_text())['passed'] is True,name
+          PY
+      - name: Store tested non-workflow blobs without publishing or changing refs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          test "$(git write-tree)" = dfca63befea360aa3f14a41556af71df4e0e84e6
+          git diff --quiet
+          python3 - <<'PY'
+          import base64,hashlib,json,os,subprocess,urllib.request
+          from pathlib import Path
+          base='32d5a9efa74824ea5159b77f4eaa36812e2016a5'
+          paths=subprocess.check_output(['git','diff','--cached','--name-only',base],text=True).splitlines()
+          manifest={}
+          for name in paths:
+              if name.startswith('.github/workflows/'): continue
+              path=Path(name)
+              assert path.is_file() and not path.is_symlink(),name
+              data=path.read_bytes()
+              expected=hashlib.sha1(b'blob '+str(len(data)).encode()+b'\0'+data).hexdigest()
+              body=json.dumps({'content':base64.b64encode(data).decode(),'encoding':'base64'}).encode()
+              req=urllib.request.Request('https://api.github.com/repos/eliseopeirano79-droid/PHARMA/git/blobs',data=body,method='POST',headers={'Authorization':'Bearer '+os.environ['GH_TOKEN'],'Accept':'application/vnd.github+json','Content-Type':'application/json','X-GitHub-Api-Version':'2022-11-28'})
+              with urllib.request.urlopen(req,timeout=60) as response: result=json.load(response)
+              assert result['sha']==expected,name
+              manifest[name]=expected
+          assert len(manifest)==16
+          Path('/tmp/elix-audit/blob-manifest.json').write_text(json.dumps(manifest,indent=2))
+          print('TESTED_NON_WORKFLOW_BLOBS '+json.dumps(manifest))
+          PY
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: elix-verified-browser
-          path: /tmp/elix-shots
-          if-no-files-found: ignore
-      - name: Publish tested code changes to the same branch
-        run: |
-          git config user.name 'ELIX Release Checks'
-          git config user.email 'elix-checks@users.noreply.github.com'
-          git add evidence-atlas.js index.html sw.js app.js package.json README.md
-          if git diff --cached --quiet; then exit 0; fi
-          git commit -m 'feat: integrate tested real-source pharmacology data and responsive panels'
-          git pull --rebase origin "${GITHUB_REF_NAME}"
-          git push origin "HEAD:${GITHUB_REF_NAME}"
+          name: elix-abc-integration
+          path: /tmp/elix-audit
+          if-no-files-found: error
