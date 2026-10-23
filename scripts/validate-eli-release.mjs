@@ -1,3 +1,4 @@
+import {ABC_CONTINUATION_BATCH} from '../elix-abc-continuation.js';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import crypto from 'node:crypto';
@@ -11,10 +12,11 @@ import {reviewedProfiles,PK_FIELDS} from '../elix-pk-reviewed.js';
 const read=p=>JSON.parse(fs.readFileSync(new URL('../'+p,import.meta.url)));
 const editorial=read('data/editorial.json'),pk=read('data/pk-reviewed.json'),catalog=read('data/catalog.json'),index=read('data/verified/index.json');
 appendContentBatches(editorial,pk);appendContentBatches(editorial,pk,ESSENTIAL_BATCH);appendContentBatches(editorial,pk,ALPHABET_A_BATCH);
+appendContentBatches(editorial,pk,ABC_CONTINUATION_BATCH);
 const baseline=structuredClone({editorial,pk});appendContentBatches(editorial,pk,batch);
-assert.deepEqual(editorial.drugs.slice(0,63),baseline.editorial.drugs);assert.deepEqual(pk.profiles.slice(0,33),baseline.pk.profiles);
+assert.deepEqual(editorial.drugs.slice(0,71),baseline.editorial.drugs);assert.deepEqual(pk.profiles.slice(0,41),baseline.pk.profiles);
 const report=buildCatalogCoverage({catalog,editorial,pk,index});
-assert.deepEqual([report.counts.editorial,report.counts.profileContexts,report.counts.pkFields,report.counts.labelWithoutEditorial,report.counts.labelWithoutPK],[73,43,258,103,131]);
+assert.deepEqual([report.counts.editorial,report.counts.profileContexts,report.counts.pkFields,report.counts.labelWithoutEditorial,report.counts.labelWithoutPK],[81,51,306,95,123]);
 let fields=0,anchors=0,numeric=0;const statuses={};
 for(const d of batch.drugs){
  assert.ok(!baseline.editorial.drugs.some(x=>x.chembl===d.chembl));assert.equal(d.quizAvailable,false);

@@ -116,7 +116,7 @@ export function renderReviewedProductSource(source,area){
  return available(file,label=>{
   if(label.setId!==source.setId)return '<p class="ev-missing">Il documento importato non coincide con la fonte della sintesi selezionata. Consulta il documento pertinente dal collegamento qui sotto.</p>';
   const keys=area==='dosage'?['indications_and_usage','dosage_and_administration','dosage_forms_and_strengths','contraindications','boxed_warning','warnings_and_cautions','warnings','adverse_reactions','drug_interactions','use_in_specific_populations','pregnancy','pediatric_use','geriatric_use','overdosage']:['pharmacokinetics','clinical_pharmacology'];
-  return `<div class="vd-product-context"><strong>${h(label.product?.generic?.join(' / '))}</strong><p>${h(label.product?.route?.join(' / '))} · USA · versione ${h(date(label.effectiveDate))}</p></div>${area==='dosage'?renderIndications09(label,file):''}${sourceSections(label,keys)}`;
+  return `<div class="vd-product-context"><strong>${h(label.product?.generic?.join(' / '))}</strong><p>${h(source.reviewedRoute||label.product?.route?.join(' / '))} · USA · versione ${h(date(label.effectiveDate))}</p>${source.routeReview?`<p class="vd-note" data-route-review>${h(source.routeReview)}</p>`:''}</div>${area==='dosage'?renderIndications09(label,file):''}${sourceSections(label,keys)}`;
  })+reference;
 }
 export function renderVerifiedByArea(molecule,area){

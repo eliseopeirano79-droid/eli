@@ -10,7 +10,7 @@ Estensione del progetto recuperato da `PHARMA-Alpha03-pronta-per-Dock-e-GitHub-P
 
 Cinema e Novità sono sezioni principali, con anteprima cinematografica e notizie vere in home. ADME, Dose Explorer, Evidence Lab, casi e confronti hanno schede esplicite. Rimossa l’iniezione della home che cercava un elemento non più presente. Il cinema conserva scena e controlli tra i passaggi, permette pausa e avanzamento manuale, rispetta il movimento ridotto e si arresta quando la pagina diventa nascosta.
 
-Aggiunte sintesi per **diazepam, lorazepam, midazolam, fentanyl, ketamina, lidocaina, atropina, adrenalina, semaglutide e tirzepatide**, con 60 campi PK contestuali. Totali: **73 sintesi, 43 profili di prodotto, 258 campi**. Le 4.225 identità restano distinte dalle monografie: **103 documenti importati attendono ancora una sintesi e 131 un profilo PK**. Questi numeri non attestano completezza clinica. Fonti e date dei documenti USA restano esplicite; nessuna estensione automatica ad altre formulazioni o giurisdizioni.
+Aggiunte sintesi per **diazepam, lorazepam, midazolam, fentanyl, ketamina, lidocaina, atropina, adrenalina, semaglutide e tirzepatide**, con 60 campi PK contestuali. Totali: **81 sintesi, 51 profili di prodotto, 306 campi**. Le 4.225 identità restano distinte dalle monografie: **95 documenti importati attendono ancora una sintesi e 123 un profilo PK**. Questi numeri non attestano completezza clinica. Fonti e date dei documenti USA restano esplicite; nessuna estensione automatica ad altre formulazioni o giurisdizioni.
 
 Verifica ripetibile: `npm test`; la procedura di audit include `scripts/browser-eli-release.cjs` per home, 10 contesti di prodotto, 5 sequenze cinematografiche e riapertura offline. Rapporto della release: [docs/REVIEW-ELI-2026-10-23.md](docs/REVIEW-ELI-2026-10-23.md).
 
@@ -19,6 +19,14 @@ Verifica ripetibile: `npm test`; la procedura di audit include `scripts/browser-
 Dieci nuove sintesi originali e dieci profili PK contestuali: abacavir, acebutololo, acetilcisteina, adenosina, alfuzosina, acido alendronico, amitriptilina, anastrozolo, aprepitant e aripiprazolo. Totali: **63 sintesi, 33 profili di prodotto e 198 campi PK**. Nessun nuovo duplicato di catalogo. I dati mantengono formulazione, via, sostanza, provenienza e limiti.
 
 Stile Isoelettrica e correzione della barra preservati; data editoriale per scheda e cache `elix-alpha-0.12.6`. Metodo, fonti e verifiche: [revisione del gruppo A](docs/REVIEW-ALPHABET-A-2026-10-23.md). Stato della distribuzione attestato nella PR, non dai soli conteggi.
+
+## Prosecuzione A–C — 23 ottobre 2026
+
+Otto nuove sintesi: **azatioprina, baclofene, budesonide, bupropione, buspirone, carbamazepina, claritromicina e clonidina**. Meccanismo, impieghi del prodotto, rischi, interazioni, spiegazioni originali e 48 campi PK con formulazione e fonte. Totali: **71 sintesi, 41 contesti PK, 246 campi**; il catalogo non diventa una raccolta di monografie complete. Le 11 lacune quantitative del nuovo lotto sono esplicite.
+
+Qualificata la via della budesonide nebulizzata: il metadato originale ORAL resta immutabile, ma la scheda e il pannello della fonte chiariscono l'inalazione. Le distinzioni radioattività/parent, F relativa/assoluta, dose assorbita/somministrata e autoinduzione sono protette da regressioni. Stile Isoelettrica e barra di aggiornamento invariati. Cache `elix-alpha-0.12.7`.
+
+Il nuovo registro dei lotti evita contatori correnti dispersi nei test senza rimuovere le regressioni storiche. Metodo, fonti, limiti e verifiche: [docs/REVIEW-ABC-CONTINUATION-2026-10-23.md](docs/REVIEW-ABC-CONTINUATION-2026-10-23.md). Audit browser e pubblicazione sono verificati nella PR, non attestati da questo testo.
 
 ## Alpha 0.12.4 — intero catalogo e dodici nuove sintesi
 

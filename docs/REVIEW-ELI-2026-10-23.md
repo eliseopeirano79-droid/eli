@@ -16,7 +16,7 @@ Integrate inoltre formula e massa di semaglutide e tirzepatide dalle sezioni Des
 
 60 campi PK: 27 con dati numerici, 54 con ancoraggi testuali verificabili, 5 non riportati nel paragrafo selezionato e uno definito dalla via. Non si attribuiscono dati della via orale a prodotti nasali/iniettabili, dati EV alla quantità applicata sulla cute, o dati del parent ai sali. Il legame del fentanyl riporta esplicitamente la **frazione libera**; il parametro del cerotto descrive il calo del 50% dopo rimozione. L’emivita dell’atropina oculare specifica la specie misurata, l-iosciamina. Le fasi della ketamina mantengono la terminologia e i limiti della label.
 
-Totali: 4.225 identità (2.945 parent e 1.280 forme correlate), 73 sintesi proprie, 43 profili di prodotto per 46 identità esatte, 258 campi PK, 172 documenti importati. Restano 103 documenti senza sintesi propria e 131 senza profilo PK contestuale. Questi conteggi descrivono la copertura strutturale; non attestano completezza del sapere farmacologico o validità clinica dell’atlante.
+Totali: 4.225 identità (2.945 parent e 1.280 forme correlate), 81 sintesi proprie, 51 profili di prodotto per 54 identità esatte, 306 campi PK, 172 documenti importati. Restano 95 documenti senza sintesi propria e 123 senza profilo PK contestuale. Questi conteggi descrivono la copertura strutturale; non attestano completezza del sapere farmacologico o validità clinica dell’atlante.
 
 ## Verifiche ripetibili
 

@@ -14,7 +14,7 @@ const assert=require('node:assert/strict'),fs=require('node:fs');
    if(await page.locator('body').getAttribute('data-theme')!==theme)await page.locator('[data-act="theme"]').click();
    assert.equal(await page.locator('.topnav-link').count(),7);const nav=await page.locator('.topnav-link').evaluateAll(es=>es.map(e=>{const r=e.getBoundingClientRect();return {left:r.left,right:r.right};}));assert.ok(nav.every(r=>r.left>=0&&r.right<=width+1));
    for(const path of ['#/cinema/ADRB2','#/news','#/pk','#/dose','#/evidence'])assert.ok(await page.locator('.eli-home a[href="'+path+'"]').count());
-   assert.deepEqual(await page.locator('.eli-coverage dd').allTextContents(),['4.225','73','43','103']);
+   assert.deepEqual(await page.locator('.eli-coverage dd').allTextContents(),['4.225','81','51','95']);
    assert.equal(await page.locator('.eli-news-preview article').count(),3);await noOverflow('home '+width+'/'+theme);
    await page.screenshot({path:out+'/eli-home-'+width+'-'+theme+'.png',fullPage:true});
    for(const drug of batch.drugs){
@@ -42,7 +42,7 @@ const assert=require('node:assert/strict'),fs=require('node:fs');
   await page.setViewportSize({width:390,height:1000});await page.goto(base+'#/cinema/ADRA2A');await page.waitForSelector('.ex-cell-canvas');await noOverflow('mobile cinema');await page.screenshot({path:out+'/eli-cinema-mobile.png',fullPage:true});
   await context.close();
   const online=await browser.newContext(),tab=await online.newPage();tab.on('pageerror',e=>errors.push(e.message));await tab.goto(base+'#/home');await tab.waitForFunction(()=>Boolean(navigator.serviceWorker.controller));
-  await online.setOffline(true);await tab.reload();await tab.waitForSelector('.eli-coverage dd');assert.equal(await tab.locator('.eli-coverage dd').nth(1).innerText(),'73');
+  await online.setOffline(true);await tab.reload();await tab.waitForSelector('.eli-coverage dd');assert.equal(await tab.locator('.eli-coverage dd').nth(1).innerText(),'81');
   await tab.goto(base+'#/molecule/CHEMBL4297839');await tab.waitForSelector('[data-pk-context="eli-clinical-tirzepatide"]');await tab.locator('details[data-ev-section$=":adme"]>summary').click();await tab.waitForSelector('[data-reviewed-pk="eli-clinical-tirzepatide"]');assert.equal(await tab.locator('[data-pk-metric]').count(),6);
   await tab.goto(base+'#/cinema/ADRB2');await tab.waitForSelector('.ex-cell-canvas');await tab.locator('[data-elix="cinema-next"]').click();assert.equal(await tab.locator('.ex-cinema-count').innerText(),'2 / 6');await online.close();
   assert.deepEqual(errors,[]);const result={passed:true,productMatrix:matrix,homes:8,scenarios:5,scenePreserved:true,pause:true,storyDeepLinks:true,offlineHome:true,offlinePK:true,offlineCinema:true,errors};fs.writeFileSync(out+'/eli-release-browser.json',JSON.stringify(result,null,2));console.log('ELI_BROWSER_PASS',JSON.stringify(result));
