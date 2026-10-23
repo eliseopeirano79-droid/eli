@@ -25,7 +25,7 @@ const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
   }
   const ctx=await browser.newContext({serviceWorkers:'block',reducedMotion:'reduce'}),page=await ctx.newPage();page.on('pageerror',e=>errors.push(e.message));
   await page.route('**/*',r=>r.request().url().startsWith(base)?r.continue():r.abort());
-  for(const width of [1440,768,390,320])for(const theme of ['dark','light']){
+  for(const width of [1440,1280,1100,1024,768,550,390,320])for(const theme of ['dark','light']){
    await page.setViewportSize({width,height:900});await page.goto(base+'#/home');await page.waitForSelector('.eli-coverage dd');
    if(await page.locator('body').getAttribute('data-theme')!==theme)await page.locator('[data-act="theme"]').click();
    assert.equal(await page.locator('.header-brand').getAttribute('aria-label'),'ELIX, torna alla panoramica');
@@ -35,8 +35,16 @@ const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
    assert.equal(await page.locator('.header-brand img').count(),0,'Brand uses native text and vector, never a raster crop');
    const dimensions=await page.evaluate(()=>({width:innerWidth,scroll:document.documentElement.scrollWidth,logos:[...document.querySelectorAll('.header-brand .elix-pill')].map(x=>({loaded:!x.querySelector('image'),width:x.getBoundingClientRect().width})),brandBackground:getComputedStyle(document.querySelector('.header-brand .brand-mark')).backgroundColor,markColor:getComputedStyle(document.querySelector('.header-brand .brand-mark')).color,accent:getComputedStyle(document.querySelector('.eli-button')).backgroundColor,sub:(()=>{let e=document.querySelector('.header-brand .brand-sub'),r=e.getBoundingClientRect();return {left:r.left,right:r.right}})()}));
    assert.ok(dimensions.scroll<=width+2,JSON.stringify(dimensions));assert.equal(dimensions.logos.length,1);assert.ok(dimensions.logos.every(x=>x.loaded&&x.width>0));assert.equal(dimensions.brandBackground,'rgba(0, 0, 0, 0)');assert.equal(dimensions.markColor,dimensions.accent);assert.ok(dimensions.sub.right<=width);
+   const header=await page.evaluate(()=>{const box=e=>{const r=e.getBoundingClientRect();return {left:r.left,right:r.right,top:r.top,bottom:r.bottom,width:r.width,height:r.height}};const bar=document.querySelector('.topbar'),nav=document.querySelector('.top-navigation');return {bar:box(bar),padding:parseFloat(getComputedStyle(bar).paddingRight),nav:box(nav),brand:box(document.querySelector('.header-primary')),actions:box(document.querySelector('.top-actions')),credit:box(document.querySelector('.header-credit')),version:box(document.querySelector('.header-release')),links:[...nav.children].map(box)}});
+   assert.ok(header.credit.width>0&&header.credit.height>0,'Author credit remains visible');assert.ok(header.version.width>0&&header.version.height>0,'Version remains visible');
+   assert.ok(Math.abs(header.actions.right-(width-header.padding))<2,'Theme and version are right aligned');
+   assert.ok(Math.abs((header.nav.left+header.nav.right)/2-width/2)<2,'Navigation container is centered');
+   const rows=Map.groupBy(header.links,x=>Math.round(x.top));for(const row of rows.values()){const left=Math.min(...row.map(x=>x.left)),right=Math.max(...row.map(x=>x.right));assert.ok(Math.abs((left+right-header.nav.left-header.nav.right)/2)<2,'Every selector row is centered inside its frame');}
+   for(const a of [header.brand,header.actions,header.credit])assert.ok(a.right<=header.nav.left||a.left>=header.nav.right||a.bottom<=header.nav.top||a.top>=header.nav.bottom,'Navigation does not overlap the logo or controls');
+   assert.match(await page.locator('.header-credit').innerText(),/^App made by Eliseo Peirano · 2026$/);
    assert.deepEqual(await page.locator('.eli-coverage dd').allTextContents(),['4.225','81','51','95']);
    await page.screenshot({path:out+`/ELIX-${width}-${theme}.png`,fullPage:true});
+   if([1440,390].includes(width))await page.screenshot({path:out+`/ELIX-header-${width}-${theme}.png`});
    for(const route of ['atlas','receptors','textbook','quiz','pk','cinema/ADRB2']){await page.goto(base+'#/'+route);await page.waitForSelector('.content h1');assert.doesNotMatch(await page.locator('body').innerText(),/\beli\b/i);assert.match(await page.title(),/ELIX/);}
    matrix.push({width,theme});
   }

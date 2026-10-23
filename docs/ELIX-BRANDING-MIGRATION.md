@@ -6,6 +6,10 @@ Il nome pubblico è **ELIX**, con sottotitolo **Farmacologia & Principi Attivi**
 
 Il ritaglio fotografico è sostituito da tipografia nativa dell’app e pillola SVG trasparente, condivisa tra header, menu, home e splash. Il colore segue il tema attivo e lo splash usa esattamente lo sfondo dell’app. Le icone installabili e l’anteprima social sono generate dallo stesso segno vettoriale. L’immagine iniziale resta soltanto come riferimento archiviato.
 
+## Allineamento della testata a Isoelettrica
+
+Firma «App made by Eliseo Peirano · 2026», tema e versione sono visibili e allineati a destra. La navigazione è centrata nell’header e ogni riga di selettori è centrata nel proprio riquadro, anche quando va a capo. Il footer riprende la firma centrata. Controllati otto formati da 320 a 1440 px, in tema chiaro e scuro, con misure di centratura e assenza di sovrapposizioni.
+
 ## Grafica e contenuti della prima migrazione
 
 - Riferimento recuperato dalla copia di progetto `work/ELIX/assets/elix-logo.png`, conservato senza modifiche in `assets/elix-reference.png`. SHA-256: `476b3193923d8f6cb362edef39cb0d2e9cca5d72d128bf577b0c8583a1f221f2`.

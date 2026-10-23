@@ -16,3 +16,30 @@
 @media(max-width:750px){.elix-home-mark{width:80px;height:80px;margin:0}}
 @media(max-width:550px){.header-brand{gap:7px}.header-brand .brand-mark{width:32px;height:32px}.header-brand .brand-name{font-size:20px}.header-brand .brand-sub{font-size:7.6px!important}.brand-copy{gap:4px}.elix-boot-brand{gap:12px}.elix-boot-brand .brand-mark{width:60px;height:60px}.elix-boot-brand .brand-name{font-size:38px}.elix-boot-brand .brand-sub{font-size:10px!important}}
 @media(max-width:500px){.elix-home-mark{display:none}}
+
+/* Isoelettrica-like shell: centered sections and persistent author/theme/version. */
+.topbar{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);grid-template-areas:"brand nav credit" "brand nav tools";align-items:center;column-gap:18px;row-gap:4px;min-height:78px}
+.header-primary{grid-area:brand;min-width:0}
+.top-navigation{grid-area:nav;order:0;display:flex!important;flex-wrap:wrap!important;align-items:center;justify-content:center;justify-self:center;gap:3px!important;width:max-content;max-width:100%!important;margin:0!important;padding:4px!important;overflow:visible!important}
+.topnav-link{flex:0 0 auto;min-height:36px;padding:8px 11px;text-align:center}
+.header-credit{grid-area:credit;display:block;font-size:11.5px;line-height:1.4;color:var(--muted);justify-self:end;text-align:right;white-space:nowrap}
+.top-actions{grid-area:tools;justify-self:end;justify-content:flex-end;margin:0;gap:6px}
+.header-release{display:inline-flex;align-items:center;justify-content:center;min-height:34px;font-weight:500;letter-spacing:0;font-size:11px;padding:0 8px;color:var(--muted);background:transparent}
+.theme-toggle{height:34px;background:transparent;font-weight:500}
+.app-footer{flex-direction:column;justify-content:center;text-align:center;gap:7px}
+.app-footer .footer-brand{justify-content:center;flex-wrap:wrap}
+.app-footer .footer-limit{text-align:center}
+@media(max-width:1100px){
+ .topbar{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"brand credit" "brand tools" "nav nav";row-gap:5px}
+ .top-navigation{margin-top:5px!important;max-width:100%!important}
+}
+@media(max-width:550px){
+ .topbar{grid-template-columns:minmax(0,1fr) 78px;grid-template-areas:"brand tools" "credit credit" "nav nav";column-gap:6px;row-gap:5px}
+ .top-actions{display:grid;grid-template-columns:36px 36px;gap:3px 6px}
+ .top-actions .search-trigger{grid-column:1;grid-row:1;width:36px;height:34px}
+ .top-actions .theme-toggle{grid-column:2;grid-row:1;width:36px;height:34px}
+ .header-release{grid-column:1/-1;grid-row:2;justify-self:end;min-height:16px;padding:0;border:0;font-size:10px}
+ .header-credit{font-size:10.5px;justify-self:end}
+ .top-navigation{width:100%!important;gap:3px!important}
+ .topnav-link{min-height:36px;padding:8px 10px!important;font-size:11px!important}
+}
